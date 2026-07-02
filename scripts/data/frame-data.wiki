@@ -1,0 +1,3583 @@
+<!-- Pinned snapshot of https://wiki.pioneer2.net/w/Game_mechanics/Frame_data (raw wikitext), retrieved 2026-07-03.
+     Source of authentic PSO:BB attack-animation frame data (30 fps). Parsed by scripts/extract-frame-data.mjs.
+     Re-fetch deliberately and re-run the extraction if the community measures more data. -->
+<small><div class="noexcerpt">< Return to [[Game mechanics]]</div></small>
+
+''Phantasy Star Online Blue Burst'' runs at 30 frames per second. 
+* ''Combo'' is the frame data when this attack is not the ending step of a combo. 
+* ''Full'' is the frame data when the combo ends on this attack. 
+''Heavy'' and ''Special'' are the same unless explicitly marked.
+
+==Weapons==
+===Combo frame data calculation===
+Examples using HUmar frame data:
+# Handgun, N: <code>N1 (Full) = 27 = 27f total</code>
+# Handgun, NNN: <code>N1 (Combo) + N2 (Combo) + N3 (Full) = 14 + 11 + 19 = 44f total</code>
+# Handgun, NH: <code>N1 (Combo) + H2 (Full) = 14 + 30 = 44f total</code>
+
+===Frame data tables===
+: ''Note that standard male animations are considered the 'default' animations, and all others are compared against it. If a category does not exist, this means that all the attack speeds are the same as the male animations. For example, female sword is the same speed as male sword, so it is not listed separately.''
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |1. Male, V101:
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="20"|Melee
+|rowspan="2"|[[Saber]]
+|Normal
+|29
+|13
+|24
+|10
+|31
+|-
+|Heavy
+|37
+|21
+|29
+|15
+|34
+|-
+|rowspan="2"|[[Sword]]
+|Normal
+|39
+|17
+|31
+|15
+|43
+|-
+|Heavy
+|46
+|24
+|35
+|19
+|43
+|-
+|rowspan="2"|[[Daggers]]
+|Normal
+|40
+|21
+|30
+|15
+|50
+|-
+|Heavy
+|46
+|27
+|35
+|20
+|49
+|-
+|rowspan="2"|[[Partisans]]
+|Normal
+|39
+|17
+|30
+|14
+|33
+|-
+|Heavy
+|46
+|24
+|35
+|19
+|35
+|-
+|rowspan="2"|[[Slicers]]
+|Normal
+|40
+|21
+|32
+|12
+|42
+|-
+|Heavy
+|47
+|28
+|37
+|17
+|43
+|-
+|rowspan="2"|[[Double Sabers]]
+|Normal
+|39
+|22
+|27
+|11
+|51
+|-
+|Heavy
+|46
+|29
+|32
+|16
+|49
+|-
+|rowspan="2"|[[Claws]]
+|Normal
+|27
+|16
+|22
+|11
+|37
+|-
+|Heavy
+|35
+|24
+|27
+|16
+|39
+|-
+|rowspan="2"|[[Katanas]]
+|Normal
+|30
+|14
+|29
+|15
+|44
+|-
+|Heavy
+|38
+|22
+|33
+|19
+|44
+|-
+|rowspan="2"|[[Twin Swords]]
+|Normal
+|37
+|18
+|34
+|19
+|51
+|-
+|Heavy
+|44
+|25
+|37
+|22
+|49
+|-
+|rowspan="2"|[[Fists]]
+|Normal
+|26
+|19
+|26
+|19
+|35
+|-
+|Heavy
+|33
+|26
+|29
+|22
+|36
+|-
+|rowspan="14"|Ranged
+|rowspan="2"|[[Handguns]]
+|Normal
+|27
+|14
+|25
+|11
+|19
+|-
+|Heavy
+|34
+|22
+|30
+|16
+|25
+|-
+|rowspan="2"|[[Master Raven]]
+|Normal
+|26
+|
+|
+|
+|
+|-
+|Heavy
+|36
+|
+|
+|
+|
+|-
+|rowspan="2"|[[Rifles]]
+|Normal
+|29
+|15
+|25
+|12
+|20
+|-
+|Heavy
+|37
+|23
+|30
+|17
+|26
+|-
+|rowspan="2"|[[Mechguns]]
+|Normal
+|49
+|12
+|45
+|10
+|42
+|-
+|Heavy
+|58
+|21
+|50
+|15
+|48
+|-
+|rowspan="2"|[[Shots]]
+|Normal
+|50
+|25
+|43
+|21
+|34
+|-
+|Heavy
+|56
+|31
+|46
+|24
+|38
+|-
+|rowspan="2"|[[L&K38 Combat]]
+|Normal
+|46
+|
+|
+|
+|
+|-
+|Heavy
+|55
+|
+|
+|
+|
+|-
+|rowspan="2"|[[Launchers]]
+|Normal
+|46
+|21
+|41
+|19
+|36
+|-
+|Heavy
+|52
+|27
+|44
+|22
+|39
+|-
+|rowspan="8"|Technique
+|rowspan="2"|[[Canes]]
+|Normal
+|29
+|13
+|27
+|13
+|39
+|-
+|Heavy
+|37
+|21
+|32
+|18
+|40
+|-
+|rowspan="2"|[[Rods]]
+|Normal
+|29
+|14
+|27
+|14
+|40
+|-
+|Heavy
+|37
+|22
+|32
+|19
+|41
+|-
+|rowspan="2"|[[Wands]]
+|Normal
+|30
+|14
+|29
+|15
+|40
+|-
+|Heavy
+|37
+|21
+|33
+|19
+|41
+|-
+|rowspan="2"|[[Cards]]
+|Normal
+|33
+|18
+|30
+|17
+|47
+|-
+|Heavy
+|40
+|25
+|34
+|21
+|47
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |2. Female, V101
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="10"|Melee
+|rowspan="2"|[[Saber]]
+|Normal
+|29
+|13
+|style="background-color: #930c00;"|26 (+2)
+|style="background-color: #930c00;"|12 (+2)
+|style="background-color: #930c00;"|35 (+4)
+|-
+|Heavy
+|37
+|21
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|17 (+2)
+|style="background-color: #930c00;"|37 (+3)
+|-
+|rowspan="2"|[[Double Sabers]]
+|Normal
+|style="background-color: #0a8b0a;"|35 (-4)
+|style="background-color: #0a8b0a;"|18 (-4)
+|style="background-color: #0a8b0a;"|26 (-1)
+|style="background-color: #0a8b0a;"|10 (-1)
+|style="background-color: #0a8b0a;"|45 (-6)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|42 (-4)
+|style="background-color: #0a8b0a;"|25 (-4)
+|style="background-color: #0a8b0a;"|31 (-1)
+|16
+|style="background-color: #0a8b0a;"|45 (-4)
+|-
+|rowspan="2"|[[Claws]]
+|Normal
+|27
+|16
+|22
+|11
+|style="background-color: #0a8b0a;"|34 (-3)
+|-
+|Heavy
+|35
+|24
+|27
+|16
+|style="background-color: #0a8b0a;"|36 (-3)
+|-
+|rowspan="2"|[[Katanas]]
+|Normal
+|30
+|14
+|29
+|15
+|style="background-color: #0a8b0a;"|41 (-3)
+|-
+|Heavy
+|38
+|22
+|33
+|19
+|style="background-color: #0a8b0a;"|42 (-2)
+|-
+|rowspan="2"|[[Fists]]
+|Normal
+|style="background-color: #0a8b0a;"|25 (-1)
+|style="background-color: #0a8b0a;"|18 (-1)
+|style="background-color: #0a8b0a;"|23 (-3)
+|style="background-color: #0a8b0a;"|16 (-3)
+|style="background-color: #930c00;"|39 (+4)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|32 (-1)
+|style="background-color: #0a8b0a;"|25 (-1)
+|style="background-color: #0a8b0a;"|27 (-2)
+|style="background-color: #0a8b0a;"|20 (-2)
+|style="background-color: #930c00;"|39 (+3)
+|-
+|rowspan="2"|Ranged
+|rowspan="2"|[[Last Swan]]
+|Normal
+|26
+|14
+|25
+|12
+|21
+|-
+|Heavy
+|36
+|24
+|32
+|19
+|28
+|-
+|rowspan="4"|Technique
+|rowspan="2"|[[Canes]]
+|Normal
+|style="background-color: #930c00;"|30 (+1)
+|style="background-color: #930c00;"|14 (+1)
+|27
+|13
+|39
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+10)
+|style="background-color: #930c00;"|22 (+1)
+|32
+|18
+|40
+|-
+|rowspan="2"|[[Rods]]
+|Normal
+|style="background-color: #930c00;"|33 (+4)
+|style="background-color: #930c00;"|18 (+4)
+|style="background-color: #930c00;"|30 (+3)
+|style="background-color: #930c00;"|17 (+3)
+|40
+|-
+|Heavy
+|style="background-color: #930c00;"|40 (+3)
+|style="background-color: #930c00;"|25 (+3)
+|style="background-color: #930c00;"|34 (+2)
+|style="background-color: #930c00;"|21 (+2)
+|41
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |3. HUcaseal, V101
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="8"|Melee
+|rowspan="2"|[[Daggers]]
+|Normal
+|style="background-color: #0a8b0a;"|37 (-3)
+|style="background-color: #0a8b0a;"|18 (-3)
+|style="background-color: #0a8b0a;"|29 (-1)
+|style="background-color: #0a8b0a;"|14 (-1)
+|style="background-color: #0a8b0a;"|41 (-9)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|44 (-2)
+|style="background-color: #0a8b0a;"|25 (-2)
+|style="background-color: #0a8b0a;"|33 (-2)
+|style="background-color: #0a8b0a;"|18 (-2)
+|style="background-color: #0a8b0a;"|42 (-7)
+|-
+|rowspan="2"|[[Double Sabers]]
+|Normal
+|style="background-color: #0a8b0a;"|35 (-5)
+|style="background-color: #0a8b0a;"|18 (-4)
+|27
+|11
+|style="background-color: #0a8b0a;"|45 (-6)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|42 (-4)
+|style="background-color: #0a8b0a;"|25 (-4)
+|32
+|16
+|style="background-color: #0a8b0a;"|45 (-4)
+|-
+|rowspan="2"|[[Claws]]
+|Normal
+|style="background-color: #930c00;"|32 (+5)
+|style="background-color: #930c00;"|21 (+5)
+|style="background-color: #930c00;"|25 (+3)
+|style="background-color: #930c00;"|14 (+3)
+|style="background-color: #0a8b0a;"|34 (-3)
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+3)
+|style="background-color: #930c00;"|27 (+3)
+|style="background-color: #930c00;"|29 (+2)
+|style="background-color: #930c00;"|18 (+2)
+|style="background-color: #0a8b0a;"|36 (-3)
+|-
+|rowspan="2"|[[Fists]]
+|Normal
+|style="background-color: #0a8b0a;"|22 (-4)
+|style="background-color: #0a8b0a;"|15 (-4)
+|style="background-color: #0a8b0a;"|21 (-5)
+|style="background-color: #0a8b0a;"|14 (-5)
+|style="background-color: #930c00;"|36 (+1)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|30 (-3)
+|style="background-color: #0a8b0a;"|23 (-3)
+|style="background-color: #0a8b0a;"|26 (-3)
+|style="background-color: #0a8b0a;"|19 (-3)
+|style="background-color: #930c00;"|38 (+2)
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |4. RAmarl, V101
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="2"|Melee
+|rowspan="2"|[[Claws]]
+|Normal
+|style="background-color: #930c00;"|32 (+5)
+|style="background-color: #930c00;"|21 (+5)
+|style="background-color: #930c00;"|25 (+3)
+|style="background-color: #930c00;"|14 (+3)
+|style="background-color: #0a8b0a;"|34 (-3)
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+3)
+|style="background-color: #930c00;"|27 (+3)
+|style="background-color: #930c00;"|29 (+2)
+|style="background-color: #930c00;"|18 (+2)
+|style="background-color: #0a8b0a;"|36 (-3)
+|-
+| rowspan="4" |Ranged
+|rowspan="2"|[[Handgun]]
+|Normal
+|style="background-color: #0a8b0a;"|26 (-1)
+|style="background-color: #0a8b0a;"|13 (-1)
+|style="background-color: #0a8b0a;"|24 (-1)
+|style="background-color: #0a8b0a;"|10 (-1)
+|19
+|-
+|Heavy
+|34
+|style="background-color: #0a8b0a;"|21 (-1)
+|style="background-color: #0a8b0a;"|29 (-1)
+|style="background-color: #0a8b0a;"|15 (-1)
+|25
+|-
+| rowspan="2" |[[Last Swan]]
+|Normal
+|26
+|14
+|25
+|12
+|21
+|-
+|Heavy
+|36
+|24
+|32
+|19
+|style="background-color: #0a8b0a;"|27 (-1)
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |5. FOmar, V101
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="4"|Melee
+|rowspan="2"|[[Claws]]
+|Normal
+|style="background-color: #930c00;"|32 (+5)
+|style="background-color: #930c00;"|21 (+5)
+|22
+|11
+|style="background-color: #930c00;"|41 (+4)
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+3)
+|style="background-color: #930c00;"|27 (+3)
+|27
+|16
+|style="background-color: #930c00;"|42 (+3)
+|-
+|rowspan="2"|[[Fists]]
+|Normal
+|style="background-color: #0a8b0a;"|24 (-2)
+|style="background-color: #0a8b0a;"|17 (-2)
+|style="background-color: #0a8b0a;"|23 (-3)
+|style="background-color: #0a8b0a;"|16 (-3)
+|style="background-color: #930c00;"|45 (+10)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|31 (-2)
+|style="background-color: #0a8b0a;"|24 (-2)
+|style="background-color: #0a8b0a;"|27 (-2)
+|style="background-color: #0a8b0a;"|20 (-2)
+|style="background-color: #930c00;"|45 (+9)
+|-
+|rowspan="4"|Technique
+|rowspan="2"|[[Rods]]
+|Normal
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|16 (+2)
+|27
+|14
+|40
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+1)
+|style="background-color: #930c00;"|23 (+1)
+|32
+|19
+|41
+|-
+|rowspan="2"|[[Wands]]
+|Normal
+|30
+|14
+|style="background-color: #930c00;"|30 (+1)
+|style="background-color: #930c00;"|16 (+1)
+|style="background-color: #930c00;"|42 (+2)
+|-
+|Heavy
+|37
+|21
+|34
+|20
+|style="background-color: #930c00;"|42 (+1)
+|-
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |6. FOmarl, V101
+!rowspan="2"|Category
+!rowspan="2"|Weapon
+!rowspan="2"|Attack
+!colspan="2"|Combo Step 1
+!colspan="2"|Combo Step 2
+!Combo Step 3
+|-
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+|rowspan="18"|Melee
+|rowspan="2"|[[Sabers]]
+|Normal
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|15 (+2)
+|style="background-color: #930c00;"|26 (+2)
+|style="background-color: #930c00;"|12 (+2)
+|style="background-color: #930c00;"|37 (+6)
+|-
+|Heavy
+|style="background-color: #930c00;"|39 (+2)
+|style="background-color: #930c00;"|23 (+2)
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|17 (+2)
+|style="background-color: #930c00;"|39 (+5)
+|-
+|rowspan="2"|[[Swords]]
+|Normal
+|style="background-color: #0a8b0a;"|38 (-1)
+|style="background-color: #0a8b0a;"|16 (-1)
+|31
+|15
+|style="background-color: #930c00;"|53 (+10)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|45 (-1)
+|style="background-color: #0a8b0a;"|23 (-1)
+|35
+|19
+|style="background-color: #930c00;"|51 (+8)
+|-
+|rowspan="2"|[[Daggers]]
+|Normal
+|style="background-color: #930c00;"|42 (+2)
+|style="background-color: #930c00;"|23 (+2)
+|style="background-color: #930c00;"|34 (+4)
+|style="background-color: #930c00;"|19 (+4)
+|style="background-color: #930c00;"|53 (+3)
+|-
+|Heavy
+|style="background-color: #930c00;"|48 (+2)
+|style="background-color: #930c00;"|29 (+2)
+|style="background-color: #930c00;"|37 (+2)
+|style="background-color: #930c00;"|22 (+2)
+|style="background-color: #930c00;"|51 (+2)
+|-
+|rowspan="2"|[[Partisans]]
+|Normal
+|style="background-color: #0a8b0a;"|38 (-1)
+|style="background-color: #0a8b0a;"|16 (-1)
+|style="background-color: #930c00;"|32 (+2)
+|style="background-color: #930c00;"|16 (+2)
+|style="background-color: #930c00;"|42 (+9)
+|-
+|Heavy
+|46
+|24
+|style="background-color: #930c00;"|36 (+1)
+|style="background-color: #930c00;"|20 (+1)
+|style="background-color: #930c00;"|42 (+7)
+|-
+|rowspan="2"|[[Slicers]]
+|Normal
+|style="background-color: #0a8b0a;"|39 (-1)
+|style="background-color: #0a8b0a;"|20 (-1)
+|style="background-color: #930c00;"|33 (+1)
+|style="background-color: #930c00;"|13 (+1)
+|style="background-color: #0a8b0a;"|38 (-4)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|45 (-2)
+|style="background-color: #0a8b0a;"|26 (-2)
+|style="background-color: #930c00;"|38 (+1)
+|style="background-color: #930c00;"|18 (+1)
+|style="background-color: #0a8b0a;"|40 (-3)
+|-
+|rowspan="2"|[[Double Sabers]]
+|Normal
+|style="background-color: #0a8b0a;"|38 (-1)
+|style="background-color: #0a8b0a;"|21 (-1)
+|27
+|11
+|style="background-color: #0a8b0a;"|48 (-3)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|44 (-2)
+|style="background-color: #0a8b0a;"|27 (-2)
+|32
+|16
+|style="background-color: #0a8b0a;"|47 (-2)
+|-
+|rowspan="2"|[[Claws]]
+|Normal
+|27
+|16
+|22
+|11
+|style="background-color: #0a8b0a;"|34 (-3)
+|-
+|Heavy
+|35
+|24
+|27
+|16
+|style="background-color: #0a8b0a;"|36 (-3)
+|-
+|rowspan="2"|[[Katanas]]
+|Normal
+|30
+|14
+|29
+|15
+|style="background-color: #0a8b0a;"|41 (-3)
+|-
+|Heavy
+|38
+|22
+|33
+|19
+|style="background-color: #0a8b0a;"|42 (-2)
+|-
+|rowspan="2"|[[Fists]]
+|Normal
+|style="background-color: #0a8b0a;"|24 (-2)
+|style="background-color: #0a8b0a;"|17 (-2)
+|style="background-color: #0a8b0a;"|21 (-5)
+|style="background-color: #0a8b0a;"|14 (-5)
+|style="background-color: #0a8b0a;"|33 (-2)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|31 (-2)
+|style="background-color: #0a8b0a;"|24 (-2)
+|style="background-color: #0a8b0a;"|25 (-4)
+|style="background-color: #0a8b0a;"|18 (-4)
+|style="background-color: #0a8b0a;"|35 (-1)
+|-
+|rowspan="10"|Ranged
+|rowspan="2"|[[Handgun]]
+|Normal
+|style="background-color: #930c00;"|30 (+3)
+|style="background-color: #930c00;"|17 (+3)
+|style="background-color: #930c00;"|28 (+3)
+|style="background-color: #930c00;"|14 (+3)
+|style="background-color: #930c00;"|23 (+4)
+|-
+|Heavy
+|style="background-color: #930c00;"|37 (+3)
+|style="background-color: #930c00;"|24 (+2)
+|style="background-color: #930c00;"|32 (+2)
+|style="background-color: #930c00;"|18 (+2)
+|style="background-color: #930c00;"|28 (+3)
+|-
+|rowspan="2"|[[Last Swan]]
+|Normal
+|style="background-color: #930c00;"|27 (+1)
+|style="background-color: #930c00;"|15 (+1)
+|25
+|12
+|21
+|-
+|Heavy
+|36
+|24
+|32
+|19
+|28
+|-
+|rowspan="2"|[[Rifles]]
+|Normal
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|17 (+2)
+|style="background-color: #930c00;"|28 (+3)
+|style="background-color: #930c00;"|15 (+3)
+|style="background-color: #930c00;"|26 (+6)
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+1)
+|style="background-color: #930c00;"|24 (+1)
+|style="background-color: #930c00;"|32 (+2)
+|style="background-color: #930c00;"|19 (+2)
+|style="background-color: #930c00;"|30 (+4)
+|-
+|rowspan="2"|[[Shots]]
+|Normal
+|style="background-color: #0a8b0a;"|43 (-7)
+|style="background-color: #0a8b0a;"|18 (-7)
+|style="background-color: #0a8b0a;"|32 (-11)
+|style="background-color: #0a8b0a;"|10 (-11)
+|style="background-color: #0a8b0a;"|27 (-13)
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|50 (-6)
+|style="background-color: #0a8b0a;"|25 (-6)
+|style="background-color: #0a8b0a;"|37 (-9)
+|style="background-color: #0a8b0a;"|15 (-9)
+|style="background-color: #0a8b0a;"|32 (-6)
+|-
+|rowspan="2"|[[L&K38 Combat]]
+|Normal
+|style="background-color: #0a8b0a;"|45 (-1)
+|
+|
+|
+|
+|-
+|Heavy
+|style="background-color: #0a8b0a;"|54 (-1)
+|
+|
+|
+|
+|-
+|rowspan="6"|Technique
+|rowspan="2"|[[Canes]]
+|Normal
+|29
+|13
+|27
+|13
+|39
+|-
+|Heavy
+|37
+|21
+|32
+|18
+|40
+|-
+|rowspan="2"|[[Rods]]
+|Normal
+|style="background-color: #930c00;"|31 (+2)
+|style="background-color: #930c00;"|16 (+2)
+|27
+|14
+|style="background-color: #0a8b0a;"|36 (-4)
+|-
+|Heavy
+|style="background-color: #930c00;"|38 (+1)
+|style="background-color: #930c00;"|23 (+1)
+|32
+|19
+|style="background-color: #0a8b0a;"|38 (-3)
+|-
+|rowspan="2"|[[Wands]]
+|Normal
+|30
+|14
+|style="background-color: #930c00;"|30 (+1)
+|style="background-color: #930c00;"|16 (+1)
+|40
+|-
+|Heavy
+|37
+|21
+|style="background-color: #930c00;"|34 (+1)
+|style="background-color: #930c00;"|20 (+1)
+|41
+|-
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |7. Male, no V101
+!Category
+!Weapon
+!Attack
+! colspan="2" |Combo Step 1
+! colspan="2" |Combo Step 2
+!Combo Step 3
+|-
+!
+!
+!
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+| rowspan="8" |Melee
+| rowspan="2" |[[Sabers]]
+|Normal
+|32
+|16
+|28
+|14
+|40
+|-
+|Heavy
+|40
+|24
+|32
+|18
+|41
+|-
+| rowspan="2" |[[Swords]]
+|Normal
+|44
+|22
+|37
+|21
+|56
+|-
+|Heavy
+|50
+|28
+|40
+|24
+|54
+|-
+| rowspan="2" |[[Daggers]]
+|Normal
+|46
+|27
+|36
+|21
+|66
+|-
+|Heavy
+|52
+|33
+|39
+|24
+|62
+|-
+| rowspan="2" |[[Partisans]]
+|Normal
+|45
+|23
+|35
+|19
+|42
+|-
+|Heavy
+|51
+|29
+|39
+|23
+|43
+|-
+| rowspan="4" |Ranged
+| rowspan="2" |[[Handguns]]
+|Normal
+|31
+|18
+|28
+|14
+|23
+|-
+|Heavy
+|38
+|25
+|33
+|19
+|27
+|-
+| rowspan="2" |[[Mechguns]]
+|Normal
+|53
+|16
+|48
+|13
+|45
+|-
+|Heavy
+|60
+|23
+|53
+|18
+|50
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |8. Female, no V101
+!Category
+!Weapon
+!Attack
+! colspan="2" |Combo Step 1
+! colspan="2" |Combo Step 2
+!Combo Step 3
+|-
+!
+!
+!
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+| rowspan="2" |Melee
+| rowspan="2" |[[Sabers]]
+|Normal
+|32
+|16
+|30 (+2)
+|16 (+2)
+|46 (+6)
+|-
+|Heavy
+|40
+|24
+|34 (+2)
+|20 (+2)
+|45 (+4)
+|}
+
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" |9. HUcaseal, no V101
+!Category
+!Weapon
+!Attack
+! colspan="2" |Combo Step 1
+! colspan="2" |Combo Step 2
+!Combo Step 3
+|-
+!
+!
+!
+!Full
+!Combo
+!Full
+!Combo
+!Full
+|-
+| rowspan="2" |Melee
+| rowspan="2" |[[Daggers]]
+|Normal
+|43 (-3)
+|24 (-3)
+|34 (-2)
+|19 (-2)
+|53 (-13)
+|-
+|Heavy
+|48 (-4)
+|29 (-4)
+|37 (-2)
+|22 (-2)
+|52 (-10)
+|}
+
+==Techniques==
+===Terms===
+'''Casting Speed''' refers to the entire technique [[Techniques#Casting_Animation|casting animation]] from start to finish. Casting speed is composed of four animations: <code>Startup -> Charge time -> Cast time -> Endlag</code>
+#<code>Startup</code> is the first movement your character does when you begin to cast a technique, and it is always 6 frames;
+#<code>Charge time</code> is a stationary animation after startup that is accompanied by particle effects, and ranges from 0 frames (absent) to 15 frames;
+#<code>Cast time</code> is the time from the end of the charge animation to when TP is deducted and the technique's effect happens;
+#<code>Endlag</code> is the amount of time after the technique is cast that the player cannot move or perform any actions.
+Casting speed varies between techniques, classes, and even specific weapons. Techniques in any context reach their maximum casting speed at or before Lv16.
+
+'''Time-to-Cast''', or '''TTC''', is a combination of <code>startup</code>, <code>charge time</code>, and <code>cast time</code>. This is used for efficiency as there is no practical difference between these animations in-game (i.e. an interrupted technique will have the same effect regardless of which of these three animations was active).
+
+===Casting Speed Tables===
+Format follows '''XX<sub>yy</sub>''', where '''XX''' is the total Casting speed of the technique, while <sub>'''yy'''</sub> is the time to cast. The fastest casting speed for any given technique on a table is shown in <font color="ffff00">yellow</font>. There are 9 distinct casting speed sets. They are listed in order from fastest to slowest. 
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 6 frames (male, unarmed, V801):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|32<sub>12</sub>
+|colspan="6"|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|32<sub>12</sub>
+|colspan="6"|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|32<sub>12</sub>
+|colspan="6"|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|colspan="12"|<font color=f8e502>57<sub>12</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|37<sub>12</sub>
+|colspan="5"|32<sub>12</sub>
+|colspan="5"|27<sub>12</sub>
+|<font color=f8e502>22<sub>12</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|57<sub>12</sub>
+|colspan="5"|52<sub>12</sub>
+|colspan="5"|47<sub>12</sub>
+|<font color=f8e502>42<sub>12</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|46<sub>16</sub>
+|40<sub>15</sub>
+|colspan="2"|39<sub>14</sub>
+|38<sub>13</sub>
+|37<sub>12</sub>
+|colspan="5"|32<sub>12</sub>
+|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|46<sub>16</sub>
+|40<sub>15</sub>
+|colspan="2"|39<sub>14</sub>
+|38<sub>13</sub>
+|37<sub>12</sub>
+|colspan="5"|32<sub>12</sub>
+|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|46<sub>16</sub>
+|40<sub>15</sub>
+|colspan="2"|39<sub>14</sub>
+|38<sub>13</sub>
+|37<sub>12</sub>
+|colspan="5"|32<sub>12</sub>
+|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|57<sub>17</sub>
+|colspan="2"|51<sub>16</sub>
+|50<sub>15</sub>
+|colspan="2"|49<sub>14</sub>
+|43<sub>13</sub>
+|colspan="4"|42<sub>12</sub>
+|<font color=f8e502>37<sub>12</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|57<sub>17</sub>
+|colspan="2"|51<sub>16</sub>
+|50<sub>15</sub>
+|colspan="2"|49<sub>14</sub>
+|43<sub>13</sub>
+|colspan="4"|42<sub>12</sub>
+|<font color=f8e502>37<sub>12</sub>
+|-
+! colspan="13" |Support
+|-
+! style="text-align:left"|{{Resta}}
+|37<sub>12</sub>
+|colspan="5"|32<sub>12</sub>
+|colspan="5"|27<sub>12</sub>
+|<font color=f8e502>22<sub>12</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|37<sub>12</sub>
+|colspan="2"|<font color=f8e502>32<sub>12</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>49<sub>14</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|47<sub>12</sub>
+|colspan="5"|42<sub>12</sub>
+|colspan="5"|37<sub>12</sub>
+|<font color=f8e502>32<sub>12</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|47<sub>12</sub>
+|colspan="5"|42<sub>12</sub>
+|colspan="5"|37<sub>12</sub>
+|<font color=f8e502>32<sub>12</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|32<sub>12</sub>
+|colspan="6"|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|32<sub>12</sub>
+|colspan="6"|<font color=f8e502>27<sub>12</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>46<sub>21</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 8 Frames (male, unarmed):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+! Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|34<sub>14</sub>
+|colspan="6"|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|34<sub>14</sub>
+|colspan="6"|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|34<sub>14</sub>
+|colspan="6"|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|61<sub>16</sub>
+|60<sub>15</sub>
+|colspan="10"|<font color=f8e502>59<sub>14</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|41<sub>16</sub>
+|35<sub>15</sub>
+|colspan="4"|34<sub>14</sub>
+|colspan="5"|29<sub>14</sub>
+|<font color=f8e502>24<sub>14</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|61<sub>16</sub>
+|55<sub>15</sub>
+|colspan="4"|54<sub>14</sub>
+|colspan="5"|49<sub>14</sub>
+|<font color=f8e502>44<sub>14</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|52<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|36<sub>16</sub>
+|35<sub>15</sub>
+|colspan="3"|34<sub>14</sub>
+|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|52<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|36<sub>16</sub>
+|35<sub>15</sub>
+|colspan="3"|34<sub>14</sub>
+|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|52<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|36<sub>16</sub>
+|35<sub>15</sub>
+|colspan="3"|34<sub>14</sub>
+|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|64<sub>24</sub>
+|58<sub>23</sub>
+|57<sub>22</sub>
+|56<sub>21</sub>
+|55<sub>20</sub>
+|54<sub>19</sub>
+|48<sub>18</sub>
+|47<sub>17</sub>
+|46<sub>16</sub>
+|45<sub>15</sub>
+|44<sub>14</sub>
+|<font color=f8e502>39<sub>14</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|64<sub>24</sub>
+|58<sub>23</sub>
+|57<sub>22</sub>
+|56<sub>21</sub>
+|55<sub>20</sub>
+|54<sub>19</sub>
+|48<sub>18</sub>
+|47<sub>17</sub>
+|46<sub>16</sub>
+|45<sub>15</sub>
+|44<sub>14</sub>
+|<font color=f8e502>39<sub>14</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|41<sub>16</sub>
+|35<sub>15</sub>
+|colspan="4"|34<sub>14</sub>
+|colspan="5"|29<sub>14</sub>
+|<font color=f8e502>24<sub>14</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|41<sub>16</sub>
+|35<sub>15</sub>
+|<font color=f8e502>34<sub>14</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>54<sub>19</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|49<sub>14</sub>
+|colspan="5"|44<sub>14</sub>
+|colspan="5"|39<sub>14</sub>
+|<font color=f8e502>34<sub>14</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|49<sub>14</sub>
+|colspan="5"|44<sub>14</sub>
+|colspan="5"|39<sub>14</sub>
+|<font color=f8e502>34<sub>14</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|34<sub>14</sub>
+|colspan="6"|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|34<sub>14</sub>
+|colspan="6"|<font color=f8e502>29<sub>14</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>54<sub>29</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 9 frames (any class, armed, V801 & FOmarl, ''un''armed, V801):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|35<sub>15</sub>
+|colspan="6"|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|35<sub>15</sub>
+|colspan="6"|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|35<sub>15</sub>
+|colspan="6"|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|colspan="12"|<font color=f8e502>60<sub>15</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|40<sub>15</sub>
+|colspan="5"|35<sub>15</sub>
+|colspan="5"|30<sub>15</sub>
+|<font color=f8e502>25<sub>15</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|60<sub>15</sub>
+|colspan="5"|55<sub>15</sub>
+|colspan="5"|50<sub>15</sub>
+|<font color=f8e502>45<sub>15</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|49<sub>19</sub>
+|43<sub>18</sub>
+|colspan="2"|42<sub>17</sub>
+|41<sub>16</sub>
+|40<sub>15</sub>
+|colspan="5"|35<sub>15</sub>
+|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|49<sub>19</sub>
+|43<sub>18</sub>
+|colspan="2"|42<sub>17</sub>
+|41<sub>16</sub>
+|40<sub>15</sub>
+|colspan="5"|35<sub>15</sub>
+|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|49<sub>19</sub>
+|43<sub>18</sub>
+|colspan="2"|42<sub>17</sub>
+|41<sub>16</sub>
+|40<sub>15</sub>
+|colspan="5"|35<sub>15</sub>
+|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|60<sub>20</sub>
+|colspan="2"|54<sub>19</sub>
+|53<sub>18</sub>
+|colspan="2"|52<sub>17</sub>
+|46<sub>16</sub>
+|colspan="4"|45<sub>15</sub>
+|<font color=f8e502>40<sub>15</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|60<sub>20</sub>
+|colspan="2"|54<sub>19</sub>
+|53<sub>18</sub>
+|colspan="2"|52<sub>17</sub>
+|46<sub>16</sub>
+|colspan="4"|45<sub>15</sub>
+|<font color=f8e502>40<sub>15</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|40<sub>15</sub>
+|colspan="5"|35<sub>15</sub>
+|colspan="5"|30<sub>15</sub>
+|<font color=f8e502>25<sub>15</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|40<sub>15</sub>
+|colspan="2"|<font color=f8e502>35<sub>15</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>52<sub>17</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|50<sub>15</sub>
+|colspan="5"|45<sub>15</sub>
+|colspan="5"|40<sub>15</sub>
+|<font color=f8e502>35<sub>15</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|50<sub>15</sub>
+|colspan="5"|45<sub>15</sub>
+|colspan="5"|40<sub>15</sub>
+|<font color=f8e502>35<sub>15</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|35<sub>15</sub>
+|colspan="6"|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|35<sub>15</sub>
+|colspan="6"|<font color=f8e502>30<sub>15</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>49<sub>24</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 10 frames (FOmar, Rod, V801):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|36<sub>16</sub>
+|colspan="6"|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|36<sub>16</sub>
+|colspan="6"|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|36<sub>16</sub>
+|colspan="6"|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|colspan="12"|<font color=f8e502>61<sub>16</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|41<sub>16</sub>
+|colspan="5"|36<sub>16</sub>
+|colspan="5"|31<sub>16</sub>
+|<font color=f8e502>26<sub>16</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|61<sub>16</sub>
+|colspan="5"|56<sub>16</sub>
+|colspan="5"|51<sub>16</sub>
+|<font color=f8e502>46<sub>16</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|50<sub>20</sub>
+|44<sub>19</sub>
+|colspan="2"|43<sub>18</sub>
+|42<sub>17</sub>
+|41<sub>16</sub>
+|colspan="5"|36<sub>16</sub>
+|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|50<sub>20</sub>
+|44<sub>19</sub>
+|colspan="2"|43<sub>18</sub>
+|42<sub>17</sub>
+|41<sub>16</sub>
+|colspan="5"|36<sub>16</sub>
+|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|50<sub>20</sub>
+|44<sub>19</sub>
+|colspan="2"|43<sub>18</sub>
+|42<sub>17</sub>
+|41<sub>16</sub>
+|colspan="5"|36<sub>16</sub>
+|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|61<sub>21</sub>
+|colspan="2"|55<sub>20</sub>
+|54<sub>19</sub>
+|colspan="2"|53<sub>18</sub>
+|47<sub>17</sub>
+|colspan="4"|46<sub>16</sub>
+|<font color=f8e502>41<sub>16</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|61<sub>21</sub>
+|colspan="2"|55<sub>20</sub>
+|54<sub>19</sub>
+|colspan="2"|53<sub>18</sub>
+|47<sub>17</sub>
+|colspan="4"|46<sub>16</sub>
+|<font color=f8e502>41<sub>16</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|41<sub>16</sub>
+|colspan="5"|36<sub>16</sub>
+|colspan="5"|31<sub>16</sub>
+|<font color=f8e502>26<sub>16</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|41<sub>16</sub>
+|colspan="2"|<font color=f8e502>36<sub>16</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>53<sub>18</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|51<sub>16</sub>
+|colspan="5"|46<sub>16</sub>
+|colspan="5"|41<sub>16</sub>
+|<font color=f8e502>36<sub>16</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|51<sub>16</sub>
+|colspan="5"|46<sub>16</sub>
+|colspan="5"|41<sub>16</sub>
+|<font color=f8e502>36<sub>16</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|36<sub>16</sub>
+|colspan="6"|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|36<sub>16</sub>
+|colspan="6"|<font color=f8e502>31<sub>16</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>50<sub>25</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 11 frames (female, unarmed, V801 (excl. FOmarl)):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|colspan="12"|<font color=f8e502>62<sub>17</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|42<sub>17</sub>
+|colspan="5"|37<sub>17</sub>
+|colspan="5"|32<sub>17</sub>
+|<font color=f8e502>27<sub>17</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|62<sub>17</sub>
+|colspan="5"|57<sub>17</sub>
+|colspan="5"|52<sub>17</sub>
+|<font color=f8e502>47<sub>17</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|51<sub>21</sub>
+|45<sub>20</sub>
+|colspan="2"|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|colspan="5"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|51<sub>21</sub>
+|45<sub>20</sub>
+|colspan="2"|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|colspan="5"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|51<sub>21</sub>
+|45<sub>20</sub>
+|colspan="2"|44<sub>19</sub>
+|43<sub>18</sub>
+|42<sub>17</sub>
+|colspan="5"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|62<sub>22</sub>
+|colspan="2"|56<sub>21</sub>
+|55<sub>20</sub>
+|colspan="2"|54<sub>19</sub>
+|48<sub>18</sub>
+|colspan="4"|47<sub>17</sub>
+|<font color=f8e502>42<sub>17</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|62<sub>22</sub>
+|colspan="2"|56<sub>21</sub>
+|55<sub>20</sub>
+|colspan="2"|54<sub>19</sub>
+|48<sub>18</sub>
+|colspan="4"|47<sub>17</sub>
+|<font color=f8e502>42<sub>17</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|42<sub>17</sub>
+|colspan="5"|37<sub>17</sub>
+|colspan="5"|32<sub>17</sub>
+|<font color=f8e502>27<sub>17</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|42<sub>17</sub>
+|colspan="2"|<font color=f8e502>37<sub>17</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>54<sub>19</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|52<sub>17</sub>
+|colspan="5"|47<sub>17</sub>
+|colspan="5"|42<sub>17</sub>
+|<font color=f8e502>37<sub>17</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|52<sub>17</sub>
+|colspan="5"|47<sub>17</sub>
+|colspan="5"|42<sub>17</sub>
+|<font color=f8e502>37<sub>17</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>51<sub>26</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 11 frames (FOmarl, Card):
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|64<sub>19</sub>
+|63<sub>18</sub>
+|colspan="10"|<font color=f8e502>62<sub>17</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|44<sub>19</sub>
+|38<sub>18</sub>
+|colspan="4"|37<sub>17</sub>
+|colspan="5"|32<sub>17</sub>
+|<font color=f8e502>27<sub>17</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|64<sub>19</sub>
+|58<sub>18</sub>
+|colspan="4"|57<sub>17</sub>
+|colspan="5"|52<sub>17</sub>
+|<font color=f8e502>47<sub>17</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|55<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|39<sub>19</sub>
+|38<sub>18</sub>
+|colspan="3"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|55<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|39<sub>19</sub>
+|38<sub>18</sub>
+|colspan="3"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|55<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|45<sub>20</sub>
+|39<sub>19</sub>
+|38<sub>18</sub>
+|colspan="3"|37<sub>17</sub>
+|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|67<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|58<sub>23</sub>
+|57<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|48<sub>18</sub>
+|47<sub>17</sub>
+|<font color=f8e502>42<sub>17</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|67<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|58<sub>23</sub>
+|57<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|48<sub>18</sub>
+|47<sub>17</sub>
+|<font color=f8e502>42<sub>17</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|44<sub>19</sub>
+|38<sub>18</sub>
+|colspan="4"|37<sub>17</sub>
+|colspan="5"|32<sub>17</sub>
+|<font color=f8e502>27<sub>17</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|44<sub>19</sub>
+|38<sub>18</sub>
+|<font color=f8e502>37<sub>17</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>57<sub>22</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|52<sub>17</sub>
+|colspan="5"|47<sub>17</sub>
+|colspan="5"|42<sub>17</sub>
+|<font color=f8e502>37<sub>17</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|52<sub>17</sub>
+|colspan="5"|47<sub>17</sub>
+|colspan="5"|42<sub>17</sub>
+|<font color=f8e502>37<sub>17</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|37<sub>17</sub>
+|colspan="6"|<font color=f8e502>32<sub>17</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>57<sub>32</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 12 frames (any class, armed & FOmarl, ''un''armed)
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|38<sub>18</sub>
+|colspan="6"|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|38<sub>18</sub>
+|colspan="6"|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|38<sub>18</sub>
+|colspan="6"|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|65<sub>20</sub>
+|64<sub>19</sub>
+|colspan="10"|<font color=f8e502>63<sub>18</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|45<sub>20</sub>
+|39<sub>19</sub>
+|colspan="4"|38<sub>18</sub>
+|colspan="5"|33<sub>18</sub>
+|<font color=f8e502>28<sub>18</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|65<sub>20</sub>
+|59<sub>19</sub>
+|colspan="4"|58<sub>18</sub>
+|colspan="5"|53<sub>18</sub>
+|<font color=f8e502>48<sub>18</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|56<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|40<sub>20</sub>
+|39<sub>19</sub>
+|colspan="3"|38<sub>18</sub>
+|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|56<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|40<sub>20</sub>
+|39<sub>19</sub>
+|colspan="3"|38<sub>18</sub>
+|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|56<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|46<sub>21</sub>
+|40<sub>20</sub>
+|39<sub>19</sub>
+|colspan="3"|38<sub>18</sub>
+|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|68<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|58<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|48<sub>18</sub>
+|<font color=f8e502>43<sub>18</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|68<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|58<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|48<sub>18</sub>
+|<font color=f8e502>43<sub>18</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|45<sub>20</sub>
+|39<sub>19</sub>
+|colspan="4"|38<sub>18</sub>
+|colspan="5"|33<sub>18</sub>
+|<font color=f8e502>28<sub>18</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|45<sub>20</sub>
+|39<sub>19</sub>
+|<font color=f8e502>38<sub>18</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>58<sub>23</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|53<sub>18</sub>
+|colspan="5"|48<sub>18</sub>
+|colspan="5"|43<sub>18</sub>
+|<font color=f8e502>38<sub>18</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|53<sub>18</sub>
+|colspan="5"|48<sub>18</sub>
+|colspan="5"|43<sub>18</sub>
+|<font color=f8e502>38<sub>18</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|38<sub>18</sub>
+|colspan="6"|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|38<sub>18</sub>
+|colspan="6"|<font color=f8e502>33<sub>18</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>58<sub>33</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 13 frames (FOmar, Rod)
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|39<sub>19</sub>
+|colspan="6"|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|39<sub>19</sub>
+|colspan="6"|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|39<sub>19</sub>
+|colspan="6"|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|66<sub>21</sub>
+|65<sub>20</sub>
+|colspan="10"|<font color=f8e502>64<sub>19</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|46<sub>21</sub>
+|40<sub>20</sub>
+|colspan="4"|39<sub>19</sub>
+|colspan="5"|34<sub>19</sub>
+|<font color=f8e502>29<sub>19</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|66<sub>21</sub>
+|60<sub>20</sub>
+|colspan="4"|59<sub>19</sub>
+|colspan="5"|54<sub>19</sub>
+|<font color=f8e502>49<sub>19</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|57<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|41<sub>21</sub>
+|40<sub>20</sub>
+|colspan="3"|39<sub>19</sub>
+|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|57<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|41<sub>21</sub>
+|40<sub>20</sub>
+|colspan="3"|39<sub>19</sub>
+|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|57<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|48<sub>23</sub>
+|47<sub>22</sub>
+|41<sub>21</sub>
+|40<sub>20</sub>
+|colspan="3"|39<sub>19</sub>
+|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|69<sub>29</sub>
+|63<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|53<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|<font color=f8e502>44<sub>19</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|69<sub>29</sub>
+|63<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|60<sub>25</sub>
+|59<sub>24</sub>
+|53<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|50<sub>20</sub>
+|49<sub>19</sub>
+|<font color=f8e502>44<sub>19</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|46<sub>21</sub>
+|40<sub>20</sub>
+|colspan="4"|39<sub>19</sub>
+|colspan="5"|34<sub>19</sub>
+|<font color=f8e502>29<sub>19</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|46<sub>21</sub>
+|40<sub>20</sub>
+|<font color=f8e502>39<sub>19</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>59<sub>24</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|54<sub>19</sub>
+|colspan="5"|49<sub>19</sub>
+|colspan="5"|44<sub>19</sub>
+|<font color=f8e502>39<sub>19</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|54<sub>19</sub>
+|colspan="5"|49<sub>19</sub>
+|colspan="5"|44<sub>19</sub>
+|<font color=f8e502>39<sub>19</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|39<sub>19</sub>
+|colspan="6"|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|39<sub>19</sub>
+|colspan="6"|<font color=f8e502>34<sub>19</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>59<sub>34</sub>
+|colspan="11" style="text-align:center" | -
+|}
+{| class="wikitable mw-collapsible mw-collapsed"
+|+ style="white-space: nowrap; text-align: left; min-width: 150px;" | 15 frames (female, unarmed (excl. FOmarl))
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+!Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |Attack
+|-
+! style="text-align:left"|{{Foie}}
+|colspan="6"|41<sub>21</sub>
+|colspan="6"|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Zonde}}
+|colspan="6"|41<sub>21</sub>
+|colspan="6"|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Barta}}
+|colspan="6"|41<sub>21</sub>
+|colspan="6"|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Gifoie}}
+|68<sub>23</sub>
+|67<sub>22</sub>
+|colspan="10"|<font color=f8e502>66<sub>21</sub>
+|-
+! style="text-align:left"|{{Gizonde}}
+|48<sub>23</sub>
+|42<sub>22</sub>
+|colspan="4"|41<sub>21</sub>
+|colspan="5"|36<sub>21</sub>
+|<font color=f8e502>31<sub>21</sub>
+|-
+! style="text-align:left"|{{Gibarta}}
+|68<sub>23</sub>
+|62<sub>22</sub>
+|colspan="4"|61<sub>21</sub>
+|colspan="5"|56<sub>21</sub>
+|<font color=f8e502>51<sub>21</sub>
+|-
+! style="text-align:left"|{{Rafoie}}
+|59<sub>29</sub>
+|53<sub>28</sub>
+|52<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|43<sub>23</sub>
+|42<sub>22</sub>
+|colspan="3"|41<sub>21</sub>
+|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Razonde}}
+|59<sub>29</sub>
+|53<sub>28</sub>
+|52<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|43<sub>23</sub>
+|42<sub>22</sub>
+|colspan="3"|41<sub>21</sub>
+|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Rabarta}}
+|59<sub>29</sub>
+|53<sub>28</sub>
+|52<sub>27</sub>
+|51<sub>26</sub>
+|50<sub>25</sub>
+|49<sub>24</sub>
+|43<sub>23</sub>
+|42<sub>22</sub>
+|colspan="3"|41<sub>21</sub>
+|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Grants}}
+|71<sub>31</sub>
+|65<sub>30</sub>
+|64<sub>29</sub>
+|63<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|55<sub>25</sub>
+|54<sub>24</sub>
+|53<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|<font color=f8e502>46<sub>21</sub>
+|-
+! style="text-align:left"|{{Megid}}
+|71<sub>31</sub>
+|65<sub>30</sub>
+|64<sub>29</sub>
+|63<sub>28</sub>
+|62<sub>27</sub>
+|61<sub>26</sub>
+|55<sub>25</sub>
+|54<sub>24</sub>
+|53<sub>23</sub>
+|52<sub>22</sub>
+|51<sub>21</sub>
+|<font color=f8e502>46<sub>21</sub>
+|-
+! colspan="13" |Support
+
+|-
+! style="text-align:left"|{{Resta}}
+|48<sub>23</sub>
+|42<sub>22</sub>
+|colspan="4"|41<sub>21</sub>
+|colspan="5"|36<sub>21</sub>
+|<font color=f8e502>31<sub>21</sub>
+|-
+! style="text-align:left"|{{Anti}}
+|48<sub>23</sub>
+|42<sub>22</sub>
+|<font color=f8e502>41<sub>21</sub>
+|colspan="9" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Reverser}}
+|<font color=f8e502>61<sub>26</sub>
+|colspan="11" style="text-align:center" | -
+|-
+! style="text-align:left"|{{Shifta}}
+|56<sub>21</sub>
+|colspan="5"|51<sub>21</sub>
+|colspan="5"|46<sub>21</sub>
+|<font color=f8e502>41<sub>21</sub>
+|-
+! style="text-align:left"|{{Deband}}
+|56<sub>21</sub>
+|colspan="5"|51<sub>21</sub>
+|colspan="5"|46<sub>21</sub>
+|<font color=f8e502>41<sub>21</sub>
+|-
+! style="text-align:left"|{{Jellen}}
+|colspan="6"|41<sub>21</sub>
+|colspan="6"|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Zalure}}
+|colspan="6"|41<sub>21</sub>
+|colspan="6"|<font color=f8e502>36<sub>21</sub>
+|-
+! style="text-align:left"|{{Ryuker}}
+|<font color=f8e502>61<sub>36</sub>
+|colspan="11" style="text-align:center" | -
+|}
+
+===Endlag Table===
+Each technique disk has a set amount of endlag. Endlag decreases in increments of 5, and decreases in endlag for a given technique can happen at Lv. 6, Lv. 11, and/or Lv16 depending on the technique.
+
+Minimum endlag for a technique is shown in <font color="ffff00">yellow</font>.
+
+{| class="wikitable" style="text-align:left"
+|+ style="white-space:nowrap;" "text-align:center;" | Technique Endlag
+|-
+!
+!Lv. 1-5
+!Lv. 6
+!Lv. 7
+!Lv. 8
+!Lv. 9
+!Lv. 10
+!Lv. 11
+!Lv. 12
+!Lv. 13
+!Lv. 14
+! Lv. 15
+!Lv. 16+
+|-
+! colspan="13" |<center><font size="3">Attack</center>
+|-
+! style="text-align:left"|{{Foie}}
+| colspan="6" |20
+| colspan="6" |<font color="f8e502">15
+|-
+! style="text-align:left"|{{Zonde}}
+| colspan="6" |20
+| colspan="6" |<font color="f8e502">15
+|-
+! style="text-align:left"|{{Barta}}
+| colspan="6" |20
+| colspan="6" |<font color="f8e502">15
+|-
+! style="text-align:left"|{{Gifoie}}
+| colspan="12" |<font color=f8e502>45
+|-
+! style="text-align:left"|{{Gizonde}}
+|25
+| colspan="5" |20
+| colspan="5" |15
+|<font color=f8e502>10
+|-
+! style="text-align:left"|{{Gibarta}}
+|45
+| colspan="5" |40
+| colspan="5" |35
+|<font color=f8e502>30
+|-
+! style="text-align:left"|{{Rafoie}}
+|30
+| colspan="5" |25
+| colspan="5" |20
+|<font color=f8e502>15
+|-
+! style="text-align:left"|{{Razonde}}
+|30
+| colspan="5" |25
+| colspan="5" |20
+|<font color=f8e502>15
+|-
+! style="text-align:left"|{{Rabarta}}
+|30
+| colspan="5" |25
+| colspan="5" |20
+|<font color=f8e502>15
+|-
+! style="text-align:left"|{{Grants}}
+|40
+| colspan="5" |35
+| colspan="5" |30
+|<font color=f8e502>25
+|-
+! style="text-align:left"|{{Megid}}
+|40
+| colspan="5" |35
+| colspan="5" |30
+|<font color=f8e502>25
+|-
+! colspan="13" |<center><font size="3">Support</center>
+|-
+! style="text-align:left"|{{Resta}}
+|25
+| colspan="5" |20
+| colspan="5" |15
+|<font color=f8e502>10
+|-
+! style="text-align:left"|{{Anti}}
+|25
+| colspan="11" |<font color=f8e502>20
+|-
+! style="text-align:left"|{{Reverser}}
+| colspan="12" |<font color=f8e502>35
+|-
+! style="text-align:left"|{{Shifta}}
+|35
+| colspan="5" |30
+| colspan="5" |25
+|<font color=f8e502>20
+|-
+! style="text-align:left"|{{Deband}}
+|35
+| colspan="5" |30
+| colspan="5" |25
+|<font color=f8e502>20
+|-
+! style="text-align:left"|{{Jellen}}
+| colspan="6" |20
+| colspan="6" |<font color="f8e502">15
+|-
+! style="text-align:left"|{{Zalure}}
+| colspan="6" |20
+| colspan="6" |<font color="f8e502">15
+|-
+! style="text-align:left"|{{Ryuker}}
+| colspan="12" |<font color=f8e502>25
+|}
+
+==Detailed==
+===Saber===
+{| class="wikitable" style="text-align:center;"
+!Animation
+!Speed
+!Attack
+!Attack comes out on
+!Min Frames
+!Max Frames
+|-
+| rowspan="6" |Male
+| rowspan="6" |40%
+|N1
+|11
+|13
+|29
+|-
+|N2
+|10
+|10
+|24
+|-
+|N3
+|8
+|31
+|31
+|-
+|H1
+|20
+|21
+|37
+|-
+|H2
+|15
+|15
+|29
+|-
+|H3
+|14
+|34
+|34
+|}
+
+===Double Saber===
+{| class="wikitable" style="text-align:center;"
+! Animation
+! Speed
+! Attack
+! Attack comes out on
+! Earliest Cancel
+! Total Frames
+|-
+|Rowspan="15"|Male
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 16,19
+| 22
+| 39
+|- 
+| N2
+| 8
+| 11
+| 27
+|- 
+| N3
+| 9,17,22
+| -
+| 51
+|- 
+| H1
+| 23,26
+| 29
+| 46
+|- 
+| H2
+| 14
+| 16
+| 32
+|- 
+| H3
+| 14,21,25
+| -
+| 49
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 21,25
+| 30
+| 47
+|- 
+| N2
+| 11
+| 15
+| 31
+|- 
+| N3
+| 11,23,31
+| -
+| 67
+|- 
+| H1
+| 27,31
+| 35
+| 52
+|- 
+| H2
+| 16
+| 20
+| 36
+|- 
+| H3
+| 17,26,32
+| -
+| 63
+|-
+|Rowspan="15"|Female
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 13,16
+| 18
+| 35
+|- 
+| N2
+| 7
+| 10
+| 26
+|- 
+| N3
+| 8,15,20
+| -
+| 45
+|- 
+| H1
+| 21,23
+| 25
+| 42
+|- 
+| H2
+| 13
+| 15
+| 31
+|- 
+| H3
+| 13,19,23
+| -
+| 45
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 17,21
+| 24
+| 41
+|- 
+| N2
+| 10
+| 13
+| 29
+|- 
+| N3
+| 10,20,27
+| -
+| 59
+|- 
+| H1
+| 24,27
+| 30
+| 47
+|- 
+| H2
+| 15
+| 18
+| 34
+|- 
+| H3
+| 15,23,29
+| -
+| 56
+|-
+|Rowspan="15"|HUcaseal
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 18
+| 35
+|- 
+| N2
+| 
+| 11
+| 27
+|- 
+| N3
+| 
+| -
+| 45
+|- 
+| H1
+| 
+| 25
+| 42
+|- 
+| H2
+| 
+| 16
+| 32
+|- 
+| H3
+| 
+| -
+| 45
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|-
+|Rowspan="15"|FOmarl
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 21
+| 38
+|- 
+| N2
+| 
+| 11
+| 27
+|- 
+| N3
+| 
+| -
+| 48
+|- 
+| H1
+| 
+| 27
+| 44
+|- 
+| H2
+| 
+| 16
+| 32
+|- 
+| H3
+| 
+| -
+| 47
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|}
+
+===Sword===
+{| class="wikitable" style="text-align:center;"
+! Animation
+! Speed
+! Attack
+! Attack comes out on
+! Earliest Cancel
+! Total Frames
+|-
+|Rowspan="15"|Male
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 11
+| 17
+| 39
+|- 
+| N2
+| 11
+| 15
+| 31
+|- 
+| N3
+| 11
+| -
+| 43
+|- 
+| H1
+| 20
+| 24
+| 46
+|- 
+| H2
+| 16
+| 19
+| 35
+|- 
+| H3
+| 16
+| -
+| 43
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 14
+| 22
+| 44
+|- 
+| N2
+| 15
+| 21
+| 37
+|- 
+| N3
+| 15
+| -
+| 56
+|- 
+| H1
+| 22
+| 28
+| 50
+|- 
+| H2
+| 19
+| 24
+| 40
+|- 
+| H3
+| 19
+| -
+| 54
+|-
+|Rowspan="15"|FOmarl
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 16
+| 38
+|- 
+| N2
+| 
+| 15
+| 31
+|- 
+| N3
+| 
+| -
+| 53
+|- 
+| H1
+| 
+| 23
+| 45
+|- 
+| H2
+| 
+| 19
+| 35
+|- 
+| H3
+| 
+| -
+| 51
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|}
+
+===Partisan===
+{| class="wikitable" style="text-align:center;"
+!Animation
+!Speed
+!Attack
+!Attack comes out on
+!Earliest Cancel
+!Total Frames
+|-
+| rowspan="6" |Male
+| rowspan="6" |40%
+|N1
+|14
+|
+|39
+|-
+|N2
+|11
+|
+|30
+|-
+|N3
+|9
+|
+|33
+|-
+|H1
+|22
+|
+|46
+|-
+|H2
+|16
+|
+|35
+|-
+|H3
+|15
+|
+|35
+|}
+
+===Handgun===
+{| class="wikitable" style="text-align:center;"
+! Animation
+! Speed
+! Attack
+! Attack comes out on
+! Earliest Cancel
+! Total Frames
+|-
+|Rowspan="15"|Male
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 5
+| 14
+| 27
+|- 
+| N2
+| 3
+| 11
+| 25
+|- 
+| N3
+| 3
+| -
+| 19
+|- 
+| H1
+| 15
+| 22
+| 34
+|- 
+| H2
+| 10
+| 16
+| 30
+|- 
+| H3
+| 10
+| -
+| 25
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 6
+| 18
+| 31
+|- 
+| N2
+| 4
+| 14
+| 28
+|- 
+| N3
+| 3
+| -
+| 23
+|- 
+| H1
+| 15
+| 25
+| 38
+|- 
+| H2
+| 10
+| 19
+| 33
+|- 
+| H3
+| 10
+| -
+| 27
+|-
+|Rowspan="15"|RAmarl
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 
+| 26
+|- 
+| N2
+| 
+| 
+| 24
+|- 
+| N3
+| 
+| -
+| 19
+|- 
+| H1
+| 
+| 
+| 34
+|- 
+| H2
+| 
+| 
+| 29
+|- 
+| H3
+| 
+| -
+| 25
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|-
+|Rowspan="15"|FOmarl
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|}
+
+===Mechgun===
+{| class="wikitable" style="text-align:center;"
+! Animation
+! Speed
+! Attack
+! Attack comes out on
+! Earliest Cancel
+! Total Frames
+|-
+|Rowspan="15"|Male
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 5,8,11
+| 12 (earliest input on 11)
+| 49
+|- 
+| N2
+| 3,6,9
+| 10
+| 45
+|- 
+| N3
+| 3,5,8
+| -
+| 42
+|- 
+| H1
+| 15,17,20
+| 21
+| 58
+|- 
+| H2
+| 10,12,14
+| 15
+| 50
+|- 
+| H3
+| 10,12,14
+| -
+| 48
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 6,10,15
+| 16
+| 53
+|- 
+| N2
+| 4,8,12
+| 13
+| 48
+|- 
+| N3
+| 3,7,11
+| -
+| 45
+|- 
+| H1
+| 15,19,22
+| 23
+| 60
+|- 
+| H2
+| 10,13,17
+| 18
+| 53
+|- 
+| H3
+| 10,13,16
+| -
+| 50
+|-
+|Rowspan="15"|FOmarl
+|-
+|Rowspan="7"|40%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|-
+|Rowspan="7"|0%
+|- 
+| N1
+| 
+| 
+| 
+|- 
+| N2
+| 
+| 
+| 
+|- 
+| N3
+| 
+| -
+| 
+|- 
+| H1
+| 
+| 
+| 
+|- 
+| H2
+| 
+| 
+| 
+|- 
+| H3
+| 
+| -
+| 
+|}
+
+===L&K38 Combat===
+{| class="wikitable" style="text-align:center;"
+! Animation
+! Speed
+! Attack
+! Attack comes out on
+! Total Frames
+|-
+|Rowspan="7"|Male
+|-
+|Rowspan="3"|40%
+|- 
+| N1
+| 9 / 12 / 15 / 18 / 21
+| 46
+|- 
+| H1
+| 18 / 21 / 24 / 27 / 30
+| 55
+|-
+|Rowspan="3"|0%
+|- 
+| N1
+| 11 / 14 / 17 / 20 / 23
+| 48
+|- 
+| H1
+| 20 / 23 / 26 / 29 / 32
+| 57
+|- 
+|Rowspan="7"|FOmarl
+|-
+|Rowspan="3"|40%
+|- 
+| N1
+| 
+| 
+|- 
+| H1
+| 
+| 
+|-
+|Rowspan="3"|0%
+|- 
+| N1
+| 
+| 
+|- 
+| H1
+| 
+| 
+|- 
+|}
+
+==Photon Blast==
+Startup for the first player is 61 frames. Players chaining will join the first player for however many startup frames were left.
+
+Twins is 255 frames, all other PBs are 254. Two PB chains are 404 frames.
+
+== HP Drain ==
+{| class="wikitable sortable"
+|+
+!class="unsortable"|Weapon
+!Frames
+|-
+!class="unsortable" style="background-position: center;" | !! style="background-position: center;" |
+|-
+|{{Sword|rare|Double Cannon}}
+|style="text-align:center|25
+|-
+|{{Sword|rare|Girasole}}
+|style="text-align:center|25
+|-
+|{{Sword|rare|Lavis Blade}} (first drain)
+|style="text-align:center|20
+|-
+|{{Sword|rare|Lavis Blade}} (second drain)
+|style="text-align:center|27
+|-
+|{{Sword|rare|Lavis Cannon}}
+|style="text-align:center|21
+|-
+|{{Cane|rare|Gal Wind}}
+|style="text-align:center|23
+|-
+|{{Sword|rare|Orotiagito}}
+|style="text-align:center|22
+|-
+|{{Cane|rare|Psycho Wand}} (any technique)
+|style="text-align:center|15
+|-
+|{{Sword|rare|Raikiri}}
+|style="text-align:center|22
+|-
+|{{Sword|rare|Soul Banish}}
+|style="text-align:center|23+1*
+|}
+: ''* Soul Banish drains on frame 23, but adds one additional frame to the collapse animation''
+
+Total time to revive with a {{Tool|Scape Doll}}:
+
+<code>(time to drain) + 7f (collapsing) + 119f (dead) + 70f (reviving) + 1f (standing but cannot act)</code>
+
+Example: With Lavis Blade, it would be: <code>20+7+119+70+1 = 217f</code> total, or 7.23 seconds for a full retrap.
+
+== Block Recoil ==
+Blocking damage (EVP or DFP block) leaves the character in recoil for 8 frames.
+<br>
+{{Guides}}
+[[Category:Guides]]

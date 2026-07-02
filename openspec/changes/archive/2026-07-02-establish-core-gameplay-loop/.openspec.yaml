@@ -1,0 +1,5 @@
+schema: spec-driven
+created: 2026-07-01
+goal: "Deliver the MVP idle ARPG loop: send a solo character on background
+  auto-runs through rooms, resolve combat with real PSO formulas, auto-loot, and
+  return to a meta layer for gear/grind/consumable/loot-filter decisions."

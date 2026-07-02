@@ -1,0 +1,843 @@
+/*
+ * PSO Blue Burst-styled theme (pso-ui-overhaul). The look is recreated in pure
+ * CSS from the BB reference material — translucent teal windows with a cyan
+ * edge and one clipped corner, scanline fills, orange selection bars — so it
+ * stays sharp at any size; no raster chrome. All themed colors resolve from
+ * the token block below.
+ */
+
+:root {
+  /* PSO BB palette */
+  --pso-window: rgba(7, 34, 44, 0.84);
+  --pso-window-2: rgba(12, 48, 60, 0.85);
+  --pso-edge: #46c8dc;
+  --pso-edge-dim: #1f6a7c;
+  --pso-glow: rgba(70, 200, 220, 0.35);
+  --pso-select: #f8a020;
+  --pso-select-ink: #201404;
+  --pso-hp: #38e448;
+  --pso-tp: #3878f8;
+  --bg: #050a14;
+  --ink: #e8f4f6;
+  --muted: #7fa4b0;
+  --accent: #5ce0f0;
+  --good: #57e08a;
+  --bad: #ff5864;
+  --gold: #ffd76a;
+  --line: var(--pso-edge-dim);
+  --panel: var(--pso-window);
+  --panel-2: var(--pso-window-2);
+}
+
+/*
+ * Gulim is PSO BB's UI typeface. NOTE: GULIM.TTC (Microsoft/HanYang) and the
+ * reference UI spritesheet are NOT redistributable — fine for this personal
+ * project, but swap for a free look-alike before any public release.
+ */
+@font-face {
+  font-family: "Gulim";
+  src: url(./assets/gulim.ttc);
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1400px 900px at 75% -15%, #0c2436 0%, transparent 60%),
+    radial-gradient(1000px 700px at 10% 110%, #081a28 0%, transparent 55%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--ink);
+  font: 14px/1.5 "Gulim", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Full-width app shell: gutters, no max-width (D6). */
+#app {
+  padding: 18px clamp(14px, 2.5vw, 40px) 60px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+h1 {
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-shadow: 0 0 12px var(--pso-glow);
+}
+h2 {
+  font-size: 16px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+h3 {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.resources {
+  display: flex;
+  gap: 16px;
+  font-weight: 600;
+}
+.resources .meseta {
+  color: var(--gold);
+}
+
+/* ---- PSO window treatment (D4) --------------------------------------------
+ * Top-level windows: translucent teal fill + scanlines, cyan border with a
+ * soft glow, and the BB clipped top-right corner. Inner content uses the flat
+ * .pso-panel variant so the treatment stays special.
+ */
+.pso-window,
+.panel {
+  --corner: 18px;
+  position: relative;
+  background:
+    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
+  border: 1px solid var(--pso-edge);
+  box-shadow:
+    0 0 10px var(--pso-glow),
+    inset 0 0 22px rgba(20, 90, 110, 0.35);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--corner)) 0,
+    100% var(--corner),
+    100% 100%,
+    0 100%
+  );
+  padding: 14px;
+}
+/* Cyan facet line along the clipped corner. */
+.pso-window::before,
+.panel::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: calc(var(--corner) * 1.6);
+  height: calc(var(--corner) * 1.6);
+  background: linear-gradient(
+    135deg,
+    transparent calc(50% - 1.5px),
+    var(--pso-edge) calc(50% - 1.5px),
+    var(--pso-edge) calc(50% + 0.5px),
+    transparent calc(50% + 0.5px)
+  );
+  pointer-events: none;
+}
+
+/* Flat inner panel: no clip, no glow. */
+.pso-panel {
+  background: rgba(10, 40, 52, 0.6);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  color: var(--muted);
+}
+.stat-row b {
+  color: var(--ink);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 3px;
+  margin-bottom: 6px;
+  background: rgba(10, 40, 52, 0.6);
+}
+.item .name {
+  font-weight: 600;
+}
+.item .meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.rarity-uncommon .name {
+  color: var(--accent);
+}
+.rarity-rare .name {
+  color: var(--gold);
+}
+
+.list {
+  max-height: 260px;
+  overflow: auto;
+}
+
+/* ---- PSO menu rows: the orange selection bar (D4) ------------------------ */
+.pso-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pso-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  width: 100%;
+}
+.pso-menu-row .meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.pso-menu-row:hover,
+.pso-menu-row.selected {
+  background: linear-gradient(180deg, #ffb640, var(--pso-select));
+  border-color: #ffd080;
+  color: var(--pso-select-ink);
+  text-shadow: none;
+}
+.pso-menu-row:hover .meta,
+.pso-menu-row.selected .meta,
+.pso-menu-row:hover .muted,
+.pso-menu-row.selected .muted {
+  color: #5a3c10;
+}
+
+/* ---- Buttons -------------------------------------------------------------- */
+button,
+.pso-btn {
+  background: linear-gradient(180deg, rgba(24, 78, 96, 0.9), rgba(10, 44, 56, 0.9));
+  color: var(--ink);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 2px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+button:hover {
+  border-color: var(--pso-edge);
+  box-shadow: 0 0 8px var(--pso-glow);
+}
+/* Primary per-screen action: cyan-lit, hex-clipped ends (D4/open question:
+ * hex treatment is reserved for the one primary action per screen). */
+button.primary {
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  border: 1px solid var(--pso-edge);
+  clip-path: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 50%,
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 50%
+  );
+  padding: 9px 26px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #eafcff;
+  text-shadow: 0 0 6px var(--pso-glow);
+}
+button.primary:hover {
+  background: linear-gradient(180deg, #26a2be, #147089);
+}
+button.small {
+  padding: 3px 8px;
+  font-size: 12px;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input:not([type]) {
+  background: rgba(6, 28, 38, 0.9);
+  color: var(--ink);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 2px;
+  padding: 6px 8px;
+  font: inherit;
+}
+select:focus,
+input:focus {
+  outline: none;
+  border-color: var(--pso-edge);
+  box-shadow: 0 0 8px var(--pso-glow);
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0;
+  flex-wrap: wrap;
+}
+
+/* ---- Bars: BB chunky green-on-bezel; width contract unchanged (D4) ------- */
+.hpbar,
+.progress {
+  height: 12px;
+  border-radius: 2px;
+  background: #04141c;
+  overflow: hidden;
+  border: 1px solid var(--pso-edge-dim);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.hpbar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #8cf89c 0%, var(--pso-hp) 45%, #18a028 100%);
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 60%, #2050b0 100%);
+}
+
+/* ---- Screen: character select --------------------------------------------- */
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.slot-card {
+  position: relative;
+  padding: 16px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.slot-card:hover {
+  box-shadow:
+    0 0 16px var(--pso-glow),
+    0 0 0 1px var(--pso-edge),
+    inset 0 0 22px rgba(20, 90, 110, 0.35);
+}
+.slot-card .slot-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.slot-card .slot-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.slot-card .slot-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.slot-card.empty {
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  border-style: dashed;
+  font-style: italic;
+}
+
+/* ---- Screen: character create --------------------------------------------- */
+.create-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(320px, 1.6fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .create-grid {
+    grid-template-columns: 1fr;
+  }
+}
+details.advanced summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+/* ---- Screen: Pioneer 2 hub — master-detail shell (pioneer2-hub-redesign) --- */
+
+/* PSO BB status window: identity | level | exp/money fields. */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+}
+.status-id .status-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.status-level {
+  font-size: 15px;
+  white-space: nowrap;
+}
+.status-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-left: auto;
+}
+.status-fields > div {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+.status-fields .muted::after {
+  content: " :";
+}
+.status-fields .meseta {
+  color: var(--gold);
+}
+
+/* Sidebar + detail region. */
+.hub-shell {
+  display: grid;
+  grid-template-columns: minmax(190px, 230px) 1fr;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .hub-shell {
+    grid-template-columns: 1fr;
+  }
+}
+.sidebar .pso-menu-row {
+  padding: 10px 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Equipment pane: slots | candidates | preview. */
+.equip-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(240px, 1.2fr) minmax(220px, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .equip-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stat preview diff table (now → after with change markers). */
+.diff-table {
+  border-collapse: collapse;
+  min-width: 180px;
+}
+.diff-table th,
+.diff-table td {
+  text-align: right;
+  padding: 3px 10px 3px 0;
+  font-weight: 400;
+}
+.diff-table th {
+  color: var(--muted);
+  font-weight: 600;
+}
+.diff-table .diff-up {
+  color: var(--good);
+  font-weight: 700;
+}
+.diff-table .diff-down {
+  color: var(--bad);
+  font-weight: 700;
+}
+
+/* ---- Screens: shops & bank (list + detail, D3) ---------------------------- */
+.shop-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.1fr) minmax(280px, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .shop-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.shop-list {
+  max-height: 60vh;
+  overflow: auto;
+}
+.shop-detail .detail-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+/* ---- Post-run report dialog (D2) ------------------------------------------ */
+.dialog-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 14, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  padding: 20px;
+}
+.dialog-scrim .report {
+  max-width: 640px;
+  width: 100%;
+  margin: 0;
+}
+
+/* ---- Rooms / progress ------------------------------------------------------ */
+.rooms {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+.room-cell {
+  flex: 1;
+  min-width: 60px;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 2px;
+  border: 1px solid var(--pso-edge-dim);
+  background: rgba(10, 40, 52, 0.6);
+  color: var(--muted);
+  font-size: 12px;
+}
+.room-cell.cleared {
+  border-color: var(--good);
+  color: var(--good);
+}
+.room-cell.current {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+
+.log {
+  height: 340px;
+  overflow: auto;
+  background: rgba(3, 14, 20, 0.85);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font: 12.5px/1.6 ui-monospace, "Cascadia Code", monospace;
+}
+.log .l-attack {
+  color: var(--ink);
+}
+.log .l-miss {
+  color: var(--muted);
+}
+.log .l-crit {
+  color: var(--gold);
+}
+.log .l-kill {
+  color: var(--good);
+}
+.log .l-loot {
+  color: var(--accent);
+}
+.log .l-heal {
+  color: #7fe0c0;
+}
+.log .l-eject {
+  color: var(--bad);
+  font-weight: 700;
+}
+.log .l-complete {
+  color: var(--good);
+  font-weight: 700;
+}
+.log .l-room {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---- Battle stage (battle-scene-view D4): PSIV-homage first-person view ---- */
+
+.stage {
+  padding: 0;
+  overflow: hidden;
+}
+
+.stage-ticker {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--pso-edge-dim);
+  background: rgba(3, 14, 20, 0.85);
+  font: 13px/1.5 ui-monospace, "Cascadia Code", monospace;
+  min-height: 40px;
+}
+.stage-ticker.l-miss {
+  color: var(--muted);
+}
+.stage-ticker.l-crit {
+  color: var(--gold);
+}
+.stage-ticker.l-kill {
+  color: var(--good);
+}
+.stage-ticker.l-loot {
+  color: var(--accent);
+}
+.stage-ticker.l-heal,
+.stage-ticker.l-revive {
+  color: #7fe0c0;
+}
+.stage-ticker.l-eject {
+  color: var(--bad);
+  font-weight: 700;
+}
+.stage-ticker.l-complete {
+  color: var(--good);
+  font-weight: 700;
+}
+
+/* The enemy field: a floor plane receding to a horizon, enemies in a row. */
+.stage-field {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 28px;
+  min-height: 220px;
+  padding: 26px 20px 34px;
+  background:
+    linear-gradient(180deg, #04101e 0%, #0a2030 55%, transparent 55%),
+    repeating-linear-gradient(180deg, #12384a 0 2px, #0a2430 2px 26px);
+}
+
+.stage-empty {
+  align-self: center;
+  font-style: italic;
+}
+
+.stage-enemy {
+  position: relative;
+  width: 96px;
+  text-align: center;
+  transition: opacity 0.6s ease;
+}
+.stage-enemy.dead {
+  opacity: 0.15;
+}
+/* Sprite frame; enemies without art (see enemy-art.ts) keep the bare box. */
+.stage-enemy-box {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 6px;
+  border-radius: 3px;
+  border: 2px solid var(--accent);
+  background: linear-gradient(160deg, #143c50, #0a2838);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.stage-enemy-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 4px;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.stage-enemy-name {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.stage-enemy .hpbar {
+  height: 8px;
+}
+.stage-enemy .hpbar > span {
+  background: linear-gradient(90deg, var(--bad), #ff9d6b);
+  transition: width 0.25s ease;
+}
+.stage-enemy-hp {
+  font-size: 11px;
+}
+
+@keyframes stage-hit {
+  0% {
+    filter: brightness(3);
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  100% {
+    filter: none;
+    transform: translateX(0);
+  }
+}
+.stage-enemy.hit .stage-enemy-box {
+  animation: stage-hit 0.28s ease-out;
+}
+
+/* Player band: status window bottom-left, supplies beside it. */
+.stage-bottom {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--pso-edge-dim);
+  background: rgba(10, 40, 52, 0.6);
+}
+.stage-player-box {
+  position: relative;
+  flex: 0 0 260px;
+  border: 1px solid var(--pso-edge);
+  border-radius: 3px;
+  padding: 8px 10px;
+  background: var(--pso-window);
+}
+.stage-player-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.stage-player-box .hpbar > span {
+  background: linear-gradient(180deg, #8cf89c 0%, var(--pso-hp) 45%, #18a028 100%);
+  transition: width 0.25s ease;
+}
+.stage-player-box .hpbar > span.low {
+  background: linear-gradient(180deg, var(--gold), var(--bad));
+}
+@keyframes stage-hurt {
+  0% {
+    box-shadow: 0 0 0 3px var(--bad);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+.stage-player-box.hurt {
+  animation: stage-hurt 0.35s ease-out;
+}
+@keyframes stage-healed {
+  0% {
+    box-shadow: 0 0 0 3px var(--good);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+.stage-player-box.healed {
+  animation: stage-healed 0.5s ease-out;
+}
+.stage-side {
+  font-size: 12px;
+}
+
+/* Floating combat text. */
+@keyframes stage-float {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -34px);
+  }
+}
+.float-dmg,
+.float-miss {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translate(-50%, 0);
+  animation: stage-float 0.7s ease-out forwards;
+  display: flex;
+  font-weight: 700;
+  pointer-events: none;
+  text-shadow: 0 1px 3px #000;
+  filter: drop-shadow(0 1px 1px #000);
+}
+/* PSO bitmap glyphs (atlas regions; tints baked into the PNG rows). */
+.float-glyph {
+  display: inline-block;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+/* color/font-size below only affect the plain-text fallback. */
+.float-dmg {
+  color: #fff;
+  font-size: 16px;
+}
+.float-dmg.crit {
+  color: var(--gold);
+  font-size: 20px;
+}
+.float-miss {
+  color: var(--bad);
+  font-size: 12px;
+}
+
+.log.log-compact {
+  height: 160px;
+}
+
+.report {
+  position: relative;
+  border: 1px solid var(--accent);
+  background:
+    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
+  box-shadow: 0 0 14px var(--pso-glow);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.report.ejected {
+  border-color: var(--bad);
+}
+.outcome-complete {
+  color: var(--good);
+}
+.outcome-ejected {
+  color: var(--bad);
+}
+.notice {
+  color: var(--bad);
+  min-height: 18px;
+  margin: 6px 0;
+}
+.muted {
+  color: var(--muted);
+}

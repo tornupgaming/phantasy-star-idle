@@ -1,0 +1,1861 @@
+{
+  "source": "wiki.pioneer2.net/w/Game_mechanics/Frame_data (pinned: scripts/data/frame-data.wiki)",
+  "fps": 30,
+  "medianRatio": {
+    "full1": 1.106071964017991,
+    "combo1": 1.2264957264957266,
+    "full2": 1.1206060606060606,
+    "combo2": 1.2679425837320575,
+    "full3": 1.2469545957918051
+  },
+  "rigs": {
+    "female": {
+      "cane": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 27,
+            "combo2": 13,
+            "full3": 39
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 22,
+            "full2": 32,
+            "combo2": 18,
+            "full3": 40
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 27,
+            "full2": 36,
+            "combo2": 23,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        }
+      },
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 27,
+            "combo1": 16,
+            "full2": 22,
+            "combo2": 11,
+            "full3": 34
+          },
+          "base": {
+            "full1": 30,
+            "combo1": 20,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 42
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 35,
+            "combo1": 24,
+            "full2": 27,
+            "combo2": 16,
+            "full3": 36
+          },
+          "base": {
+            "full1": 39,
+            "combo1": 29,
+            "full2": 30,
+            "combo2": 20,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        }
+      },
+      "double-saber": {
+        "normal": {
+          "v101": {
+            "full1": 35,
+            "combo1": 18,
+            "full2": 26,
+            "combo2": 10,
+            "full3": 45
+          },
+          "base": {
+            "full1": 39,
+            "combo1": 22,
+            "full2": 29,
+            "combo2": 13,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 42,
+            "combo1": 25,
+            "full2": 31,
+            "combo2": 16,
+            "full3": 45
+          },
+          "base": {
+            "full1": 46,
+            "combo1": 31,
+            "full2": 35,
+            "combo2": 20,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        }
+      },
+      "fist": {
+        "normal": {
+          "v101": {
+            "full1": 25,
+            "combo1": 18,
+            "full2": 23,
+            "combo2": 16,
+            "full3": 39
+          },
+          "base": {
+            "full1": 28,
+            "combo1": 22,
+            "full2": 26,
+            "combo2": 20,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 32,
+            "combo1": 25,
+            "full2": 27,
+            "combo2": 20,
+            "full3": 39
+          },
+          "base": {
+            "full1": 35,
+            "combo1": 31,
+            "full2": 30,
+            "combo2": 25,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        }
+      },
+      "katana": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 41
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 22,
+            "full2": 33,
+            "combo2": 19,
+            "full3": 42
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 27,
+            "full2": 37,
+            "combo2": 24,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        }
+      },
+      "rod": {
+        "normal": {
+          "v101": {
+            "full1": 33,
+            "combo1": 18,
+            "full2": 30,
+            "combo2": 17,
+            "full3": 40
+          },
+          "base": {
+            "full1": 37,
+            "combo1": 22,
+            "full2": 34,
+            "combo2": 22,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 40,
+            "combo1": 25,
+            "full2": 34,
+            "combo2": 21,
+            "full3": 41
+          },
+          "base": {
+            "full1": 44,
+            "combo1": 31,
+            "full2": 38,
+            "combo2": 27,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        }
+      },
+      "saber": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 13,
+            "full2": 26,
+            "combo2": 12,
+            "full3": 35
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 16,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 46
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 31,
+            "combo2": 17,
+            "full3": 37
+          },
+          "base": {
+            "full1": 40,
+            "combo1": 24,
+            "full2": 34,
+            "combo2": 20,
+            "full3": 45
+          },
+          "baseReconstructed": false
+        }
+      }
+    },
+    "fomar": {
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 32,
+            "combo1": 21,
+            "full2": 22,
+            "combo2": 11,
+            "full3": 41
+          },
+          "base": {
+            "full1": 35,
+            "combo1": 26,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 27,
+            "full2": 27,
+            "combo2": 16,
+            "full3": 42
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 33,
+            "full2": 30,
+            "combo2": 20,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        }
+      },
+      "fist": {
+        "normal": {
+          "v101": {
+            "full1": 24,
+            "combo1": 17,
+            "full2": 23,
+            "combo2": 16,
+            "full3": 45
+          },
+          "base": {
+            "full1": 27,
+            "combo1": 21,
+            "full2": 26,
+            "combo2": 20,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 31,
+            "combo1": 24,
+            "full2": 27,
+            "combo2": 20,
+            "full3": 45
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 29,
+            "full2": 30,
+            "combo2": 25,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        }
+      },
+      "rod": {
+        "normal": {
+          "v101": {
+            "full1": 31,
+            "combo1": 16,
+            "full2": 27,
+            "combo2": 14,
+            "full3": 40
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 20,
+            "full2": 30,
+            "combo2": 18,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 23,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 41
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 28,
+            "full2": 36,
+            "combo2": 24,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        }
+      },
+      "wand": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 42
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 34,
+            "combo2": 20,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 34,
+            "combo2": 20,
+            "full3": 42
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 26,
+            "full2": 38,
+            "combo2": 25,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        }
+      }
+    },
+    "fomarl": {
+      "cane": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 13,
+            "full2": 27,
+            "combo2": 13,
+            "full3": 39
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 16,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 32,
+            "combo2": 18,
+            "full3": 40
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 26,
+            "full2": 36,
+            "combo2": 23,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        }
+      },
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 27,
+            "combo1": 16,
+            "full2": 22,
+            "combo2": 11,
+            "full3": 34
+          },
+          "base": {
+            "full1": 30,
+            "combo1": 20,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 42
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 35,
+            "combo1": 24,
+            "full2": 27,
+            "combo2": 16,
+            "full3": 36
+          },
+          "base": {
+            "full1": 39,
+            "combo1": 29,
+            "full2": 30,
+            "combo2": 20,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        }
+      },
+      "dagger": {
+        "normal": {
+          "v101": {
+            "full1": 42,
+            "combo1": 23,
+            "full2": 34,
+            "combo2": 19,
+            "full3": 53
+          },
+          "base": {
+            "full1": 46,
+            "combo1": 28,
+            "full2": 38,
+            "combo2": 24,
+            "full3": 66
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 48,
+            "combo1": 29,
+            "full2": 37,
+            "combo2": 22,
+            "full3": 51
+          },
+          "base": {
+            "full1": 53,
+            "combo1": 36,
+            "full2": 41,
+            "combo2": 28,
+            "full3": 64
+          },
+          "baseReconstructed": true
+        }
+      },
+      "double-saber": {
+        "normal": {
+          "v101": {
+            "full1": 38,
+            "combo1": 21,
+            "full2": 27,
+            "combo2": 11,
+            "full3": 48
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 26,
+            "full2": 30,
+            "combo2": 14,
+            "full3": 60
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 44,
+            "combo1": 27,
+            "full2": 32,
+            "combo2": 16,
+            "full3": 47
+          },
+          "base": {
+            "full1": 49,
+            "combo1": 33,
+            "full2": 36,
+            "combo2": 20,
+            "full3": 59
+          },
+          "baseReconstructed": true
+        }
+      },
+      "fist": {
+        "normal": {
+          "v101": {
+            "full1": 24,
+            "combo1": 17,
+            "full2": 21,
+            "combo2": 14,
+            "full3": 33
+          },
+          "base": {
+            "full1": 27,
+            "combo1": 21,
+            "full2": 24,
+            "combo2": 18,
+            "full3": 41
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 31,
+            "combo1": 24,
+            "full2": 25,
+            "combo2": 18,
+            "full3": 35
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 29,
+            "full2": 28,
+            "combo2": 23,
+            "full3": 44
+          },
+          "baseReconstructed": true
+        }
+      },
+      "handgun": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 17,
+            "full2": 28,
+            "combo2": 14,
+            "full3": 23
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 21,
+            "full2": 31,
+            "combo2": 18,
+            "full3": 29
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 24,
+            "full2": 32,
+            "combo2": 18,
+            "full3": 28
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 29,
+            "full2": 36,
+            "combo2": 23,
+            "full3": 35
+          },
+          "baseReconstructed": true
+        }
+      },
+      "katana": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 41
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 22,
+            "full2": 33,
+            "combo2": 19,
+            "full3": 42
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 27,
+            "full2": 37,
+            "combo2": 24,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        }
+      },
+      "partisan": {
+        "normal": {
+          "v101": {
+            "full1": 38,
+            "combo1": 16,
+            "full2": 32,
+            "combo2": 16,
+            "full3": 42
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 20,
+            "full2": 36,
+            "combo2": 20,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 46,
+            "combo1": 24,
+            "full2": 36,
+            "combo2": 20,
+            "full3": 42
+          },
+          "base": {
+            "full1": 51,
+            "combo1": 29,
+            "full2": 40,
+            "combo2": 25,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        }
+      },
+      "rifle": {
+        "normal": {
+          "v101": {
+            "full1": 31,
+            "combo1": 17,
+            "full2": 28,
+            "combo2": 15,
+            "full3": 26
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 21,
+            "full2": 31,
+            "combo2": 19,
+            "full3": 32
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 24,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 30
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 29,
+            "full2": 36,
+            "combo2": 24,
+            "full3": 37
+          },
+          "baseReconstructed": true
+        }
+      },
+      "rod": {
+        "normal": {
+          "v101": {
+            "full1": 31,
+            "combo1": 16,
+            "full2": 27,
+            "combo2": 14,
+            "full3": 36
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 20,
+            "full2": 30,
+            "combo2": 18,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 23,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 38
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 28,
+            "full2": 36,
+            "combo2": 24,
+            "full3": 47
+          },
+          "baseReconstructed": true
+        }
+      },
+      "saber": {
+        "normal": {
+          "v101": {
+            "full1": 31,
+            "combo1": 15,
+            "full2": 26,
+            "combo2": 12,
+            "full3": 37
+          },
+          "base": {
+            "full1": 34,
+            "combo1": 18,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 46
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 39,
+            "combo1": 23,
+            "full2": 31,
+            "combo2": 17,
+            "full3": 39
+          },
+          "base": {
+            "full1": 43,
+            "combo1": 28,
+            "full2": 35,
+            "combo2": 22,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        }
+      },
+      "shot": {
+        "normal": {
+          "v101": {
+            "full1": 43,
+            "combo1": 18,
+            "full2": 32,
+            "combo2": 10,
+            "full3": 27
+          },
+          "base": {
+            "full1": 48,
+            "combo1": 22,
+            "full2": 36,
+            "combo2": 13,
+            "full3": 34
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 50,
+            "combo1": 25,
+            "full2": 37,
+            "combo2": 15,
+            "full3": 32
+          },
+          "base": {
+            "full1": 55,
+            "combo1": 31,
+            "full2": 41,
+            "combo2": 19,
+            "full3": 40
+          },
+          "baseReconstructed": true
+        }
+      },
+      "slicer": {
+        "normal": {
+          "v101": {
+            "full1": 39,
+            "combo1": 20,
+            "full2": 33,
+            "combo2": 13,
+            "full3": 38
+          },
+          "base": {
+            "full1": 43,
+            "combo1": 25,
+            "full2": 37,
+            "combo2": 16,
+            "full3": 47
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 45,
+            "combo1": 26,
+            "full2": 38,
+            "combo2": 18,
+            "full3": 40
+          },
+          "base": {
+            "full1": 50,
+            "combo1": 32,
+            "full2": 43,
+            "combo2": 23,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        }
+      },
+      "sword": {
+        "normal": {
+          "v101": {
+            "full1": 38,
+            "combo1": 16,
+            "full2": 31,
+            "combo2": 15,
+            "full3": 53
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 20,
+            "full2": 35,
+            "combo2": 19,
+            "full3": 66
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 45,
+            "combo1": 23,
+            "full2": 35,
+            "combo2": 19,
+            "full3": 51
+          },
+          "base": {
+            "full1": 50,
+            "combo1": 28,
+            "full2": 39,
+            "combo2": 24,
+            "full3": 64
+          },
+          "baseReconstructed": true
+        }
+      },
+      "wand": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 40
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 34,
+            "combo2": 20,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 34,
+            "combo2": 20,
+            "full3": 41
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 26,
+            "full2": 38,
+            "combo2": 25,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        }
+      }
+    },
+    "hucaseal": {
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 32,
+            "combo1": 21,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 34
+          },
+          "base": {
+            "full1": 35,
+            "combo1": 26,
+            "full2": 28,
+            "combo2": 18,
+            "full3": 42
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 27,
+            "full2": 29,
+            "combo2": 18,
+            "full3": 36
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 33,
+            "full2": 32,
+            "combo2": 23,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        }
+      },
+      "dagger": {
+        "normal": {
+          "v101": {
+            "full1": 37,
+            "combo1": 18,
+            "full2": 29,
+            "combo2": 14,
+            "full3": 41
+          },
+          "base": {
+            "full1": 43,
+            "combo1": 24,
+            "full2": 34,
+            "combo2": 19,
+            "full3": 53
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 44,
+            "combo1": 25,
+            "full2": 33,
+            "combo2": 18,
+            "full3": 42
+          },
+          "base": {
+            "full1": 48,
+            "combo1": 29,
+            "full2": 37,
+            "combo2": 22,
+            "full3": 52
+          },
+          "baseReconstructed": false
+        }
+      },
+      "double-saber": {
+        "normal": {
+          "v101": {
+            "full1": 35,
+            "combo1": 18,
+            "full2": 27,
+            "combo2": 11,
+            "full3": 45
+          },
+          "base": {
+            "full1": 39,
+            "combo1": 22,
+            "full2": 30,
+            "combo2": 14,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 42,
+            "combo1": 25,
+            "full2": 32,
+            "combo2": 16,
+            "full3": 45
+          },
+          "base": {
+            "full1": 46,
+            "combo1": 31,
+            "full2": 36,
+            "combo2": 20,
+            "full3": 56
+          },
+          "baseReconstructed": true
+        }
+      },
+      "fist": {
+        "normal": {
+          "v101": {
+            "full1": 22,
+            "combo1": 15,
+            "full2": 21,
+            "combo2": 14,
+            "full3": 36
+          },
+          "base": {
+            "full1": 24,
+            "combo1": 18,
+            "full2": 24,
+            "combo2": 18,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 30,
+            "combo1": 23,
+            "full2": 26,
+            "combo2": 19,
+            "full3": 38
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 28,
+            "full2": 29,
+            "combo2": 24,
+            "full3": 47
+          },
+          "baseReconstructed": true
+        }
+      }
+    },
+    "male": {
+      "cane": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 13,
+            "full2": 27,
+            "combo2": 13,
+            "full3": 39
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 16,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 32,
+            "combo2": 18,
+            "full3": 40
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 26,
+            "full2": 36,
+            "combo2": 23,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        }
+      },
+      "card": {
+        "normal": {
+          "v101": {
+            "full1": 33,
+            "combo1": 18,
+            "full2": 30,
+            "combo2": 17,
+            "full3": 47
+          },
+          "base": {
+            "full1": 37,
+            "combo1": 22,
+            "full2": 34,
+            "combo2": 22,
+            "full3": 59
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 40,
+            "combo1": 25,
+            "full2": 34,
+            "combo2": 21,
+            "full3": 47
+          },
+          "base": {
+            "full1": 44,
+            "combo1": 31,
+            "full2": 38,
+            "combo2": 27,
+            "full3": 59
+          },
+          "baseReconstructed": true
+        }
+      },
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 27,
+            "combo1": 16,
+            "full2": 22,
+            "combo2": 11,
+            "full3": 37
+          },
+          "base": {
+            "full1": 30,
+            "combo1": 20,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 46
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 35,
+            "combo1": 24,
+            "full2": 27,
+            "combo2": 16,
+            "full3": 39
+          },
+          "base": {
+            "full1": 39,
+            "combo1": 29,
+            "full2": 30,
+            "combo2": 20,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        }
+      },
+      "dagger": {
+        "normal": {
+          "v101": {
+            "full1": 40,
+            "combo1": 21,
+            "full2": 30,
+            "combo2": 15,
+            "full3": 50
+          },
+          "base": {
+            "full1": 46,
+            "combo1": 27,
+            "full2": 36,
+            "combo2": 21,
+            "full3": 66
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 46,
+            "combo1": 27,
+            "full2": 35,
+            "combo2": 20,
+            "full3": 49
+          },
+          "base": {
+            "full1": 52,
+            "combo1": 33,
+            "full2": 39,
+            "combo2": 24,
+            "full3": 62
+          },
+          "baseReconstructed": false
+        }
+      },
+      "double-saber": {
+        "normal": {
+          "v101": {
+            "full1": 39,
+            "combo1": 22,
+            "full2": 27,
+            "combo2": 11,
+            "full3": 51
+          },
+          "base": {
+            "full1": 43,
+            "combo1": 27,
+            "full2": 30,
+            "combo2": 14,
+            "full3": 64
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 46,
+            "combo1": 29,
+            "full2": 32,
+            "combo2": 16,
+            "full3": 49
+          },
+          "base": {
+            "full1": 51,
+            "combo1": 36,
+            "full2": 36,
+            "combo2": 20,
+            "full3": 61
+          },
+          "baseReconstructed": true
+        }
+      },
+      "fist": {
+        "normal": {
+          "v101": {
+            "full1": 26,
+            "combo1": 19,
+            "full2": 26,
+            "combo2": 19,
+            "full3": 35
+          },
+          "base": {
+            "full1": 29,
+            "combo1": 23,
+            "full2": 29,
+            "combo2": 24,
+            "full3": 44
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 33,
+            "combo1": 26,
+            "full2": 29,
+            "combo2": 22,
+            "full3": 36
+          },
+          "base": {
+            "full1": 37,
+            "combo1": 32,
+            "full2": 32,
+            "combo2": 28,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        }
+      },
+      "handgun": {
+        "normal": {
+          "v101": {
+            "full1": 27,
+            "combo1": 14,
+            "full2": 25,
+            "combo2": 11,
+            "full3": 19
+          },
+          "base": {
+            "full1": 31,
+            "combo1": 18,
+            "full2": 28,
+            "combo2": 14,
+            "full3": 23
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 34,
+            "combo1": 22,
+            "full2": 30,
+            "combo2": 16,
+            "full3": 25
+          },
+          "base": {
+            "full1": 38,
+            "combo1": 25,
+            "full2": 33,
+            "combo2": 19,
+            "full3": 27
+          },
+          "baseReconstructed": false
+        }
+      },
+      "katana": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 44
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 55
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 22,
+            "full2": 33,
+            "combo2": 19,
+            "full3": 44
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 27,
+            "full2": 37,
+            "combo2": 24,
+            "full3": 55
+          },
+          "baseReconstructed": true
+        }
+      },
+      "launcher": {
+        "normal": {
+          "v101": {
+            "full1": 46,
+            "combo1": 21,
+            "full2": 41,
+            "combo2": 19,
+            "full3": 36
+          },
+          "base": {
+            "full1": 51,
+            "combo1": 26,
+            "full2": 46,
+            "combo2": 24,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 52,
+            "combo1": 27,
+            "full2": 44,
+            "combo2": 22,
+            "full3": 39
+          },
+          "base": {
+            "full1": 58,
+            "combo1": 33,
+            "full2": 49,
+            "combo2": 28,
+            "full3": 49
+          },
+          "baseReconstructed": true
+        }
+      },
+      "mechgun": {
+        "normal": {
+          "v101": {
+            "full1": 49,
+            "combo1": 12,
+            "full2": 45,
+            "combo2": 10,
+            "full3": 42
+          },
+          "base": {
+            "full1": 53,
+            "combo1": 16,
+            "full2": 48,
+            "combo2": 13,
+            "full3": 45
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 58,
+            "combo1": 21,
+            "full2": 50,
+            "combo2": 15,
+            "full3": 48
+          },
+          "base": {
+            "full1": 60,
+            "combo1": 23,
+            "full2": 53,
+            "combo2": 18,
+            "full3": 50
+          },
+          "baseReconstructed": false
+        }
+      },
+      "partisan": {
+        "normal": {
+          "v101": {
+            "full1": 39,
+            "combo1": 17,
+            "full2": 30,
+            "combo2": 14,
+            "full3": 33
+          },
+          "base": {
+            "full1": 45,
+            "combo1": 23,
+            "full2": 35,
+            "combo2": 19,
+            "full3": 42
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 46,
+            "combo1": 24,
+            "full2": 35,
+            "combo2": 19,
+            "full3": 35
+          },
+          "base": {
+            "full1": 51,
+            "combo1": 29,
+            "full2": 39,
+            "combo2": 23,
+            "full3": 43
+          },
+          "baseReconstructed": false
+        }
+      },
+      "rifle": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 15,
+            "full2": 25,
+            "combo2": 12,
+            "full3": 20
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 18,
+            "full2": 28,
+            "combo2": 15,
+            "full3": 25
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 23,
+            "full2": 30,
+            "combo2": 17,
+            "full3": 26
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 28,
+            "full2": 34,
+            "combo2": 22,
+            "full3": 32
+          },
+          "baseReconstructed": true
+        }
+      },
+      "rod": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 14,
+            "full2": 27,
+            "combo2": 14,
+            "full3": 40
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 17,
+            "full2": 30,
+            "combo2": 18,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 22,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 41
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 27,
+            "full2": 36,
+            "combo2": 24,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        }
+      },
+      "saber": {
+        "normal": {
+          "v101": {
+            "full1": 29,
+            "combo1": 13,
+            "full2": 24,
+            "combo2": 10,
+            "full3": 31
+          },
+          "base": {
+            "full1": 32,
+            "combo1": 16,
+            "full2": 28,
+            "combo2": 14,
+            "full3": 40
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 34
+          },
+          "base": {
+            "full1": 40,
+            "combo1": 24,
+            "full2": 32,
+            "combo2": 18,
+            "full3": 41
+          },
+          "baseReconstructed": false
+        }
+      },
+      "shot": {
+        "normal": {
+          "v101": {
+            "full1": 50,
+            "combo1": 25,
+            "full2": 43,
+            "combo2": 21,
+            "full3": 34
+          },
+          "base": {
+            "full1": 55,
+            "combo1": 31,
+            "full2": 48,
+            "combo2": 27,
+            "full3": 42
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 56,
+            "combo1": 31,
+            "full2": 46,
+            "combo2": 24,
+            "full3": 38
+          },
+          "base": {
+            "full1": 62,
+            "combo1": 38,
+            "full2": 52,
+            "combo2": 30,
+            "full3": 47
+          },
+          "baseReconstructed": true
+        }
+      },
+      "slicer": {
+        "normal": {
+          "v101": {
+            "full1": 40,
+            "combo1": 21,
+            "full2": 32,
+            "combo2": 12,
+            "full3": 42
+          },
+          "base": {
+            "full1": 44,
+            "combo1": 26,
+            "full2": 36,
+            "combo2": 15,
+            "full3": 52
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 47,
+            "combo1": 28,
+            "full2": 37,
+            "combo2": 17,
+            "full3": 43
+          },
+          "base": {
+            "full1": 52,
+            "combo1": 34,
+            "full2": 41,
+            "combo2": 22,
+            "full3": 54
+          },
+          "baseReconstructed": true
+        }
+      },
+      "sword": {
+        "normal": {
+          "v101": {
+            "full1": 39,
+            "combo1": 17,
+            "full2": 31,
+            "combo2": 15,
+            "full3": 43
+          },
+          "base": {
+            "full1": 44,
+            "combo1": 22,
+            "full2": 37,
+            "combo2": 21,
+            "full3": 56
+          },
+          "baseReconstructed": false
+        },
+        "heavy": {
+          "v101": {
+            "full1": 46,
+            "combo1": 24,
+            "full2": 35,
+            "combo2": 19,
+            "full3": 43
+          },
+          "base": {
+            "full1": 50,
+            "combo1": 28,
+            "full2": 40,
+            "combo2": 24,
+            "full3": 54
+          },
+          "baseReconstructed": false
+        }
+      },
+      "twin-sword": {
+        "normal": {
+          "v101": {
+            "full1": 37,
+            "combo1": 18,
+            "full2": 34,
+            "combo2": 19,
+            "full3": 51
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 22,
+            "full2": 38,
+            "combo2": 24,
+            "full3": 64
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 44,
+            "combo1": 25,
+            "full2": 37,
+            "combo2": 22,
+            "full3": 49
+          },
+          "base": {
+            "full1": 49,
+            "combo1": 31,
+            "full2": 41,
+            "combo2": 28,
+            "full3": 61
+          },
+          "baseReconstructed": true
+        }
+      },
+      "wand": {
+        "normal": {
+          "v101": {
+            "full1": 30,
+            "combo1": 14,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 40
+          },
+          "base": {
+            "full1": 33,
+            "combo1": 17,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 50
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 37,
+            "combo1": 21,
+            "full2": 33,
+            "combo2": 19,
+            "full3": 41
+          },
+          "base": {
+            "full1": 41,
+            "combo1": 26,
+            "full2": 37,
+            "combo2": 24,
+            "full3": 51
+          },
+          "baseReconstructed": true
+        }
+      }
+    },
+    "ramarl": {
+      "claw": {
+        "normal": {
+          "v101": {
+            "full1": 32,
+            "combo1": 21,
+            "full2": 25,
+            "combo2": 14,
+            "full3": 34
+          },
+          "base": {
+            "full1": 35,
+            "combo1": 26,
+            "full2": 28,
+            "combo2": 18,
+            "full3": 42
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 38,
+            "combo1": 27,
+            "full2": 29,
+            "combo2": 18,
+            "full3": 36
+          },
+          "base": {
+            "full1": 42,
+            "combo1": 33,
+            "full2": 32,
+            "combo2": 23,
+            "full3": 45
+          },
+          "baseReconstructed": true
+        }
+      },
+      "handgun": {
+        "normal": {
+          "v101": {
+            "full1": 26,
+            "combo1": 13,
+            "full2": 24,
+            "combo2": 10,
+            "full3": 19
+          },
+          "base": {
+            "full1": 29,
+            "combo1": 16,
+            "full2": 27,
+            "combo2": 13,
+            "full3": 24
+          },
+          "baseReconstructed": true
+        },
+        "heavy": {
+          "v101": {
+            "full1": 34,
+            "combo1": 21,
+            "full2": 29,
+            "combo2": 15,
+            "full3": 25
+          },
+          "base": {
+            "full1": 38,
+            "combo1": 26,
+            "full2": 32,
+            "combo2": 19,
+            "full3": 31
+          },
+          "baseReconstructed": true
+        }
+      }
+    }
+  }
+}

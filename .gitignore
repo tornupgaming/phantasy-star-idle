@@ -1,0 +1,14 @@
+node_modules
+dist
+*.log
+.DS_Store
+
+# Raw ripped game assets awaiting ingestion — not redistributable, keep local
+assets_to_ingest/
+
+# Local tool state / secrets
+.claude/settings.local.json
+.pi/local/
+.env
+.env.*
+*.local

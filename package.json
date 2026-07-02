@@ -1,0 +1,28 @@
+{
+  "name": "phantasy-star-idle",
+  "version": "0.1.0",
+  "description": "A PSO-style idle ARPG: dispatch a solo character on background, self-resolving runs.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "extract:enemy-stats": "node scripts/extract-battle-params.mjs",
+    "extract:frame-data": "node scripts/extract-frame-data.mjs",
+    "extract:item-table": "node scripts/extract-item-table.mjs",
+    "extract:map-spawns": "node scripts/extract-map-spawns.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vitest": "^2.0.5"
+  },
+  "allowScripts": {
+    "esbuild@0.21.5": true
+  }
+}
