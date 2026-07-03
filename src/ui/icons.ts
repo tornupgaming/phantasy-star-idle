@@ -5,6 +5,8 @@
  * to the glyph for free.
  */
 
+import type { SectionId } from "../engine/classes";
+
 export type IconId =
   | "saber"
   | "frame"
@@ -13,7 +15,22 @@ export type IconId =
   | "mate"
   | "atomizer"
   | "grinder"
-  | "meseta";
+  | "meseta"
+  | "sid-viridia"
+  | "sid-greenill"
+  | "sid-skyly"
+  | "sid-bluefull"
+  | "sid-purplenum"
+  | "sid-pinkal"
+  | "sid-redria"
+  | "sid-oran"
+  | "sid-yellowboze"
+  | "sid-whitill";
+
+/** Section ID → glyph id (player-hud spec); glyphs carry canonical colors. */
+export function sectionIcon(sectionId: SectionId): IconId {
+  return `sid-${sectionId.toLowerCase()}` as IconId;
+}
 
 /** Item-kind → glyph mapping (consumable kinds included). */
 export function iconForKind(kind: string): IconId {
@@ -80,5 +97,47 @@ export function spriteDefs(): string {
       <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/>
       <path d="M5.5 11V5.5L8 9l2.5-3.5V11" fill="none" stroke="currentColor" stroke-width="1.5"/>
     </symbol>
+    ${sectionIdDefs()}
   </svg>`;
+}
+
+/**
+ * Section ID glyphs (player-hud spec D4): geometric approximations of the ten
+ * PSO section symbols, each with its canonical color baked in (unlike item
+ * glyphs, these do NOT inherit currentColor — the color IS the identity).
+ */
+function sectionIdDefs(): string {
+  return `
+    <symbol id="i-sid-viridia" viewBox="0 0 16 16">
+      <path d="M2 10.5 8 7.2v3l6-3.3v-3L8 7.2v-3L2 7.5z" fill="#58d858"/>
+    </symbol>
+    <symbol id="i-sid-greenill" viewBox="0 0 16 16">
+      <path d="M3 3l5 5-5 5zM8.5 3l5 5-5 5z" fill="#b0e050"/>
+    </symbol>
+    <symbol id="i-sid-skyly" viewBox="0 0 16 16">
+      <path d="M2 13.5 4.8 3.5l2.6 5.6L11.2 2.5 14 13.5z" fill="#58c4f8"/>
+    </symbol>
+    <symbol id="i-sid-bluefull" viewBox="0 0 16 16">
+      <path d="M8 1C10.6 5.4 13 7.4 13 10.2A5 5 0 0 1 3 10.2C3 7.4 5.4 5.4 8 1z" fill="#3868f0"/>
+    </symbol>
+    <symbol id="i-sid-purplenum" viewBox="0 0 16 16">
+      <path d="M3 3h10L9.6 8 13 13H3l3.4-5z" fill="#b058e8"/>
+    </symbol>
+    <symbol id="i-sid-pinkal" viewBox="0 0 16 16">
+      <circle cx="8" cy="4.6" r="3.1" fill="#f884d0"/>
+      <circle cx="4.6" cy="10.6" r="3.1" fill="#f884d0"/>
+      <circle cx="11.4" cy="10.6" r="3.1" fill="#f884d0"/>
+    </symbol>
+    <symbol id="i-sid-redria" viewBox="0 0 16 16">
+      <path d="M8 1l7 7-7 7-7-7zm0 4.2L5.2 8 8 10.8 10.8 8z" fill="#f85454" fill-rule="evenodd"/>
+    </symbol>
+    <symbol id="i-sid-oran" viewBox="0 0 16 16">
+      <path d="M2 3h12v6l-6 5-6-5z" fill="#f8a030"/>
+    </symbol>
+    <symbol id="i-sid-yellowboze" viewBox="0 0 16 16">
+      <path d="M8 1 9.9 6.1 15 8 9.9 9.9 8 15 6.1 9.9 1 8 6.1 6.1z" fill="#f8e050"/>
+    </symbol>
+    <symbol id="i-sid-whitill" viewBox="0 0 16 16">
+      <path d="M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="#f0f6f8" fill-rule="evenodd"/>
+    </symbol>`;
 }

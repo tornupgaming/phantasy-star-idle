@@ -51,7 +51,8 @@ describe("UI smoke (manual-pass stand-in)", () => {
     expect(game.state.roster).toHaveLength(2);
     expect(root.textContent).toContain("Pioneer 2");
     expect(root.textContent).toContain("Sue");
-    expect(root.textContent).toContain("RAmarl");
+    // Class name is off the hub HUD (player-hud spec); capsule shows Lv + name.
+    expect(root.textContent).not.toContain("RAmarl");
     expect(root.textContent).toContain("Total Exp");
     expect(root.textContent).toContain("To Next Lv");
     expect(root.textContent).toContain("Hunter's Guild");

@@ -1,16 +1,16 @@
 # battle-scene-view Specification
 
 ## Purpose
-Present an in-run battle scene in the style of classic Phantasy Star titles: a first-person stage with enemy boxes, a player status window, and event-driven visual feedback, derived purely from the run's revealed structured events. (TBD: refine as the capability evolves.)
+Present an in-run battle scene in the style of classic Phantasy Star titles: a first-person stage with enemy boxes, the player HUD capsule as the player status display, and event-driven visual feedback, derived purely from the run's revealed structured events. (TBD: refine as the capability evolves.)
 
 ## Requirements
 
 ### Requirement: Classic battle stage layout
-While a run is active, the run screen SHALL present a first-person battle stage in the style of classic Phantasy Star titles: a message ticker showing the most recent run event at the top, an enemy field in the middle, and a player status window at the bottom. The scrollable battle log SHALL remain available, presented below the stage.
+While a run is active, the run screen SHALL present a first-person battle stage in the style of classic Phantasy Star titles: the shared PSO player HUD capsule anchored top-left of the run screen (the same anchor position as on the hub), a message ticker showing the most recent run event at the top of the stage, and an enemy field in the middle. The scrollable battle log SHALL remain available, presented below the stage. There SHALL be no separate player status window at the bottom of the stage; the capsule is the player status display.
 
 #### Scenario: Stage shows the current room's combatants
 - **WHEN** the character is fighting in a room
-- **THEN** the stage SHALL show one placeholder box per enemy in that room, each labeled with the enemy's name and showing a health bar with current/max HP, and SHALL show the player status window with the character's name and a health bar with current/max HP
+- **THEN** the stage SHALL show one placeholder box per enemy in that room, each labeled with the enemy's name and showing a health bar with current/max HP, and the player HUD capsule SHALL show the character's name and a health bar with current/max HP
 
 #### Scenario: Placeholder boxes carry sprite hooks
 - **WHEN** an enemy is rendered on the stage
@@ -18,7 +18,7 @@ While a run is active, the run screen SHALL present a first-person battle stage 
 
 #### Scenario: Room progress and supplies are visible
 - **WHEN** the stage is displayed
-- **THEN** it SHALL show the current room number out of the area total and the character's remaining consumable supply
+- **THEN** it SHALL show the current room number out of the area total and the character's remaining consumable supply, presented in the stage's bottom strip rather than inside the player HUD capsule
 
 ### Requirement: Stage handles dynamically spawned enemies
 The battle scene SHALL support enemies that appear after a room event by appending them to the current room state from structured spawn events.

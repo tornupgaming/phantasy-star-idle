@@ -600,7 +600,7 @@ details.advanced summary {
   grid-template-columns: minmax(210px, 270px) minmax(340px, 1.4fr) minmax(280px, 1fr) minmax(0, 0.5fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas:
-    "status status . money"
+    "status status status ."
     "nav pane detail ."
     "dlg dlg dlg dlg";
   pointer-events: none;
@@ -611,13 +611,36 @@ details.advanced summary {
   min-height: 0;
 }
 
+/* Capsule + XP/economy side panel, anchored top-left. */
 .hud-status {
   grid-area: status;
   justify-self: start;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
 }
-.hud-money {
-  grid-area: money;
-  justify-self: end;
+.hud-side-panel {
+  padding: 8px 16px;
+  border-radius: 6px 18px 6px 12px;
+  min-width: 250px;
+}
+.hud-side-panel .xp-bar {
+  margin: 5px 0 6px;
+}
+.side-economy {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.side-economy > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.side-economy .meseta {
+  color: var(--gold);
 }
 .hud-nav {
   grid-area: nav;
@@ -654,47 +677,153 @@ details.advanced summary {
   width: min(860px, 100%);
 }
 
-/* Status cluster: hex level chip + name plate + thin XP bar. */
-.status-cluster {
+/* ---- PSO player HUD capsule (player-hud) -----------------------------------
+ * One cyan-outlined capsule: hex character icon half-overlapping the left
+ * edge (PB badge riding its top-right), HP/TP bar rows with right-aligned
+ * numbers, Lv pill hanging off the bottom-left, yellow name + section glyph.
+ * The stage drives .stage-char-hp/.stage-char-hp-text and flashes the root.
+ */
+.player-hud {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px 18px 10px 12px;
-  border-radius: 10px 22px 10px 22px;
+  margin-left: 26px; /* room for the hex overlapping the left edge */
+  margin-bottom: 12px; /* room for the Lv pill hanging below */
+  padding: 9px 18px 11px 36px;
+  min-width: 280px;
+  background:
+    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
+  border: 1px solid var(--pso-edge);
+  border-radius: 28px;
+  box-shadow:
+    0 0 10px var(--pso-glow),
+    inset 0 0 22px rgba(20, 90, 110, 0.35);
 }
-.level-chip {
-  flex: 0 0 auto;
-  width: 58px;
+.hud-hex {
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
   height: 50px;
+}
+.hud-hex-face {
+  width: 100%;
+  height: 100%;
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   background: linear-gradient(180deg, #1c8aa4, #0e5468);
   box-shadow: inset 0 0 0 1px var(--pso-edge);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  line-height: 1.1;
-}
-.level-chip span {
-  font-size: 9px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  overflow: hidden;
   color: #bfeef8;
 }
-.level-chip b {
-  font-size: 18px;
+.hud-hex-face svg {
+  width: 30px;
+  height: 30px;
+  margin-top: 8px; /* bust crops at the hex bottom like a portrait */
+  filter: drop-shadow(0 0 4px var(--pso-glow));
+}
+/* Photon Blast badge: literal 0, no radial fill (authentic empty state). */
+.hud-pb-badge {
+  position: absolute;
+  top: -4px;
+  right: -3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #04141c;
+  border: 1px solid var(--pso-edge);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+.hud-rows {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.hud-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hud-bar-label {
+  flex: 0 0 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.hud-bar-row .hpbar {
+  flex: 1;
+  height: 10px;
+}
+.player-hud .hpbar > span {
+  transition: width 0.25s ease;
+}
+.player-hud .hpbar > span.low {
+  background: linear-gradient(180deg, var(--gold), var(--bad));
+}
+.hud-bar-row .tpbar > span {
+  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 60%, #2050b0 100%);
+}
+.hud-bar-num {
+  flex: 0 0 64px;
+  text-align: right;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hud-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 1px;
+}
+.hud-name {
+  color: var(--gold);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Lv pill hanging off the capsule's bottom-left. */
+.hud-lv-pill {
+  position: absolute;
+  left: 16px;
+  bottom: -11px;
+  padding: 1px 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  border: 1px solid var(--pso-edge);
+  color: #bfeef8;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+.hud-lv-pill b {
+  font-size: 12px;
   color: #eafcff;
   text-shadow: 0 0 6px var(--pso-glow);
 }
-.status-main {
-  min-width: 180px;
+/* Stage hurt/heal flashes (battle-scene-view): ported from stage-player-box. */
+.player-hud.hurt {
+  animation: stage-hurt 0.35s ease-out;
 }
-.status-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.5px;
+.player-hud.healed {
+  animation: stage-healed 0.5s ease-out;
 }
+
 .small {
   font-size: 11.5px;
 }
@@ -710,25 +839,6 @@ details.advanced summary {
   display: block;
   height: 100%;
   background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 70%, #2050b0 100%);
-}
-
-/* Money pod: compact top-right economy pill. */
-.money-pod {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 18px;
-  border-radius: 18px 6px 18px 6px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.money-pod > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.money-pod .meseta {
-  color: var(--gold);
 }
 
 /* Dialogue window (shop-dialogue): bottom-anchored shopkeeper line. */
@@ -837,11 +947,14 @@ details.advanced summary {
     grid-template-columns: minmax(190px, 240px) 1fr;
     grid-template-rows: auto auto minmax(0, 1fr) auto;
     grid-template-areas:
-      "status money"
+      "status status"
       "nav pane"
       "nav detail"
       "dlg dlg";
     overflow-y: auto;
+  }
+  .hud-status {
+    flex-wrap: wrap;
   }
   .hud-detail {
     max-height: none;
@@ -857,8 +970,7 @@ details.advanced summary {
     overflow-y: auto;
     gap: 20px 0;
   }
-  .hud-status,
-  .hud-money {
+  .hud-status {
     justify-self: auto;
   }
   .hud > * {
@@ -1081,7 +1193,14 @@ details.advanced summary {
   animation: stage-hit 0.28s ease-out;
 }
 
-/* Player band: status window bottom-left, supplies beside it. */
+/* Run topbar: the player HUD capsule anchored top-left (same anchor as the
+ * hub), run title to the right. The economy readout is gone with the money
+ * pod — earnings show in the settle report. */
+.run-topbar {
+  align-items: flex-start;
+}
+
+/* Bottom telemetry strip: room label + supplies (run data, not player identity). */
 .stage-bottom {
   display: flex;
   align-items: center;
@@ -1090,26 +1209,7 @@ details.advanced summary {
   border-top: 1px solid var(--pso-edge-dim);
   background: rgba(10, 40, 52, 0.6);
 }
-.stage-player-box {
-  position: relative;
-  flex: 0 0 260px;
-  border: 1px solid var(--pso-edge);
-  border-radius: 3px;
-  padding: 8px 10px;
-  background: var(--pso-window);
-}
-.stage-player-head {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-.stage-player-box .hpbar > span {
-  background: linear-gradient(180deg, #8cf89c 0%, var(--pso-hp) 45%, #18a028 100%);
-  transition: width 0.25s ease;
-}
-.stage-player-box .hpbar > span.low {
-  background: linear-gradient(180deg, var(--gold), var(--bad));
-}
+/* Flash keyframes for the capsule's hurt/heal effects (battle-scene-view). */
 @keyframes stage-hurt {
   0% {
     box-shadow: 0 0 0 3px var(--bad);
@@ -1118,9 +1218,6 @@ details.advanced summary {
     box-shadow: none;
   }
 }
-.stage-player-box.hurt {
-  animation: stage-hurt 0.35s ease-out;
-}
 @keyframes stage-healed {
   0% {
     box-shadow: 0 0 0 3px var(--good);
@@ -1128,9 +1225,6 @@ details.advanced summary {
   100% {
     box-shadow: none;
   }
-}
-.stage-player-box.healed {
-  animation: stage-healed 0.5s ease-out;
 }
 .stage-side {
   font-size: 12px;

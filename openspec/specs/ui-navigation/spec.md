@@ -55,11 +55,11 @@ The character create screen SHALL follow PSO Blue Burst order: the player SHALL 
 - **THEN** the new character SHALL be created and selected, and the Pioneer 2 hub SHALL be shown
 
 ### Requirement: Pioneer 2 hub
-The Pioneer 2 hub SHALL be a HUD shell over the scene layer: a persistent status cluster and money pod along the top, a persistent floating "Pioneer 2" navigation window listing the entries Hunters Guild, Weapon Shop, Armour Shop, Tool Shop, Equipment, Inventory/Bank, and Change Character, a pane region rendering the active pane's window(s), and a dialogue window along the bottom. Activating a navigation entry SHALL switch the pane region to that pane without leaving the hub, with the active entry visually highlighted; Change Character SHALL instead exit to the character select screen. The Hunters Guild pane SHALL present the quest counter — area, difficulty, attack pattern, loot filter, supply summary, and an accept-quest action that dispatches the run — using PSO menu idioms rather than raw form controls: the area as a highlightable menu list (name plus recommended ATP), difficulty and attack pattern as selectable chip rows, and the loot filter and supply summary in a subordinate settings window. Native select elements SHALL NOT appear on the guild pane.
+The Pioneer 2 hub SHALL be a HUD shell over the scene layer: the persistent player HUD capsule and XP/economy side panel along the top, a persistent floating "Pioneer 2" navigation window listing the entries Hunters Guild, Weapon Shop, Armour Shop, Tool Shop, Equipment, Inventory/Bank, and Change Character, a pane region rendering the active pane's window(s), and a dialogue window along the bottom. Activating a navigation entry SHALL switch the pane region to that pane without leaving the hub, with the active entry visually highlighted; Change Character SHALL instead exit to the character select screen. The Hunters Guild pane SHALL present the quest counter — area, difficulty, attack pattern, loot filter, supply summary, and an accept-quest action that dispatches the run — using PSO menu idioms rather than raw form controls: the area as a highlightable menu list (name plus recommended ATP), difficulty and attack pattern as selectable chip rows, and the loot filter and supply summary in a subordinate settings window. Native select elements SHALL NOT appear on the guild pane.
 
 #### Scenario: Switch panes from the navigation window
 - **WHEN** the player activates a navigation entry other than Change Character
-- **THEN** the corresponding pane SHALL render in the pane region with the nav entry highlighted, and the status cluster, money pod, and navigation window SHALL remain visible
+- **THEN** the corresponding pane SHALL render in the pane region with the nav entry highlighted, and the player HUD capsule, side panel, and navigation window SHALL remain visible
 
 #### Scenario: Accept quest dispatches a run
 - **WHEN** the player activates the accept-quest action on the Hunters Guild pane with a valid configuration
@@ -100,15 +100,19 @@ When a run settles, the UI SHALL navigate to the Pioneer 2 hub's Hunters Guild p
 - **THEN** the hub SHALL remain shown without the dialog
 
 ### Requirement: Hub status bar
-Every hub pane SHALL display a status cluster anchored top-left showing the selected character's name, class, section ID, and level (the level in a hexagonal chip), and their XP progression — total XP plus XP remaining to the next level rendered with a thin progress bar (or a max-level indication at the level cap). The shared meseta balance and grinder count SHALL be shown in a compact money pod anchored top-right. Both SHALL reflect state changes (purchases, XP, level-ups) on re-render. The character select, character create, and run views SHALL NOT display the hub status cluster or money pod.
+Every hub pane SHALL display the shared PSO player HUD capsule anchored top-left (see the `player-hud` capability for its anatomy: hex icon with Photon Blast badge, HP and TP bars, level pill, section ID glyph and yellow name). Immediately adjacent to the capsule, the hub SHALL display a side panel window showing the character's XP progression — total XP plus XP remaining to the next level rendered with a thin progress bar (or a max-level indication at the level cap) — and the shared economy: meseta balance and grinder count. Both SHALL reflect state changes (purchases, XP, level-ups) on re-render. There SHALL be no separate money pod window, and the class name SHALL NOT appear in the hub HUD. The character select and character create screens SHALL NOT display the capsule or side panel; the run view SHALL display the capsule (per `battle-scene-view`) but NOT the side panel.
 
-#### Scenario: Status cluster content
+#### Scenario: Hub HUD content
 - **WHEN** any hub pane is shown
-- **THEN** the status cluster SHALL show name, class, section ID, level chip, total XP, and XP-to-next progress, and the money pod SHALL show meseta and grinders
+- **THEN** the top-left SHALL show the player HUD capsule, and the adjacent side panel SHALL show total XP, XP-to-next progress, meseta, and grinders
 
-#### Scenario: Money pod updates on purchase
+#### Scenario: Side panel updates on purchase
 - **WHEN** the player completes a purchase on any shop pane
-- **THEN** the money pod's meseta value SHALL reflect the new balance
+- **THEN** the side panel's meseta value SHALL reflect the new balance
+
+#### Scenario: Side panel is hub-only
+- **WHEN** a run is active and the run screen is shown
+- **THEN** the player HUD capsule SHALL be visible but the XP/economy side panel SHALL NOT be
 
 ### Requirement: Keyboard menu navigation
 Hub menus SHALL support keyboard operation: Up/Down arrows SHALL move the highlight within the focused menu, Enter SHALL activate the highlighted row, Escape SHALL step back one level (equipment candidate list to slot list, pane content to the navigation window), and the digit keys SHALL jump directly to the corresponding navigation entry. The orange selection bar SHALL serve as the visible focus indicator. Keyboard operation SHALL be additive: all interactions SHALL remain fully operable by pointer alone.

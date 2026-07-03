@@ -160,7 +160,7 @@ export class BattleStage {
             this.float(el, "MISS", "float-miss");
           }
         } else {
-          const box = this.q(".stage-player-box");
+          const box = this.q(".player-hud");
           if (a.hit) {
             this.flash(box, "hurt");
             this.float(box, `${a.damage}`, a.crit ? "float-dmg crit" : "float-dmg");
@@ -179,7 +179,7 @@ export class BattleStage {
       }
       case "heal":
       case "revive":
-        this.flash(this.q(".stage-player-box"), "healed");
+        this.flash(this.q(".player-hud"), "healed");
         this.updatePlayer();
         break;
       case "complete":
@@ -253,7 +253,8 @@ export class BattleStage {
     const bar = this.q(".stage-char-hp");
     bar.style.width = `${pctHp}%`;
     bar.classList.toggle("low", pctHp <= 30);
-    this.q(".stage-char-hp-text").textContent = `HP ${s.charHp}/${s.charMaxHp}`;
+    // The capsule carries the static `HP` label; this element is numbers only.
+    this.q(".stage-char-hp-text").textContent = `${s.charHp}/${s.charMaxHp}`;
     this.q(".stage-room-label").textContent =
       s.roomIndex >= 0 ? `Room ${s.roomIndex + 1}/${s.totalRooms}` : "—";
     const parts = CONSUMABLES_LIST.filter((c) => (s.supply[c.id] ?? 0) > 0).map(

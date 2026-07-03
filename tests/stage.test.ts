@@ -37,7 +37,8 @@ describe("battle stage (run screen)", () => {
       expect(el.querySelector(".hpbar > span")).not.toBeNull();
     }
     expect(root.querySelectorAll(".stage-log > div").length).toBeGreaterThan(0);
-    expect(root.querySelector(".stage-char-hp-text")!.textContent).toMatch(/HP \d+\/\d+/);
+    // The capsule renders the HP label separately; the hook holds `cur/max`.
+    expect(root.querySelector(".stage-char-hp-text")!.textContent).toMatch(/^\d+\/\d+$/);
 
     // A reload mid-run rebuilds the identical scene from the event prefix
     // (the island mounts straight into the run regime).

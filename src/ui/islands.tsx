@@ -6,8 +6,10 @@
  */
 
 import { createEffect, onCleanup, onMount } from "solid-js";
+import { effectiveStats } from "../engine/character";
 import { BattleStage } from "./stage";
 import { Backdrop } from "./backdrop";
+import { PlayerHud, SpriteDefs } from "./components";
 import { useUi } from "./context";
 
 /**
@@ -40,6 +42,7 @@ export function StageIsland() {
   const g = ui.game.state;
   const prog = ui.game.runProgress()!;
   const character = g.activeRun!.input.character;
+  const maxHp = effectiveStats(character).hp;
 
   let host!: HTMLDivElement;
   onMount(() => {
@@ -50,11 +53,16 @@ export function StageIsland() {
 
   return (
     <div class="run-screen" ref={host}>
-      <div class="topbar">
+      <SpriteDefs />
+      <div class="topbar run-topbar">
+        <PlayerHud
+          name={character.name}
+          level={character.level}
+          sectionId={character.sectionId}
+          hp={maxHp}
+          maxHp={maxHp}
+        />
         <h1>✦ Run in progress</h1>
-        <div class="resources">
-          <span class="meseta">{g.economy.meseta} meseta</span>
-        </div>
       </div>
       <div class="panel">
         <h2>
@@ -78,16 +86,7 @@ export function StageIsland() {
         <div class="stage-ticker">…</div>
         <div class="stage-field"></div>
         <div class="stage-bottom">
-          <div class="stage-player-box">
-            <div class="stage-player-head">
-              <b>{character.name}</b>
-              <span class="stage-room-label muted">—</span>
-            </div>
-            <div class="hpbar hp-char">
-              <span class="stage-char-hp"></span>
-            </div>
-            <div class="stage-char-hp-text muted"></div>
-          </div>
+          <span class="stage-side stage-room-label muted">—</span>
           <div class="stage-side stage-supply muted"></div>
         </div>
       </div>
