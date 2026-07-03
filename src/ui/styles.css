@@ -1,15 +1,17 @@
 /*
- * PSO Blue Burst-styled theme (pso-ui-overhaul). The look is recreated in pure
- * CSS from the BB reference material — translucent teal windows with a cyan
- * edge and one clipped corner, scanline fills, orange selection bars — so it
- * stays sharp at any size; no raster chrome. All themed colors resolve from
- * the token block below.
+ * PSO Blue Burst-styled theme (pso-ui-overhaul → pso-hud-menus). The look is
+ * recreated in pure CSS from the BB reference material — translucent teal
+ * windows with a cyan edge and organic asymmetric-rounded silhouettes, orange
+ * tab headers and selection bars, scanline fills — so it stays sharp at any
+ * size; no raster chrome. The hub lays out as a HUD: floating corner-anchored
+ * windows on a named-area grid over the animated scene layer. All themed
+ * colors resolve from the token block below.
  */
 
 :root {
   /* PSO BB palette */
-  --pso-window: rgba(7, 34, 44, 0.84);
-  --pso-window-2: rgba(12, 48, 60, 0.85);
+  --pso-window: rgba(6, 30, 40, 0.9);
+  --pso-window-2: rgba(10, 44, 56, 0.9);
   --pso-edge: #46c8dc;
   --pso-edge-dim: #1f6a7c;
   --pso-glow: rgba(70, 200, 220, 0.35);
@@ -61,9 +63,11 @@ body {
   background-attachment: fixed;
   color: var(--ink);
   font: 14px/1.5 "Nanum Gothic", "Gulim", "Segoe UI", system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-/* Full-width app shell: gutters, no max-width (D6). */
+/* Gutters for the document-flow screens (select/create/run); the hub's fixed
+ * scene + HUD layers escape this padding by design. */
 #app {
   padding: 18px clamp(14px, 2.5vw, 40px) 60px;
 }
@@ -108,56 +112,146 @@ h3 {
   color: var(--gold);
 }
 
-/* ---- PSO window treatment (D4) --------------------------------------------
- * Top-level windows: translucent teal fill + scanlines, cyan border with a
- * soft glow, and the BB clipped top-right corner. Inner content uses the flat
- * .pso-panel variant so the treatment stays special.
+/* ---- Scene layer (hub-scene-backdrop) --------------------------------------
+ * Persistent canvas glyph wall + animatable tint + motif silhouette. Mounted
+ * once; hub re-renders never touch it. Tint crossfades via background-color
+ * transition; the motif fades in per theme.
+ */
+.scene-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #04101a;
+  overflow: hidden;
+}
+.scene-layer.scene-hidden {
+  display: none;
+}
+.scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.scene-tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  transition: background-color 0.6s ease;
+  background-color: #062a34;
+}
+.scene-tint.theme-guild {
+  background-color: #063028;
+}
+.scene-tint.theme-weapon-shop {
+  background-color: #301410;
+}
+.scene-tint.theme-armour-shop {
+  background-color: #101c34;
+}
+.scene-tint.theme-tool-shop {
+  background-color: #14300e;
+}
+.scene-tint.theme-equipment {
+  background-color: #1c1430;
+}
+.scene-tint.theme-bank {
+  background-color: #2c2408;
+}
+/* Floor plane + vignette over the glyph wall. */
+.scene-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 62%, rgba(2, 8, 14, 0.75) 100%),
+    radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(2, 8, 14, 0.55) 100%);
+}
+.scene-motif {
+  position: absolute;
+  right: 6vw;
+  top: 50%;
+  width: min(46vmin, 420px);
+  height: min(46vmin, 420px);
+  transform: translateY(-50%);
+  color: var(--pso-edge);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+.scene-motif.motif-in {
+  opacity: 0.08;
+}
+.scene-motif svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- PSO window treatment (pso-hud-menus D3) --------------------------------
+ * Organic asymmetric-rounded silhouette, translucent teal fill + scanlines,
+ * cyan border with a soft glow. `.win` is the HUD variant that carries an
+ * orange `.pso-tab` header overlapping its top edge.
  */
 .pso-window,
 .panel {
-  --corner: 18px;
   position: relative;
   background:
     repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
     linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
   border: 1px solid var(--pso-edge);
+  border-radius: 4px 18px 4px 12px;
   box-shadow:
     0 0 10px var(--pso-glow),
     inset 0 0 22px rgba(20, 90, 110, 0.35);
-  clip-path: polygon(
-    0 0,
-    calc(100% - var(--corner)) 0,
-    100% var(--corner),
-    100% 100%,
-    0 100%
-  );
   padding: 14px;
 }
-/* Cyan facet line along the clipped corner. */
-.pso-window::before,
-.panel::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  width: calc(var(--corner) * 1.6);
-  height: calc(var(--corner) * 1.6);
-  background: linear-gradient(
-    135deg,
-    transparent calc(50% - 1.5px),
-    var(--pso-edge) calc(50% - 1.5px),
-    var(--pso-edge) calc(50% + 0.5px),
-    transparent calc(50% + 0.5px)
-  );
-  pointer-events: none;
-}
 
-/* Flat inner panel: no clip, no glow. */
+/* Flat inner panel: no glow. */
 .pso-panel {
   background: rgba(10, 40, 52, 0.6);
   border: 1px solid var(--pso-edge-dim);
   border-radius: 3px;
   padding: 10px 12px;
+}
+
+/* HUD window with tab header. */
+.win {
+  margin-top: 13px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.win-body {
+  padding: 16px 12px 12px;
+  overflow: auto;
+  min-height: 0;
+}
+.pso-tab {
+  position: absolute;
+  top: -13px;
+  left: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: linear-gradient(180deg, #ffb640, var(--pso-select));
+  border: 1px solid #ffd080;
+  border-radius: 4px 12px 4px 4px;
+  padding: 3px 16px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(90, 50, 0, 0.8);
+  box-shadow: 0 0 10px rgba(248, 160, 32, 0.35);
+  white-space: nowrap;
+  z-index: 1;
+}
+.pso-tab .tab-meta {
+  font-weight: 600;
+  font-size: 11px;
+  color: #fff3d0;
 }
 
 .stat-row {
@@ -200,28 +294,72 @@ h3 {
   overflow: auto;
 }
 
-/* ---- PSO menu rows: the orange selection bar (D4) ------------------------ */
+/* ---- Item glyphs (item-iconography) ---------------------------------------- */
+.icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  vertical-align: -2px;
+}
+.detail-name .icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+
+/* ---- PSO menu rows: the orange selection bar, PSO density ------------------ */
 .pso-menu {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  border-radius: 4px;
+}
+/* Keyboard-focused menu (the orange bar inside is the focus indicator). */
+.pso-menu.kbd-active {
+  outline: 1px solid var(--pso-edge-dim);
+  outline-offset: 3px;
 }
 .pso-menu-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 7px 10px;
+  gap: 8px;
+  padding: 4px 8px;
+  min-height: 28px; /* hit-area floor despite the compact visual density */
   color: var(--ink);
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
   text-align: left;
   font: inherit;
+  font-size: 13px;
   width: 100%;
 }
 .pso-menu-row .meta {
   color: var(--muted);
   font-size: 12px;
+}
+.pso-menu-row .meta.num,
+.pso-menu-row .num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.pso-menu-row .nav-num {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 2px;
+  padding: 0 4px;
+  line-height: 1.4;
+}
+@keyframes sel-wipe {
+  from {
+    transform: scaleX(0.55);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 .pso-menu-row:hover,
 .pso-menu-row.selected {
@@ -230,11 +368,66 @@ h3 {
   color: var(--pso-select-ink);
   text-shadow: none;
 }
+.pso-menu-row.selected {
+  animation: sel-wipe 90ms ease-out;
+  transform-origin: left center;
+}
 .pso-menu-row:hover .meta,
 .pso-menu-row.selected .meta,
 .pso-menu-row:hover .muted,
-.pso-menu-row.selected .muted {
+.pso-menu-row.selected .muted,
+.pso-menu-row:hover .nav-num,
+.pso-menu-row.selected .nav-num {
   color: #5a3c10;
+  border-color: #b07820;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pso-menu-row.selected {
+    animation: none;
+  }
+}
+
+/* ---- Chips (guild counter: difficulty / attack pattern) -------------------- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  background: rgba(6, 28, 38, 0.9);
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 5px 14px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.chip .chip-meta {
+  color: var(--muted);
+  font-size: 11px;
+}
+.chip:hover {
+  border-color: var(--pso-edge);
+  box-shadow: 0 0 8px var(--pso-glow);
+}
+.chip.hex {
+  border: none;
+  padding: 6px 20px;
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+  box-shadow: inset 0 0 0 1px var(--pso-edge-dim);
+}
+.chip.selected {
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  color: #eafcff;
+  border-color: var(--pso-edge);
+  text-shadow: 0 0 6px var(--pso-glow);
+}
+.chip.hex.selected {
+  box-shadow: inset 0 0 0 1px var(--pso-edge);
+}
+.chip.selected .chip-meta {
+  color: #bfeef8;
 }
 
 /* ---- Buttons -------------------------------------------------------------- */
@@ -252,8 +445,7 @@ button:hover {
   border-color: var(--pso-edge);
   box-shadow: 0 0 8px var(--pso-glow);
 }
-/* Primary per-screen action: cyan-lit, hex-clipped ends (D4/open question:
- * hex treatment is reserved for the one primary action per screen). */
+/* Primary per-screen action: cyan-lit, hex-clipped ends. */
 button.primary {
   background: linear-gradient(180deg, #1c8aa4, #0e5468);
   border: 1px solid var(--pso-edge);
@@ -309,7 +501,7 @@ input:focus {
   flex-wrap: wrap;
 }
 
-/* ---- Bars: BB chunky green-on-bezel; width contract unchanged (D4) ------- */
+/* ---- Bars: BB chunky green-on-bezel; width contract unchanged --------------- */
 .hpbar,
 .progress {
   height: 12px;
@@ -393,74 +585,213 @@ details.advanced summary {
   margin: 6px 0;
 }
 
-/* ---- Screen: Pioneer 2 hub — master-detail shell (pioneer2-hub-redesign) --- */
+/* ---- Screen: Pioneer 2 hub — HUD over the scene (pso-hud-menus) ------------ */
 
-/* PSO BB status window: identity | level | exp/money fields. */
-.status-bar {
+.ui-layer.screen-hub {
+  padding: 0;
+}
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  padding: 16px clamp(14px, 2vw, 32px);
+  gap: 18px 16px;
+  grid-template-columns: minmax(210px, 270px) minmax(340px, 1.4fr) minmax(280px, 1fr) minmax(0, 0.5fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "status status . money"
+    "nav pane detail ."
+    "dlg dlg dlg dlg";
+  pointer-events: none;
+}
+.hud > * {
+  pointer-events: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.hud-status {
+  grid-area: status;
+  justify-self: start;
+}
+.hud-money {
+  grid-area: money;
+  justify-self: end;
+}
+.hud-nav {
+  grid-area: nav;
+  align-self: start;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.hud-pane {
+  grid-area: pane;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  align-items: stretch;
+}
+.hud-pane .win {
+  flex: 0 1 auto;
+}
+.hud-detail {
+  grid-area: detail;
+  align-self: start;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.hud-detail .win,
+.hud-nav .win {
+  min-height: 0;
+}
+.hud-dialogue {
+  grid-area: dlg;
+  justify-self: center;
+  width: min(860px, 100%);
+}
+
+/* Status cluster: hex level chip + name plate + thin XP bar. */
+.status-cluster {
   display: flex;
   align-items: center;
-  gap: 24px;
-  margin-bottom: 12px;
-  padding: 10px 16px;
+  gap: 14px;
+  padding: 10px 18px 10px 12px;
+  border-radius: 10px 22px 10px 22px;
 }
-.status-id .status-name {
-  font-size: 17px;
+.level-chip {
+  flex: 0 0 auto;
+  width: 58px;
+  height: 50px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  box-shadow: inset 0 0 0 1px var(--pso-edge);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+.level-chip span {
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #bfeef8;
+}
+.level-chip b {
+  font-size: 18px;
+  color: #eafcff;
+  text-shadow: 0 0 6px var(--pso-glow);
+}
+.status-main {
+  min-width: 180px;
+}
+.status-name {
+  font-size: 16px;
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.5px;
 }
-.status-level {
-  font-size: 15px;
+.small {
+  font-size: 11.5px;
+}
+.xp-bar {
+  height: 6px;
+  margin: 5px 0 3px;
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 2px;
+  background: #04141c;
+  overflow: hidden;
+}
+.xp-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 70%, #2050b0 100%);
+}
+
+/* Money pod: compact top-right economy pill. */
+.money-pod {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 18px;
+  border-radius: 18px 6px 18px 6px;
+  font-weight: 600;
   white-space: nowrap;
 }
-.status-fields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 22px;
-  margin-left: auto;
+.money-pod > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.status-fields > div {
-  display: flex;
-  gap: 8px;
-  align-items: baseline;
-  white-space: nowrap;
-}
-.status-fields .muted::after {
-  content: " :";
-}
-.status-fields .meseta {
+.money-pod .meseta {
   color: var(--gold);
 }
 
-/* Sidebar + detail region. */
-.hub-shell {
-  display: grid;
-  grid-template-columns: minmax(190px, 230px) 1fr;
-  gap: 14px;
-  align-items: start;
+/* Dialogue window (shop-dialogue): bottom-anchored shopkeeper line. */
+.dialogue-window {
+  padding: 10px 40px 10px 18px;
+  min-height: 44px;
+  cursor: pointer;
+  border-radius: 14px 20px 14px 14px;
+  background:
+    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.04) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, rgba(6, 22, 32, 0.94), rgba(3, 14, 22, 0.94));
 }
-@media (max-width: 900px) {
-  .hub-shell {
-    grid-template-columns: 1fr;
+.dlg-text {
+  font-size: 13.5px;
+  line-height: 1.55;
+  min-height: 21px;
+}
+@keyframes dlg-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
   }
 }
-.sidebar .pso-menu-row {
-  padding: 10px 12px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+.dialogue-window::after {
+  content: "▼";
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 10px;
+  color: var(--accent);
+  animation: dlg-blink 1.1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialogue-window::after {
+    animation: none;
+  }
 }
 
-/* Equipment pane: slots | candidates | preview. */
-.equip-grid {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(240px, 1.2fr) minmax(220px, 1fr);
-  gap: 14px;
-  align-items: start;
+/* Item detail voice + equipped treatment. */
+.detail-flavor {
+  font-style: italic;
+  color: #bcd8e0;
+  font-size: 12.5px;
+  margin: 2px 0 6px;
 }
-@media (max-width: 1100px) {
-  .equip-grid {
-    grid-template-columns: 1fr;
-  }
+.equipped-line {
+  color: var(--pso-hp);
+  font-size: 12.5px;
+  margin-bottom: 6px;
+}
+.equipped-mark {
+  display: inline-block;
+  background: var(--pso-hp);
+  color: #04220a;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 0 4px;
+  border-radius: 2px;
 }
 
 /* Stat preview diff table (now → after with change markers). */
@@ -473,6 +804,7 @@ details.advanced summary {
   text-align: right;
   padding: 3px 10px 3px 0;
   font-weight: 400;
+  font-variant-numeric: tabular-nums;
 }
 .diff-table th {
   color: var(--muted);
@@ -487,27 +819,58 @@ details.advanced summary {
   font-weight: 700;
 }
 
-/* ---- Screens: shops & bank (list + detail, D3) ---------------------------- */
-.shop-grid {
-  display: grid;
-  grid-template-columns: minmax(300px, 1.1fr) minmax(280px, 1fr);
-  gap: 14px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .shop-grid {
-    grid-template-columns: 1fr;
-  }
-}
 .shop-list {
-  max-height: 60vh;
+  max-height: 62vh;
   overflow: auto;
 }
-.shop-detail .detail-name {
+.shop-detail .detail-name,
+.detail-name {
   font-size: 16px;
   font-weight: 700;
   color: var(--accent);
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+/* HUD collapse: detail drops under the pane, then a stacked scrollable column. */
+@media (max-width: 1100px) {
+  .hud {
+    grid-template-columns: minmax(190px, 240px) 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "status money"
+      "nav pane"
+      "nav detail"
+      "dlg dlg";
+    overflow-y: auto;
+  }
+  .hud-detail {
+    max-height: none;
+  }
+  .shop-list {
+    max-height: 38vh;
+  }
+}
+@media (max-width: 900px) {
+  .hud {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 20px 0;
+  }
+  .hud-status,
+  .hud-money {
+    justify-self: auto;
+  }
+  .hud > * {
+    flex: 0 0 auto;
+  }
+  .pso-menu-row {
+    min-height: 34px;
+    padding: 7px 10px;
+  }
+  .shop-list {
+    max-height: 50vh;
+  }
 }
 
 /* ---- Post-run report dialog (D2) ------------------------------------------ */

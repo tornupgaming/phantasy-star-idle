@@ -1,9 +1,6 @@
-# pso-visual-theme Specification
+# pso-visual-theme — delta
 
-## Purpose
-Give the UI an authentic PSO Blue Burst look: CSS-only window chrome, a tokenized palette, PSO-style menus and controls, Gulim-style typography with fallback, and a HUD-over-scene responsive layout. (TBD: refine as the capability evolves.)
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: PSO window treatment in CSS
 The UI SHALL render its panels in a PSO Blue Burst-styled window treatment implemented purely in CSS (no image slicing): a translucent dark-teal fill with a subtle scanline texture, a cyan border with edge glow, and an organic silhouette using asymmetric rounded corners (one visibly larger sweep corner). Named windows SHALL carry an orange gradient tab header overlapping the window's top edge, holding the window's title and optional trailing content (counts, pagination); the tab SHALL be a real element, not a pseudo-element. The palette (window fill, cyan edge, orange selection/tab, HP green, TP blue, meseta gold, rarity colors) SHALL be defined as CSS custom properties. Raster assets SHALL NOT be load-bearing for window chrome; the reference material MAY inform geometry and color only. Window fills SHALL remain dark/opaque enough over the animated scene that muted text keeps readable contrast.
@@ -35,12 +32,13 @@ Interactive lists SHALL use PSO-style menu rows with an orange highlight bar on 
 - **WHEN** the battle stage updates an HP bar's width during a run
 - **THEN** the restyled bar SHALL reflect the update using the same element/class structure as before the theme change
 
-### Requirement: Typography
-The UI SHALL load a freely redistributable Gulim look-alike typeface (Nanum Gothic, SIL OFL) via `@font-face` from a locally served font asset with `font-display: swap` and a system-font fallback stack, so layout SHALL remain usable when the font is unavailable. The font's license SHALL ship alongside the asset, and the provenance (Gulim being PSO BB's original, non-redistributable typeface) SHALL be noted in a source comment at the `@font-face` declaration.
+## REMOVED Requirements
 
-#### Scenario: Font fallback
-- **WHEN** the font asset fails to load
-- **THEN** text SHALL render in the fallback stack with no broken layout
+### Requirement: Full-width layout
+**Reason**: The document-flow, full-width three-column dashboard layout is replaced by the HUD-over-scene layout (see ADDED "HUD-over-scene responsive layout"). Stretching panels across wide viewports produced the empty, un-PSO look this change removes.
+**Migration**: No data migration; hub markup and CSS move to the HUD grid. Character select/create keep their existing flowing layouts under the new chrome.
+
+## ADDED Requirements
 
 ### Requirement: HUD-over-scene responsive layout
 The hub SHALL lay out as a HUD: floating windows anchored toward the viewport's corners and edges on a named-area CSS grid over the scene layer, with unclaimed space showing the scene rather than stretched panels. The layout SHALL remain responsive and fullscreen at all viewport widths with no fixed-aspect letterboxing. On desktop, long content SHALL scroll inside its window and the page itself SHALL NOT scroll; below roughly 1100px the detail column SHALL reflow beneath the pane window; below roughly 900px the HUD SHALL collapse to a vertical stack (scene still behind) where page scrolling is permitted. Horizontal page scrolling SHALL never occur.
