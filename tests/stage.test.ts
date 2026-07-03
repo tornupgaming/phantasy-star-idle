@@ -2,7 +2,7 @@
 import { describe, it, expect } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
-import { UI } from "../src/ui/views";
+import { mountApp } from "../src/ui/app";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -13,8 +13,7 @@ describe("battle stage (run screen)", () => {
 
     let now = 1_000_000;
     const game = Game.loadOrNew(memoryStorage(), () => now);
-    const ui = new UI(root, game);
-    ui.render();
+    const app = mountApp(root, game);
 
     // Boot lands on character select; enter the hub, then accept a quest
     // (starter gear is auto-equipped) for the default area.
@@ -40,27 +39,32 @@ describe("battle stage (run screen)", () => {
     expect(root.querySelectorAll(".stage-log > div").length).toBeGreaterThan(0);
     expect(root.querySelector(".stage-char-hp-text")!.textContent).toMatch(/HP \d+\/\d+/);
 
-    // A reload mid-run rebuilds the identical scene from the event prefix.
-    const ui2root = document.createElement("div");
-    document.body.appendChild(ui2root);
-    const ui2 = new UI(ui2root, game);
-    ui2.render();
+    // A reload mid-run rebuilds the identical scene from the event prefix
+    // (the island mounts straight into the run regime).
+    const root2 = document.createElement("div");
+    document.body.appendChild(root2);
+    const app2 = mountApp(root2, game);
     await sleep(100);
-    expect(ui2root.querySelector(".stage-char-hp-text")!.textContent).toBe(
+    expect(root2.querySelector(".stage-char-hp-text")!.textContent).toBe(
       root.querySelector(".stage-char-hp-text")!.textContent,
     );
-    expect(ui2root.querySelectorAll(".stage-enemy").length).toBe(
+    expect(root2.querySelectorAll(".stage-enemy").length).toBe(
       root.querySelectorAll(".stage-enemy").length,
     );
 
-    // Fast-forward past the end; the 1 Hz poll settles and render swaps screens.
+    // Fast-forward past the end; the 1 Hz poll settles and the sync flips the
+    // regime switch — the island is disposed and the hub shows the report.
     const endTime = game.runProgress()!.endTime;
     now = game.state.activeRun!.startedAtWall + endTime + 1000;
     expect(game.poll()).toBe(true);
-    ui.render();
-    ui2.render();
+    app.sync();
+    app2.sync();
     expect(game.state.activeRun).toBeNull();
     expect(root.textContent).not.toContain("Run in progress");
     expect(root.textContent).toMatch(/Run complete!|Ejected!/);
+    // Settle lands on the hub's Guild pane (ui-navigation).
+    expect(root.textContent).toContain("Hunter's Guild");
+    app.dispose();
+    app2.dispose();
   });
 });

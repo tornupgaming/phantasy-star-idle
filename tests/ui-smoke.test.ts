@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
 import { gearPrice } from "../src/engine/shop";
-import { UI } from "../src/ui/views";
+import { mountApp } from "../src/ui/app";
 
 const click = (root: HTMLElement, sel: string) => {
   const el = root.querySelector<HTMLElement>(sel);
@@ -11,13 +11,23 @@ const click = (root: HTMLElement, sel: string) => {
   el.click();
 };
 
+const disposers: Array<() => void> = [];
+const mount = (root: HTMLElement, game: Game) => {
+  const app = mountApp(root, game);
+  disposers.push(app.dispose);
+  return app;
+};
+afterEach(() => {
+  while (disposers.length) disposers.pop()!();
+  document.body.innerHTML = "";
+});
+
 describe("UI smoke (manual-pass stand-in)", () => {
   it("select → create → hub → shops/bank → accept quest", () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
     const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
-    const ui = new UI(root, game);
-    ui.render();
+    mount(root, game);
 
     // Boots to character select: slot card for the starter + an empty slot.
     expect(root.textContent).toContain("Select Character");
@@ -32,7 +42,8 @@ describe("UI smoke (manual-pass stand-in)", () => {
     click(root, '[data-action="pick-class"][data-id="ramarl"]');
     const nameInput = root.querySelector<HTMLInputElement>("#new-name")!;
     nameInput.value = "Sue";
-    nameInput.dispatchEvent(new Event("input"));
+    // bubbles: Solid delegates input events at the document level.
+    nameInput.dispatchEvent(new Event("input", { bubbles: true }));
     expect(root.querySelector("#create-sid")!.textContent).toBeTruthy();
 
     // Create → auto-select → lands on the hub's Guild pane, status bar on top.
@@ -95,9 +106,103 @@ describe("UI smoke (manual-pass stand-in)", () => {
     for (let i = game.state.roster.length; i < 6; i++) {
       expect(game.createCharacter(`Alt${i}`, "humar").ok).toBe(true);
     }
-    const ui = new UI(root, game);
-    ui.render();
+    mount(root, game);
     expect(root.querySelectorAll('[data-action="select-char"]').length).toBe(6);
+  });
+
+  it("fine-grained updates: interacting with a pane preserves surrounding DOM", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    const app = mount(root, game);
+
+    click(root, '[data-action="select-char"]');
+    click(root, '[data-action="pane"][data-pane="tool-shop"]');
+
+    const hud = root.querySelector(".hud")!;
+    const nav = root.querySelector(".hud-nav .pso-menu")!;
+    const dlgWindow = root.querySelector(".dialogue-window")!;
+    const list = root.querySelector(".hud-pane .pso-menu")!;
+
+    // A pane-local interaction (select a tool) must not rebuild the shell.
+    click(root, '[data-action="detail"][data-id="grinder"]');
+    expect(root.querySelector(".hud")).toBe(hud);
+    expect(root.querySelector(".hud-nav .pso-menu")).toBe(nav);
+    expect(root.querySelector(".dialogue-window")).toBe(dlgWindow);
+    expect(root.querySelector(".hud-pane .pso-menu")).toBe(list);
+
+    // A poll-driven sync with unrelated engine changes keeps the same nodes too.
+    game.state.economy.meseta += 1;
+    app.sync();
+    expect(root.querySelector(".hud")).toBe(hud);
+    expect(root.querySelector(".hud-pane .pso-menu")).toBe(list);
+    expect(root.textContent).toContain(`${game.state.economy.meseta} Meseta`);
+  });
+
+  it("dialogue typewriter survives unrelated re-renders mid-reveal", async () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    const app = mount(root, game);
+
+    click(root, '[data-action="select-char"]'); // greeting starts revealing
+    const dlg = root.querySelector<HTMLElement>(".dlg-text")!;
+    await new Promise((r) => setTimeout(r, 60));
+    const midway = dlg.textContent!;
+    expect(midway.length).toBeGreaterThan(0);
+
+    // Unrelated engine update + sync must not restart or displace the reveal.
+    game.state.economy.meseta += 1;
+    app.sync();
+    expect(root.querySelector(".dlg-text")).toBe(dlg);
+    await new Promise((r) => setTimeout(r, 60));
+    expect(dlg.textContent!.length).toBeGreaterThanOrEqual(midway.length);
+
+    // A click on the dialogue window completes the line instantly.
+    click(root, '[data-action="dlg-skip"]');
+    expect(dlg.textContent!.length).toBeGreaterThan(midway.length);
+  });
+});
+
+describe("keyboard menu navigation (ui-navigation)", () => {
+  const key = (k: string) => document.dispatchEvent(new KeyboardEvent("keydown", { key: k, bubbles: true }));
+
+  it("digits jump panes, arrows move focus and rows, Enter confirms", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    mount(root, game);
+    click(root, '[data-action="select-char"]');
+
+    // Digit shortcut: 4 = Tool Shop.
+    key("4");
+    expect(root.textContent).toContain("Tool Shop");
+
+    // Nav window (menu 0) has keyboard focus; ArrowRight moves to the pane list.
+    expect(root.querySelector(".hud-nav .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+    key("ArrowRight");
+    expect(root.querySelector(".hud-pane .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+
+    // ArrowDown selects the first row (no prior selection), then advances.
+    key("ArrowDown");
+    const rows = root.querySelectorAll(".hud-pane .pso-menu-row");
+    expect(rows[0].classList.contains("selected")).toBe(true);
+    key("ArrowDown");
+    expect(rows[1].classList.contains("selected")).toBe(true);
+
+    // Focus survives an unrelated selection change (no restoration pass).
+    expect(root.querySelector(".hud-pane .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+
+    // ArrowLeft steps back to the nav window.
+    key("ArrowLeft");
+    expect(root.querySelector(".hud-nav .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+
+    // Enter on the Guild pane accepts the quest (primary action).
+    key("1");
+    key("Enter"); // completes the greeting reveal first
+    key("Enter"); // confirms ▶ Accept Quest
+    expect(game.state.activeRun).not.toBeNull();
+    expect(root.textContent).toContain("Run in progress");
   });
 });
 
@@ -149,8 +254,7 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     const storage = memoryStorage({ "psi.save": JSON.stringify(v2Save()) });
     let now = 1_000_000;
     const game = Game.loadOrNew(storage, () => now);
-    const ui = new UI(root, game);
-    ui.render();
+    const app = mountApp(root, game);
 
     // Migrated save boots to select with the old character intact.
     click(root, '[data-action="select-char"]');
@@ -179,7 +283,7 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     expect(root.textContent).toContain("Run in progress");
     now += game.runProgress()!.endTime + 60_000;
     expect(game.poll()).toBe(true);
-    ui.render();
+    app.sync();
     expect(root.querySelector(".dialog-scrim")).not.toBeNull();
     expect(root.textContent).toContain("Hunter's Guild");
     click(root, '[data-action="dismiss-report"]');
@@ -189,5 +293,6 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     // Change Character exits to the select screen.
     click(root, '[data-action="goto"][data-screen="select"]');
     expect(root.textContent).toContain("Select Character");
+    app.dispose();
   });
 });

@@ -1,7 +1,7 @@
 /**
  * PSIV-style battle stage (battle-scene-view D3/D4) — the run screen's live
  * renderer. The shell DOM (ticker / enemy field / player window / log) is built
- * once by views.ts; this class owns every dynamic update. A requestAnimationFrame
+ * once by the StageIsland (islands.tsx); this class owns every dynamic update. A rAF
  * loop recomputes game time from the engine each frame (via game.runProgress(),
  * so it can never drift) and plays each newly crossed event at its timestamp:
  * hit flashes, floating damage numbers, HP bar tweens, ticker + log lines.
@@ -9,7 +9,7 @@
  * Catch-up (first mount, mid-run reload, tab refocus after throttling) folds the
  * backlog through the pure scene reducer silently and repaints — no replaying
  * missed time. The 1 Hz poll in main.ts remains the settle authority; when the
- * run disappears the loop stops and views.ts unmounts the stage.
+ * run disappears the loop stops and the regime switch disposes the island.
  */
 
 import type { Game } from "../engine/game";

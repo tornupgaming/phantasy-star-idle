@@ -20,9 +20,13 @@
     "jsdom": "^29.1.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.2",
+    "vite-plugin-solid": "^2.11.12",
     "vitest": "^2.0.5"
   },
   "allowScripts": {
     "esbuild@0.21.5": true
+  },
+  "dependencies": {
+    "solid-js": "^1.9.14"
   }
 }
