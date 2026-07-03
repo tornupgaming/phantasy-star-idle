@@ -24,3 +24,20 @@ rates, item data, and the original calculations — port numbers from there
 instead of inventing them. See `docs/newserv-reference.md` for a map of which
 file holds what (drop tables, class stats, enemy stats, item parameters) and
 which `.hh`/`.cc` files implement the logic.
+
+## Subagents (context efficiency)
+
+Delegate these instead of doing them inline — each floods the main context
+with intermediate output when only the conclusion matters. Definitions in
+`.claude/agents/`:
+
+- `newserv-ref` — any "what does PSO/newserv do?" lookup; returns values +
+  `file:line` citations, not source dumps.
+- `balance-sim` — seeded simulation sweeps (clear rates, income, drop
+  distributions, knob tuning); returns aggregate tables + a recommendation.
+- `playcheck` — headless-Chromium play-checks per the `verify` skill; returns
+  findings + screenshot paths (Read only the key screenshots afterward).
+
+Also use the built-in Explore agent for broad code/spec searches, and prefer
+one full-suite `vitest run` triage pass in a subagent when many tests fail at
+once. Keep the main context for decisions, diffs, and edits.
