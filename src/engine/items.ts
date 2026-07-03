@@ -2,7 +2,8 @@
  * Item / equipment types (task 2.2).
  *
  * Four equippable gear kinds: weapon, frame (body armor), barrier (shield), unit
- * (stat module). Consumables (task 5) are a separate stock, not inventory gear.
+ * (stat module), plus inert tool items for non-usable tool drops. Consumables
+ * (task 5) are a separate stock, not inventory gear.
  *
  * Weapon fields map onto the damage formula (combat-resolution spec):
  *   EQATP = WATP,min×(1+Watr) + Grind×2 + FATP + BaATP
@@ -25,8 +26,16 @@ export type WeaponType =
   | "rifle" // ranged, slow, accurate
   | "cane"; // caster frame (techs deferred; still a valid melee weapon here)
 
-export type ItemKind = "weapon" | "frame" | "barrier" | "unit";
+export type ItemKind = "weapon" | "frame" | "barrier" | "unit" | "tool";
 export type Rarity = "common" | "uncommon" | "rare";
+
+export interface WeaponBonuses {
+  native?: number;
+  aBeast?: number;
+  machine?: number;
+  dark?: number;
+  hit?: number;
+}
 
 /**
  * Authentic PSO animation categories (`WeaponKind` in the item table, 0..18) —
@@ -117,6 +126,10 @@ interface ItemBase {
   sellValue: number;
   /** Equip gating (absent on curated gear, which equips unconditionally). */
   requirements?: EquipRequirements;
+  /** Authentic PSO 3-byte item code (TTGGII), present on generated/authentic items. */
+  code?: string;
+  /** Raw PMT star value; rarity is derived from this for generated/authentic items. */
+  stars?: number;
 }
 
 export interface Weapon extends ItemBase {
@@ -132,6 +145,10 @@ export interface Weapon extends ItemBase {
   group?: number;
   /** Authentic animation category 0..18 (drives the pacing archetype lookup). */
   weaponKind?: number;
+  /** Generated PSO area/hit attribute bonuses; stored/displayed but combat-inert for now. */
+  bonuses?: WeaponBonuses;
+  /** Generated PSO special ability tier/id; stored/displayed but combat-inert for now. */
+  special?: number;
 }
 
 export interface Frame extends ItemBase {
@@ -140,6 +157,8 @@ export interface Frame extends ItemBase {
   evp: number;
   atp?: number; // FATP (usually 0)
   unitSlots: number; // how many units this frame accepts
+  /** Generated slot count. Mirrors unitSlots for generated frames; optional for legacy items. */
+  slots?: number;
 }
 
 export interface Barrier extends ItemBase {
@@ -147,6 +166,8 @@ export interface Barrier extends ItemBase {
   dfp: number;
   evp: number;
   atp?: number; // BaATP (usually 0)
+  /** Reserved for generated shield variance; shields normally have no unit slots. */
+  slots?: number;
 }
 
 export interface Unit extends ItemBase {
@@ -160,7 +181,11 @@ export interface Unit extends ItemBase {
   attackSpeedBoost?: number;
 }
 
-export type Item = Weapon | Frame | Barrier | Unit;
+export interface Tool extends ItemBase {
+  kind: "tool";
+}
+
+export type Item = Weapon | Frame | Barrier | Unit | Tool;
 
 export function isWeapon(item: Item): item is Weapon {
   return item.kind === "weapon";
@@ -173,6 +198,9 @@ export function isBarrier(item: Item): item is Barrier {
 }
 export function isUnit(item: Item): item is Unit {
   return item.kind === "unit";
+}
+export function isTool(item: Item): item is Tool {
+  return item.kind === "tool";
 }
 
 /** Grind adds to sell value so grinding is not economically lost on sale. */

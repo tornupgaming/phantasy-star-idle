@@ -33,7 +33,7 @@ export function memoryStorage(initial?: Record<string, string>): StoragePort {
 }
 
 export const SAVE_KEY = "psi.save";
-export const SAVE_VERSION = 3; // v3: split weapon/armour shop stocks (pioneer2-hub-redesign)
+export const SAVE_VERSION = 4; // v4: authentic drop generation (item variance fields, tool items)
 
 export interface SaveEnvelope<T> {
   version: number;

@@ -116,6 +116,8 @@ for (const key of [
   "ArmorSaleDivisor",
   "ShieldSaleDivisor",
   "UnitSaleDivisor",
+  "Specials",
+  "SpecialStarsBaseIndex",
 ]) {
   if (!(key in table)) fail(`missing top-level section "${key}" in item table`);
 }
@@ -248,6 +250,7 @@ for (const rawCode of [...itemCodes].sort()) {
     requireFields(code, src, TOOL_FIELDS);
     tools[code] = {
       name: nameFor(code),
+      id: src.ID,
       cost: src.Cost,
       amount: src.Amount,
       tech: src.Tech,
@@ -264,6 +267,17 @@ for (const [kind, expected] of Object.entries(EXPECTED_COUNTS)) {
   if (actual !== expected) fail(`classified ${actual} ${kind}, expected ${expected}`);
 }
 
+const specials = Object.fromEntries(
+  table.Specials.map((special, index) => [
+    String(index),
+    {
+      type: special.Type,
+      amount: special.Amount,
+      stars: starsForId(table.SpecialStarsBaseIndex + index),
+    },
+  ]),
+);
+
 const out = {
   armorSaleDivisor: table.ArmorSaleDivisor,
   shieldSaleDivisor: table.ShieldSaleDivisor,
@@ -274,6 +288,7 @@ const out = {
   units,
   mags,
   tools,
+  specials,
 };
 
 // Spot-check reference values (item-parameter-data spec).

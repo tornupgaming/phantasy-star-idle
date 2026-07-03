@@ -190,15 +190,27 @@ function autoEquipStarter(state: GameState): void {
  * single mixed gear stock per roster entry becomes separate weapon/armour
  * stocks, regenerated fresh at the character's current band — stock is
  * ephemeral by design (it already rerolls on band change) and offers are
- * unpurchased shop copies, so nothing player-owned is lost.
+ * unpurchased shop copies, so nothing player-owned is lost. v3 → v4
+ * (authentic-drop-generation): items gained optional generated-variance fields
+ * (bonuses/special/slots/stars/code) — absent on old items by design, nothing
+ * to stamp — but v3 shop stocks hold copies of the removed placeholder GEAR
+ * templates, so stocks are regenerated from the authentic templates.
+ * Player-owned legacy items (inventory + equipped) are self-contained and
+ * survive as-is.
  */
 export function migrateSave(version: number, old: unknown): GameState | null {
-  if (version === 2) return migrateV2(old);
+  if (version === 3) return migrateV3(old);
+  if (version === 2) return migrateV2(old); // its fresh stocks already use the authentic templates
   if (version === 1) {
     const v2 = migrateV1(old);
     return v2 ? migrateV2(v2) : null;
   }
   return null;
+}
+
+/** v3 → v4: purge placeholder-template shop offers by regenerating every stock. */
+function migrateV3(old: unknown): GameState | null {
+  return migrateV2(old); // same operation: fresh split stocks per roster entry
 }
 
 /** v2 → v3: replace each entry's mixed `shop` stock with fresh split stocks. */
@@ -418,6 +430,9 @@ export class Game {
       this.inv().splice(idx, 1);
       equip(this.selectedCharacter(), item as Barrier);
       if (old) this.inv().push(old);
+    } else {
+      // Inert tool items are sellable but never equippable (loot-economy spec).
+      return { ok: false, reason: "cannot be equipped" };
     }
     this.save();
     return { ok: true };

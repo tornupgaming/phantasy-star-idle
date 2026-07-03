@@ -171,3 +171,117 @@ describe("v2 → v3 save migration (pioneer2-hub-redesign)", () => {
     expect(shop.armour.offers.length).toBeGreaterThan(0);
   });
 });
+
+/** An item as the old placeholder GEAR templates minted it: no code/stars. */
+function legacyPlaceholderWeapon(id: string) {
+  return {
+    id, defId: "iron-saber", name: "Iron Saber", kind: "weapon",
+    rarity: "uncommon", sellValue: 120, weaponType: "saber", minAtp: 55, spread: 25,
+    attribute: 0.1, ata: 40, grind: 1, maxGrind: 5,
+  };
+}
+
+/** A realistic v3 save: split stocks whose offers copy removed GEAR templates. */
+function v3Save() {
+  return {
+    version: 3,
+    savedAt: 654321,
+    state: {
+      roster: [
+        {
+          character: {
+            id: "char-1",
+            name: "Ash",
+            classId: "humar",
+            sectionId: sectionIdFromName("Ash"),
+            level: 7,
+            xp: xpForLevel("humar", 7),
+            equipment: {
+              weapon: legacyPlaceholderWeapon("equipped-w"),
+              frame: null,
+              barrier: null,
+              units: [],
+            },
+          },
+          filter: { autoSellBelow: 100, alwaysKeep: ["rare"] },
+          pattern: ["normal", "heavy"],
+          survival: { healAtPct: 0.4 },
+          shop: {
+            weapon: { band: 1, restock: 0, offers: [legacyPlaceholderWeapon("shop-old-0")] },
+            armour: { band: 1, restock: 0, offers: [] },
+          },
+        },
+      ],
+      selectedCharacterId: "char-1",
+      charCounter: 1,
+      economy: { meseta: 777, grinders: 2, inventory: [legacyPlaceholderWeapon("inv-w")] },
+      supply: { dimate: 3 },
+      runCounter: 5,
+      activeRun: null,
+      lastReport: null,
+    },
+  };
+}
+
+describe("v3 → v4 save migration (authentic-drop-generation)", () => {
+  it("regenerates shop stocks so no removed placeholder template is offered", () => {
+    const state = migrateSave(3, v3Save().state)!;
+    expect(state).not.toBeNull();
+    const shop = state.roster[0].shop;
+    for (const stock of [shop.weapon, shop.armour]) {
+      expect(stock.offers.length).toBeGreaterThan(0);
+      for (const offer of stock.offers) {
+        expect(offer.code).toMatch(/^[0-9A-F]{6}$/); // authentic item-table template
+      }
+    }
+  });
+
+  it("player-owned legacy items survive untouched (inventory and equipped)", () => {
+    const state = migrateSave(3, v3Save().state)!;
+    expect(state.economy.inventory[0]).toEqual(legacyPlaceholderWeapon("inv-w"));
+    expect(state.roster[0].character.equipment.weapon).toEqual(legacyPlaceholderWeapon("equipped-w"));
+    expect(state.economy.meseta).toBe(777);
+    expect(state.supply.dimate).toBe(3);
+  });
+
+  it("loads a v3 save through Game.loadOrNew and re-persists at v4", () => {
+    const storage = memoryStorage({ [SAVE_KEY]: JSON.stringify(v3Save()) });
+    const game = Game.loadOrNew(storage, () => 99999);
+    expect(game.selectedCharacter().name).toBe("Ash");
+    const reloaded = new SaveManager<GameState>(storage).load();
+    expect(reloaded?.version).toBe(SAVE_VERSION);
+    expect(reloaded?.migrated).toBeUndefined();
+  });
+});
+
+describe("v4 round-trip: generated variance and tool items persist intact", () => {
+  it("bonuses/special/slots/stars and inert tools survive save → load", () => {
+    const storage = memoryStorage();
+    const game = Game.loadOrNew(storage, () => 1000);
+    const generatedWeapon = {
+      id: "gen-w", defId: "000104", code: "000104", stars: 4, name: "Gladius",
+      kind: "weapon" as const, rarity: "uncommon" as const, sellValue: 653,
+      weaponType: "saber" as const, weaponKind: 1, group: 1, minAtp: 240, spread: 40,
+      attribute: 0, ata: 40, grind: 7, maxGrind: 18,
+      bonuses: { native: 15, hit: -10 }, special: 3,
+      requirements: { atp: 296 },
+    };
+    const generatedFrame = {
+      id: "gen-f", defId: "010103", code: "010103", stars: 1, name: "Giga Frame",
+      kind: "frame" as const, rarity: "common" as const, sellValue: 90,
+      dfp: 17, evp: 13, unitSlots: 2, slots: 2,
+    };
+    const toolItem = {
+      id: "gen-t", defId: "030100", code: "030100", stars: 0, name: "Monofluid",
+      kind: "tool" as const, rarity: "common" as const, sellValue: 30,
+    };
+    game.state.economy.inventory.push(generatedWeapon as never, generatedFrame as never, toolItem as never);
+    game.save();
+
+    const reloaded = Game.loadOrNew(storage, () => 2000);
+    const inv = reloaded.state.economy.inventory;
+    expect(inv.find((i) => i.id === "gen-w")).toEqual(generatedWeapon);
+    expect(inv.find((i) => i.id === "gen-f")).toEqual(generatedFrame);
+    expect(inv.find((i) => i.id === "gen-t")).toEqual(toolItem);
+  });
+});

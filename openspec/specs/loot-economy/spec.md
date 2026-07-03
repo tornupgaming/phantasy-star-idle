@@ -6,15 +6,19 @@ Govern drop generation, loot-filter routing, the meseta currency, shop purchasin
 ## Requirements
 
 ### Requirement: Drop generation
-Enemies and item boxes SHALL generate drops from area/difficulty-appropriate drop tables, producing meseta, gear, and/or consumables. All drop rolls SHALL use the run's seeded RNG.
+Enemies and item boxes SHALL generate drops via the authentic drop generator (drop-generation capability), keyed by the character's section ID, the run's difficulty, and the area — producing meseta, gear with generated variance, usable consumables, grinders, and inert tool items. The hand-authored drop tables and placeholder gear templates SHALL be removed. All drop rolls SHALL use the run's seeded RNG.
 
 #### Scenario: Enemy produces a seeded drop
 - **WHEN** an enemy dies
-- **THEN** the system SHALL roll its drop from the appropriate table using the run's seeded RNG, so the same run reproduces the same drops
+- **THEN** the system SHALL roll its drop through the authentic generator using the run's seeded RNG, so the same run reproduces the same drops
 
 #### Scenario: Box produces a seeded drop
 - **WHEN** an item box is opened
-- **THEN** the system SHALL roll its drop from the appropriate table using the run's seeded RNG
+- **THEN** the system SHALL roll its drop through the authentic generator using the run's seeded RNG
+
+#### Scenario: Placeholder gear cannot drop
+- **WHEN** any drop is generated
+- **THEN** the resulting item SHALL be defined by the authentic item-parameter dataset, never by a hand-authored placeholder template
 
 ### Requirement: Loot filter routing
 Every drop SHALL pass through a player-configured loot filter that routes it to either **keep** (added to inventory) or **auto-sell** (converted to meseta). The MVP filter SHALL support at minimum a rule to auto-sell items below a configured value and to always keep flagged/rare items.
@@ -28,11 +32,15 @@ Every drop SHALL pass through a player-configured loot filter that routes it to 
 - **THEN** the item SHALL be added to the player's inventory
 
 ### Requirement: Meseta currency
-Meseta SHALL be the currency earned from drops and auto-sold items and spent in the meta layer. The player's meseta balance SHALL persist across runs.
+Meseta SHALL be the currency earned from drops and auto-sold items and spent in the meta layer. Meseta from enemies SHALL arrive only as drops rolled by the drop generator (a kill MAY pay nothing); there SHALL be no separate guaranteed per-kill meseta award. The player's meseta balance SHALL persist across runs.
 
 #### Scenario: Meseta accrues from a run
 - **WHEN** a run collects meseta drops and/or auto-sells items
 - **THEN** the amounts SHALL be added to the player's persistent meseta balance and reflected in the run report
+
+#### Scenario: A kill can pay nothing
+- **WHEN** an enemy dies and its drop-anything roll fails
+- **THEN** the player's meseta SHALL be unchanged by that kill
 
 ### Requirement: Shop purchasing
 The player SHALL be able to spend meseta in the meta layer to buy consumables (healing and revive items) and grinders at flat prices, and to buy gear from two per-character shop stocks: a weapon stock offering weapons, and an armour stock offering frames, barriers, and units. Each stock SHALL be generated deterministically for its character and shop kind, drawn from content appropriate to that character's level band, and SHALL restock independently when the character's level band changes.
@@ -63,6 +71,13 @@ Collected items SHALL be stored in an inventory the player can view in the meta 
 #### Scenario: Sell an inventory item
 - **WHEN** the player sells an item from inventory
 - **THEN** the item SHALL be removed from inventory and its sell value added to meseta
+
+### Requirement: Inert tool items in the economy
+Inert tool items (non-mate, non-atomizer, non-grinder tools) SHALL enter the shared inventory through the loot filter like gear, valued by their authentic sell price, and SHALL be sellable but not usable.
+
+#### Scenario: Tool item is filterable and sellable
+- **WHEN** an inert tool item drops whose sell value is below the auto-sell bar
+- **THEN** it SHALL be auto-sold like any other low-value item
 
 ### Requirement: Run report
 When a run ends (complete or ejected), the system SHALL present a report summarizing loot collected, meseta gained, consumables used, and the run outcome.

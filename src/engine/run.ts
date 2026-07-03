@@ -17,8 +17,8 @@ import { createRng } from "./rng";
 import type { Character } from "./character";
 import { characterToCombatant, effectiveStats } from "./character";
 import { AttackPattern, resolveAttack, type AttackType } from "./combat";
-import { getArea, getEnemyDef, getDropTable } from "./content";
-import { difficulty, type DifficultyId } from "./areas";
+import { getArea, getEnemyDef } from "./content";
+import { areaNormForFloor, difficulty, type DifficultyId } from "./areas";
 import { generateStage } from "./stage-gen";
 import { instantiateEnemy, isDead, type EnemyInstance } from "./enemies";
 import { engageDelayMs, nextComboDelay, enemyInterval } from "./pacing";
@@ -27,7 +27,7 @@ import { attackSpeedBoost } from "./character";
 import { KIND_FOR_ARCHETYPE } from "./items";
 import type { Item } from "./items";
 import { itemSellValue } from "./items";
-import { filterItem, rollDrop, type LootFilter } from "./loot";
+import { filterItem, type LootFilter } from "./loot";
 import type { Supply } from "./consumables";
 import { addToSupply } from "./consumables";
 import {
@@ -37,6 +37,20 @@ import {
   type SurvivalConfig,
   DEFAULT_SURVIVAL,
 } from "./survival";
+import {
+  generateCommonBarrier,
+  generateCommonFrame,
+  generateCommonTool,
+  generateCommonUnit,
+  generateCommonWeapon,
+  mintRareItem,
+  rollBoxDropPipeline,
+  rollBoxMeseta,
+  rollEnemyDropPipeline,
+  rollEnemyMeseta,
+  type CommonItemClass,
+  type DropContext,
+} from "./drop-gen";
 
 /** 1 real ms = GAME_SPEED game ms. Tunable pacing knob for the balancing pass. */
 export const GAME_SPEED = 1;
@@ -175,6 +189,14 @@ export function simulateRun(input: RunInput): RunResult {
   const rng = createRng(input.runId, input.seed);
   const area = getArea(input.areaId);
   const diff = difficulty(input.difficultyId);
+  const baseAreaNorm = areaNormForFloor(area.floor);
+  const bossAreaNorm = area.bossFloor === undefined ? baseAreaNorm : areaNormForFloor(area.bossFloor);
+  const dropDifficulty = diff.label as DropContext["difficulty"];
+  const dropContext = (areaNorm: number): DropContext => ({
+    difficulty: dropDifficulty,
+    sectionId: input.character.sectionId,
+    areaNorm,
+  });
   const survival = input.survival ?? DEFAULT_SURVIVAL;
   // The stage roll consumes RNG draws first, in a fixed order — the same
   // (runId, seed) reproduces the identical layout and battle (design D11).
@@ -215,36 +237,88 @@ export function simulateRun(input: RunInput): RunResult {
     data?: Pick<RunEvent, "room" | "spawn" | "attack" | "kill" | "hp">,
   ) => events.push({ t, kind, text, ...data });
 
-  // `mesetaBase` overrides the rolled meseta amount — enemy kills award the
-  // authentic per-enemy meseta from the stat row; boxes keep the rolled range.
-  const applyDrop = (tableId: string, tier: number, source: string, mesetaBase?: number) => {
-    const out = rollDrop(getDropTable(tableId), tier, rng, mintId);
-    if (out.meseta > 0) {
-      const gained = Math.floor((mesetaBase ?? out.meseta) * diff.mesetaMult);
-      loot.meseta += gained;
-      log("loot", `${source} dropped ${gained} meseta.`);
+  const collectItem = (item: Item, source: string) => {
+    const decision = filterItem(item, input.filter);
+    if (decision === "sell") {
+      const value = itemSellValue(item);
+      loot.meseta += value;
+      log("loot", `${source} dropped ${item.name} — auto-sold for ${value} meseta.`);
+    } else {
+      loot.items.push(item);
+      log("loot", `${source} dropped ${item.name} — kept.`);
     }
-    if (out.item) {
-      const decision = filterItem(out.item, input.filter);
-      if (decision === "sell") {
-        const value = itemSellValue(out.item);
-        loot.meseta += value;
-        log("loot", `${source} dropped ${out.item.name} — auto-sold for ${value} meseta.`);
-      } else {
-        loot.items.push(out.item);
-        log("loot", `${source} dropped ${out.item.name} — kept.`);
+  };
+
+  const collectCommon = (itemClass: CommonItemClass, context: DropContext, source: string, statsType?: string) => {
+    switch (itemClass) {
+      case "weapon": {
+        const item = generateCommonWeapon(context, rng, mintId);
+        if (item) collectItem(item, source);
+        break;
       }
+      case "armor": {
+        const item = generateCommonFrame(context, rng, mintId);
+        if (item) collectItem(item, source);
+        break;
+      }
+      case "shield": {
+        const item = generateCommonBarrier(context, rng, mintId);
+        if (item) collectItem(item, source);
+        break;
+      }
+      case "unit": {
+        const item = generateCommonUnit(context, rng, mintId);
+        if (item) collectItem(item, source);
+        break;
+      }
+      case "tool": {
+        const out = generateCommonTool(context, rng, mintId);
+        if (out.kind === "consumable") {
+          addToSupply(loot.consumables, out.id, out.count);
+          // Picked-up consumables are usable for the rest of the run (PSO-style
+          // pickup); settle nets them out as gained − used, so no double count.
+          addToSupply(supply, out.id, out.count);
+          log("loot", `${source} dropped ${out.count}× ${out.id}.`);
+        } else if (out.kind === "grinders") {
+          loot.grinders += out.count;
+          log("loot", `${source} dropped ${out.count}× grinder.`);
+        } else if (out.kind === "item") {
+          collectItem(out.item, source);
+        }
+        break;
+      }
+      case "meseta": {
+        const gained = statsType
+          ? rollEnemyMeseta(statsType, context, rng, diff.mesetaMult)
+          : rollBoxMeseta(context, rng, diff.mesetaMult);
+        if (gained > 0) {
+          loot.meseta += gained;
+          log("loot", `${source} dropped ${gained} meseta.`);
+        }
+        break;
+      }
+      case "nothing":
+        break;
     }
-    if (out.consumable) {
-      addToSupply(loot.consumables, out.consumable.id, out.consumable.count);
-      // Picked-up consumables are usable for the rest of the run (PSO-style
-      // pickup); settle nets them out as gained − used, so no double count.
-      addToSupply(supply, out.consumable.id, out.consumable.count);
-      log("loot", `${source} dropped ${out.consumable.count}× ${out.consumable.id}.`);
+  };
+
+  const applyEnemyDrop = (statsType: string, areaNorm: number, source: string) => {
+    const context = dropContext(areaNorm);
+    const decision = rollEnemyDropPipeline(statsType, context, rng);
+    if (decision.kind === "rare") {
+      collectItem(mintRareItem(decision.spec, context, rng, mintId), source);
+    } else if (decision.kind === "common") {
+      collectCommon(decision.itemClass, context, source, statsType);
     }
-    if (out.grinders > 0) {
-      loot.grinders += out.grinders;
-      log("loot", `${source} dropped ${out.grinders}× grinder.`);
+  };
+
+  const applyBoxDrop = (areaNorm: number, source: string) => {
+    const context = dropContext(areaNorm);
+    const decision = rollBoxDropPipeline(context, rng);
+    if (decision.kind === "rare") {
+      collectItem(mintRareItem(decision.spec, context, rng, mintId), source);
+    } else if (decision.kind === "common") {
+      collectCommon(decision.itemClass, context, source);
     }
   };
 
@@ -433,7 +507,7 @@ export function simulateRun(input: RunInput): RunResult {
             log("kill", `${target.name} defeated. (+${xp} XP)`, {
               kill: { enemyIndex: targetIndex, xp },
             });
-            applyDrop(target.def.dropTableId, diff.dropTier, target.name, target.stats.meseta);
+            applyEnemyDrop(target.def.statsType, target.def.enemyType === "boss" ? bossAreaNorm : baseAreaNorm, target.name);
             engageNext(); // a queued enemy closes in to replace the fallen one
             charAttackIndex = 0; // combo resets on a new target
           } else {
@@ -482,7 +556,7 @@ export function simulateRun(input: RunInput): RunResult {
     for (let b = 0; b < room.boxes; b++) {
       t += BOX_OPEN_MS;
       log("box", `Opened item box ${b + 1}.`);
-      applyDrop(area.boxDropTableId, diff.dropTier, "Item box");
+      applyBoxDrop(baseAreaNorm, "Item box");
     }
     roomsCleared++;
     t += ROOM_TRAVEL_MS;

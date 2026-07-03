@@ -36,7 +36,9 @@ const baseInput = (over: Partial<RunInput> = {}): RunInput => ({
   areaId: "forest",
   difficultyId: "normal",
   character: geared(),
-  supply: { monomate: 5, "moon-atomizer": 1 },
+  // Sized like the starter med-pack: authentic drop generation yields almost
+  // no mid-run mate pickups, so the dispatched supply must cover the clear.
+  supply: { monomate: 25, "moon-atomizer": 1 },
   filter: DEFAULT_FILTER,
   pattern: ["normal", "normal", "heavy"],
   ...over,

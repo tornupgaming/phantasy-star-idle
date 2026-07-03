@@ -4,8 +4,8 @@
  * An `EnemyDef` references an enemy type in the generated stat dataset
  * (src/engine/data/enemy-stats.json — authentic PSO BB Solo values) plus the
  * hand-authored "feel" fields that battle-params doesn't carry (pacing class,
- * damage spread/variance, drop table). Difficulty selects the dataset row
- * directly — there is no stat scaling. Enemies attack the character through
+ * damage spread/variance). Difficulty selects the dataset row directly — there
+ * is no stat scaling. Enemies attack the character through
  * the same combat pipeline in reverse, so an enemy also projects into a
  * `Combatant` (critDivisor = 2).
  */
@@ -28,7 +28,6 @@ export interface EnemyDef {
   enemyType: EnemyType; // drives attack speed (pacing table)
   spread: number; // damage spread (WSpread analogue)
   pvarMax: number; // enemy damage variance range
-  dropTableId: string;
 }
 
 /** A live enemy in a run: the dataset row for the run's difficulty + current HP. */

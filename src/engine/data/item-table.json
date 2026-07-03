@@ -20562,6 +20562,7 @@
   "tools": {
     "030000": {
       "name": "Monomate",
+      "id": 0,
       "cost": 50,
       "amount": 80,
       "tech": 0,
@@ -20569,6 +20570,7 @@
     },
     "030001": {
       "name": "Dimate",
+      "id": 1,
       "cost": 300,
       "amount": 200,
       "tech": 0,
@@ -20576,6 +20578,7 @@
     },
     "030002": {
       "name": "Trimate",
+      "id": 2,
       "cost": 2000,
       "amount": 7000,
       "tech": 0,
@@ -20583,6 +20586,7 @@
     },
     "030100": {
       "name": "Monofluid",
+      "id": 3,
       "cost": 100,
       "amount": 75,
       "tech": 0,
@@ -20590,6 +20594,7 @@
     },
     "030101": {
       "name": "Difluid",
+      "id": 4,
       "cost": 500,
       "amount": 200,
       "tech": 0,
@@ -20597,6 +20602,7 @@
     },
     "030102": {
       "name": "Trifluid",
+      "id": 5,
       "cost": 3600,
       "amount": 7000,
       "tech": 0,
@@ -20604,6 +20610,7 @@
     },
     "030200": {
       "name": "<TECH-DISK>",
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 0,
@@ -20611,6 +20618,7 @@
     },
     "030201": {
       "name": null,
+      "id": 25,
       "cost": 300,
       "amount": 0,
       "tech": 1,
@@ -20618,6 +20626,7 @@
     },
     "030202": {
       "name": null,
+      "id": 25,
       "cost": 450,
       "amount": 0,
       "tech": 2,
@@ -20625,6 +20634,7 @@
     },
     "030203": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 3,
@@ -20632,6 +20642,7 @@
     },
     "030204": {
       "name": null,
+      "id": 25,
       "cost": 300,
       "amount": 0,
       "tech": 4,
@@ -20639,6 +20650,7 @@
     },
     "030205": {
       "name": null,
+      "id": 25,
       "cost": 450,
       "amount": 0,
       "tech": 5,
@@ -20646,6 +20658,7 @@
     },
     "030206": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 6,
@@ -20653,6 +20666,7 @@
     },
     "030207": {
       "name": null,
+      "id": 25,
       "cost": 300,
       "amount": 0,
       "tech": 7,
@@ -20660,6 +20674,7 @@
     },
     "030208": {
       "name": null,
+      "id": 25,
       "cost": 450,
       "amount": 0,
       "tech": 8,
@@ -20667,6 +20682,7 @@
     },
     "030209": {
       "name": null,
+      "id": 25,
       "cost": 500,
       "amount": 0,
       "tech": 9,
@@ -20674,6 +20690,7 @@
     },
     "03020A": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 10,
@@ -20681,6 +20698,7 @@
     },
     "03020B": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 11,
@@ -20688,6 +20706,7 @@
     },
     "03020C": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 12,
@@ -20695,6 +20714,7 @@
     },
     "03020D": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 13,
@@ -20702,6 +20722,7 @@
     },
     "03020E": {
       "name": null,
+      "id": 25,
       "cost": 5000,
       "amount": 0,
       "tech": 14,
@@ -20709,6 +20730,7 @@
     },
     "03020F": {
       "name": null,
+      "id": 25,
       "cost": 300,
       "amount": 0,
       "tech": 15,
@@ -20716,6 +20738,7 @@
     },
     "030210": {
       "name": null,
+      "id": 25,
       "cost": 100,
       "amount": 0,
       "tech": 16,
@@ -20723,6 +20746,7 @@
     },
     "030211": {
       "name": null,
+      "id": 25,
       "cost": 5000,
       "amount": 0,
       "tech": 17,
@@ -20730,6 +20754,7 @@
     },
     "030212": {
       "name": null,
+      "id": 25,
       "cost": 500,
       "amount": 0,
       "tech": 18,
@@ -20737,6 +20762,7 @@
     },
     "030300": {
       "name": "Sol Atomizer",
+      "id": 8,
       "cost": 300,
       "amount": 0,
       "tech": 0,
@@ -20744,6 +20770,7 @@
     },
     "030400": {
       "name": "Moon Atomizer",
+      "id": 9,
       "cost": 500,
       "amount": 0,
       "tech": 0,
@@ -20751,6 +20778,7 @@
     },
     "030500": {
       "name": "Star Atomizer",
+      "id": 10,
       "cost": 5000,
       "amount": 0,
       "tech": 0,
@@ -20758,6 +20786,7 @@
     },
     "030600": {
       "name": "Antidote",
+      "id": 6,
       "cost": 60,
       "amount": 0,
       "tech": 0,
@@ -20765,6 +20794,7 @@
     },
     "030601": {
       "name": "Antiparalysis",
+      "id": 7,
       "cost": 60,
       "amount": 0,
       "tech": 0,
@@ -20772,6 +20802,7 @@
     },
     "030700": {
       "name": "Telepipe",
+      "id": 11,
       "cost": 350,
       "amount": 0,
       "tech": 0,
@@ -20779,6 +20810,7 @@
     },
     "030800": {
       "name": "Trap Vision",
+      "id": 12,
       "cost": 100,
       "amount": 0,
       "tech": 0,
@@ -20786,6 +20818,7 @@
     },
     "030900": {
       "name": "Scape Doll",
+      "id": 24,
       "cost": 10000,
       "amount": 0,
       "tech": 0,
@@ -20793,6 +20826,7 @@
     },
     "030A00": {
       "name": "Monogrinder",
+      "id": 13,
       "cost": 5000,
       "amount": 1,
       "tech": 0,
@@ -20800,6 +20834,7 @@
     },
     "030A01": {
       "name": "Digrinder",
+      "id": 14,
       "cost": 10000,
       "amount": 2,
       "tech": 0,
@@ -20807,6 +20842,7 @@
     },
     "030A02": {
       "name": "Trigrinder",
+      "id": 15,
       "cost": 15000,
       "amount": 3,
       "tech": 0,
@@ -20814,6 +20850,7 @@
     },
     "030B00": {
       "name": "Power Material",
+      "id": 16,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20821,6 +20858,7 @@
     },
     "030B01": {
       "name": "Mind Material",
+      "id": 17,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20828,6 +20866,7 @@
     },
     "030B02": {
       "name": "Evade Material",
+      "id": 18,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20835,6 +20874,7 @@
     },
     "030B03": {
       "name": "HP Material",
+      "id": 19,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20842,6 +20882,7 @@
     },
     "030B04": {
       "name": "TP Material",
+      "id": 20,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20849,6 +20890,7 @@
     },
     "030B05": {
       "name": "Def Material",
+      "id": 21,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20856,6 +20898,7 @@
     },
     "030B06": {
       "name": "Luck Material",
+      "id": 23,
       "cost": 2400,
       "amount": 0,
       "tech": 0,
@@ -20863,6 +20906,7 @@
     },
     "030C00": {
       "name": "Cell of MAG 502",
+      "id": 26,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20870,6 +20914,7 @@
     },
     "030C01": {
       "name": "Cell of MAG 213",
+      "id": 27,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20877,6 +20922,7 @@
     },
     "030C02": {
       "name": "Parts of RoboChao",
+      "id": 28,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20884,6 +20930,7 @@
     },
     "030C03": {
       "name": "Heart of Opa Opa",
+      "id": 29,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20891,6 +20938,7 @@
     },
     "030C04": {
       "name": "Heart of Pian",
+      "id": 30,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20898,6 +20946,7 @@
     },
     "030C05": {
       "name": "Heart of Chao",
+      "id": 31,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20905,6 +20954,7 @@
     },
     "030D00": {
       "name": "Sorcerer's Right Arm",
+      "id": 32,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20912,6 +20962,7 @@
     },
     "030D01": {
       "name": "S-beat's Arms",
+      "id": 33,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20919,6 +20970,7 @@
     },
     "030D02": {
       "name": "P-arm's Arms",
+      "id": 34,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20926,6 +20978,7 @@
     },
     "030D03": {
       "name": "Delsaber's Right Arm",
+      "id": 35,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20933,6 +20986,7 @@
     },
     "030D04": {
       "name": "Bringer's Right Arm",
+      "id": 36,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20940,6 +20994,7 @@
     },
     "030D05": {
       "name": "Delsaber's Left Arm",
+      "id": 37,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20947,6 +21002,7 @@
     },
     "030D06": {
       "name": "S-red's Arms",
+      "id": 41,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20954,6 +21010,7 @@
     },
     "030D07": {
       "name": "Dragon's Claw",
+      "id": 42,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20961,6 +21018,7 @@
     },
     "030D08": {
       "name": "Hildebear's Head",
+      "id": 43,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20968,6 +21026,7 @@
     },
     "030D09": {
       "name": "Hildeblue's Head",
+      "id": 44,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20975,6 +21034,7 @@
     },
     "030D0A": {
       "name": "Parts of Baranz",
+      "id": 45,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20982,6 +21042,7 @@
     },
     "030D0B": {
       "name": "Belra's Right Arm",
+      "id": 46,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20989,6 +21050,7 @@
     },
     "030D0C": {
       "name": "Gi Gue's body",
+      "id": 67,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -20996,6 +21058,7 @@
     },
     "030D0D": {
       "name": "Sinow Berill's Arms",
+      "id": 68,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21003,6 +21066,7 @@
     },
     "030D0E": {
       "name": "Grass Assassin's Arms",
+      "id": 69,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21010,6 +21074,7 @@
     },
     "030D0F": {
       "name": "Booma's Right Arm",
+      "id": 70,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21017,6 +21082,7 @@
     },
     "030D10": {
       "name": "Gobooma's Right Arm",
+      "id": 71,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21024,6 +21090,7 @@
     },
     "030D11": {
       "name": "Gigobooma's Right Arm",
+      "id": 72,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21031,6 +21098,7 @@
     },
     "030D12": {
       "name": "Gal Gryphon's Wing",
+      "id": 73,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21038,6 +21106,7 @@
     },
     "030D13": {
       "name": "Rappy's Wing",
+      "id": 74,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21045,6 +21114,7 @@
     },
     "030D14": {
       "name": "Cladding of Epsilon",
+      "id": 175,
       "cost": 0,
       "amount": 0,
       "tech": 0,
@@ -21052,6 +21122,7 @@
     },
     "030D15": {
       "name": "De Rol Le Shell",
+      "id": 176,
       "cost": 0,
       "amount": 0,
       "tech": 0,
@@ -21059,6 +21130,7 @@
     },
     "030E00": {
       "name": "Berill Photon",
+      "id": 75,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21066,6 +21138,7 @@
     },
     "030E01": {
       "name": "Parasitic gene \"Flow\"",
+      "id": 76,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21073,6 +21146,7 @@
     },
     "030E02": {
       "name": "Magic Stone \"Iritista\"",
+      "id": 77,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21080,6 +21154,7 @@
     },
     "030E03": {
       "name": "Blue-black stone",
+      "id": 78,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21087,6 +21162,7 @@
     },
     "030E04": {
       "name": "Syncesta",
+      "id": 79,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21094,6 +21170,7 @@
     },
     "030E05": {
       "name": "Magic Water",
+      "id": 80,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21101,6 +21178,7 @@
     },
     "030E06": {
       "name": "Parasitic cell Type D",
+      "id": 81,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21108,6 +21186,7 @@
     },
     "030E07": {
       "name": "magic rock \"Heart Key\"",
+      "id": 82,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21115,6 +21194,7 @@
     },
     "030E08": {
       "name": "magic rock \"Moola\"",
+      "id": 83,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21122,6 +21202,7 @@
     },
     "030E09": {
       "name": "Star Amplifier",
+      "id": 84,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21129,6 +21210,7 @@
     },
     "030E0A": {
       "name": "Book of HITOGATA",
+      "id": 85,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21136,6 +21218,7 @@
     },
     "030E0B": {
       "name": "Heart of Chu Chu",
+      "id": 86,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21143,6 +21226,7 @@
     },
     "030E0C": {
       "name": "Parts of EGG BLASTER",
+      "id": 87,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21150,6 +21234,7 @@
     },
     "030E0D": {
       "name": "Heart of Angel",
+      "id": 88,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21157,6 +21242,7 @@
     },
     "030E0E": {
       "name": "Heart of Devil",
+      "id": 89,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21164,6 +21250,7 @@
     },
     "030E0F": {
       "name": "Kit of Hamburger",
+      "id": 90,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21171,6 +21258,7 @@
     },
     "030E10": {
       "name": "Panther's Spirit",
+      "id": 91,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21178,6 +21266,7 @@
     },
     "030E11": {
       "name": "Kit of MARK3",
+      "id": 92,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21185,6 +21274,7 @@
     },
     "030E12": {
       "name": "Kit of MASTER SYSTEM",
+      "id": 93,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21192,6 +21282,7 @@
     },
     "030E13": {
       "name": "Kit of GENESIS",
+      "id": 94,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21199,6 +21290,7 @@
     },
     "030E14": {
       "name": "Kit of SEGA SATURN",
+      "id": 95,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21206,6 +21298,7 @@
     },
     "030E15": {
       "name": "Kit of DREAMCAST",
+      "id": 96,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21213,6 +21306,7 @@
     },
     "030E16": {
       "name": "Amplifier of Resta",
+      "id": 97,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21220,6 +21314,7 @@
     },
     "030E17": {
       "name": "Amplifier of Anti",
+      "id": 98,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21227,6 +21322,7 @@
     },
     "030E18": {
       "name": "Amplifier of Shifta",
+      "id": 99,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21234,6 +21330,7 @@
     },
     "030E19": {
       "name": "Amplifier of Deband",
+      "id": 100,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21241,6 +21338,7 @@
     },
     "030E1A": {
       "name": "Amplifier of Foie",
+      "id": 101,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21248,6 +21346,7 @@
     },
     "030E1B": {
       "name": "Amplifier of Gifoie",
+      "id": 102,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21255,6 +21354,7 @@
     },
     "030E1C": {
       "name": "Amplifier of Rafoie",
+      "id": 103,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21262,6 +21362,7 @@
     },
     "030E1D": {
       "name": "Amplifier of Barta",
+      "id": 104,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21269,6 +21370,7 @@
     },
     "030E1E": {
       "name": "Amplifier of Gibarta",
+      "id": 105,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21276,6 +21378,7 @@
     },
     "030E1F": {
       "name": "Amplifier of Rabarta",
+      "id": 106,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21283,6 +21386,7 @@
     },
     "030E20": {
       "name": "Amplifier of Zonde",
+      "id": 107,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21290,6 +21394,7 @@
     },
     "030E21": {
       "name": "Amplifier of Gizonde",
+      "id": 108,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21297,6 +21402,7 @@
     },
     "030E22": {
       "name": "Amplifier of Razonde",
+      "id": 109,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21304,6 +21410,7 @@
     },
     "030E23": {
       "name": "Amplifier of Red",
+      "id": 110,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21311,6 +21418,7 @@
     },
     "030E24": {
       "name": "Amplifier of Blue",
+      "id": 111,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21318,6 +21426,7 @@
     },
     "030E25": {
       "name": "Amplifier of Yellow",
+      "id": 112,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21325,6 +21434,7 @@
     },
     "030E26": {
       "name": "Heart of KAPU KAPU",
+      "id": 113,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21332,6 +21442,7 @@
     },
     "030E27": {
       "name": "Photon Booster",
+      "id": 119,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21339,6 +21450,7 @@
     },
     "030F00": {
       "name": "AddSlot",
+      "id": 114,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21346,6 +21458,7 @@
     },
     "031000": {
       "name": "Photon Drop",
+      "id": 115,
       "cost": 8000,
       "amount": 0,
       "tech": 0,
@@ -21353,6 +21466,7 @@
     },
     "031001": {
       "name": "Photon Sphere",
+      "id": 116,
       "cost": 16000,
       "amount": 0,
       "tech": 0,
@@ -21360,6 +21474,7 @@
     },
     "031002": {
       "name": "Photon Crystal",
+      "id": 117,
       "cost": 24000,
       "amount": 0,
       "tech": 0,
@@ -21367,6 +21482,7 @@
     },
     "031003": {
       "name": "Secret Ticket",
+      "id": 118,
       "cost": 0,
       "amount": 0,
       "tech": 0,
@@ -21374,6 +21490,7 @@
     },
     "031004": {
       "name": "Photon Ticket",
+      "id": 174,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21381,6 +21498,7 @@
     },
     "031100": {
       "name": "Book of KATANA1",
+      "id": 38,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21388,6 +21506,7 @@
     },
     "031101": {
       "name": "Book of KATANA2",
+      "id": 39,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21395,6 +21514,7 @@
     },
     "031102": {
       "name": "Book of KATANA3",
+      "id": 40,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21402,6 +21522,7 @@
     },
     "031200": {
       "name": "Weapons Bronze Badge",
+      "id": 47,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21409,6 +21530,7 @@
     },
     "031201": {
       "name": "Weapons Silver Badge",
+      "id": 48,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21416,6 +21538,7 @@
     },
     "031202": {
       "name": "Weapons Gold Badge",
+      "id": 49,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21423,6 +21546,7 @@
     },
     "031203": {
       "name": "Weapons Crystal Badge",
+      "id": 50,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21430,6 +21554,7 @@
     },
     "031204": {
       "name": "Weapons Steel Badge",
+      "id": 51,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21437,6 +21562,7 @@
     },
     "031205": {
       "name": "Weapons Aluminum Badge",
+      "id": 52,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21444,6 +21570,7 @@
     },
     "031206": {
       "name": "Weapons Leather Badge",
+      "id": 53,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21451,6 +21578,7 @@
     },
     "031207": {
       "name": "Weapons Bone Badge",
+      "id": 54,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21458,6 +21586,7 @@
     },
     "031208": {
       "name": "Letter of appreciation",
+      "id": 55,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21465,6 +21594,7 @@
     },
     "031209": {
       "name": "Item Ticket",
+      "id": 56,
       "cost": 0,
       "amount": 0,
       "tech": 0,
@@ -21472,6 +21602,7 @@
     },
     "03120A": {
       "name": "Valentine's Chocolate",
+      "id": 57,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21479,6 +21610,7 @@
     },
     "03120B": {
       "name": "New Year's Card",
+      "id": 58,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21486,6 +21618,7 @@
     },
     "03120C": {
       "name": "Christmas Card",
+      "id": 59,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21493,6 +21626,7 @@
     },
     "03120D": {
       "name": "Birthday Card",
+      "id": 60,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21500,6 +21634,7 @@
     },
     "03120E": {
       "name": "Proof of Sonic Team",
+      "id": 61,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21507,6 +21642,7 @@
     },
     "03120F": {
       "name": "Special Event Ticket",
+      "id": 62,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21514,6 +21650,7 @@
     },
     "031210": {
       "name": "Flower Bouquet",
+      "id": 63,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21521,6 +21658,7 @@
     },
     "031211": {
       "name": "Cake",
+      "id": 64,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21528,6 +21666,7 @@
     },
     "031212": {
       "name": "Accessories",
+      "id": 65,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21535,6 +21674,7 @@
     },
     "031213": {
       "name": "Mr.Naka's Business Card",
+      "id": 66,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21542,6 +21682,7 @@
     },
     "031300": {
       "name": "Present",
+      "id": 120,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21549,6 +21690,7 @@
     },
     "031400": {
       "name": "Chocolate",
+      "id": 121,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21556,6 +21698,7 @@
     },
     "031401": {
       "name": "Candy",
+      "id": 122,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21563,6 +21706,7 @@
     },
     "031402": {
       "name": "Cake",
+      "id": 123,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21570,6 +21714,7 @@
     },
     "031403": {
       "name": "Weapons Silver Badge",
+      "id": 125,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21577,6 +21722,7 @@
     },
     "031404": {
       "name": "Weapons Gold Badge",
+      "id": 126,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21584,6 +21730,7 @@
     },
     "031405": {
       "name": "Weapons Crystal Badge",
+      "id": 127,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21591,6 +21738,7 @@
     },
     "031406": {
       "name": "Weapons Steel Badge",
+      "id": 128,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21598,6 +21746,7 @@
     },
     "031407": {
       "name": "Weapons Aluminum Badge",
+      "id": 129,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21605,6 +21754,7 @@
     },
     "031408": {
       "name": "Weapons Leather Badge",
+      "id": 130,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21612,6 +21762,7 @@
     },
     "031409": {
       "name": "Weapons Bone Badge",
+      "id": 131,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21619,6 +21770,7 @@
     },
     "03140A": {
       "name": "Bouquet",
+      "id": 132,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21626,6 +21778,7 @@
     },
     "03140B": {
       "name": "Decoction",
+      "id": 133,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21633,6 +21786,7 @@
     },
     "031500": {
       "name": "Christmas Present",
+      "id": 134,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21640,6 +21794,7 @@
     },
     "031501": {
       "name": "Easter Egg",
+      "id": 135,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21647,6 +21802,7 @@
     },
     "031502": {
       "name": "Jack-O'-Lantern",
+      "id": 136,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21654,6 +21810,7 @@
     },
     "031600": {
       "name": "DISK Vol.1 \"Wedding March\"",
+      "id": 137,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21661,6 +21818,7 @@
     },
     "031601": {
       "name": "DISK Vol.2 \"Day Light\"",
+      "id": 138,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21668,6 +21826,7 @@
     },
     "031602": {
       "name": "DISK Vol.3 \"Burning Rangers\"",
+      "id": 139,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21675,6 +21834,7 @@
     },
     "031603": {
       "name": "DISK Vol.4 \"Open Your Heart\"",
+      "id": 140,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21682,6 +21842,7 @@
     },
     "031604": {
       "name": "DISK Vol.5 \"Live & Learn\"",
+      "id": 141,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21689,6 +21850,7 @@
     },
     "031605": {
       "name": "DISK Vol.6 \"NiGHTS\"",
+      "id": 142,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21696,6 +21858,7 @@
     },
     "031606": {
       "name": "DISK Vol.7 \"Ending Theme (Piano ver.)\"",
+      "id": 143,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21703,6 +21866,7 @@
     },
     "031607": {
       "name": "DISK Vol.8 \"Heart to Heart\"",
+      "id": 144,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21710,6 +21874,7 @@
     },
     "031608": {
       "name": "DISK Vol.9 \"Strange Blue\"",
+      "id": 145,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21717,6 +21882,7 @@
     },
     "031609": {
       "name": "DISK Vol.10 \"Reunion System\"",
+      "id": 146,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21724,6 +21890,7 @@
     },
     "03160A": {
       "name": "DISK Vol.11 \"Pinnacles\"",
+      "id": 147,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21731,6 +21898,7 @@
     },
     "03160B": {
       "name": "DISK Vol.12 \"Fight inside the Spaceship\"",
+      "id": 148,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21738,6 +21906,7 @@
     },
     "031700": {
       "name": "Hunters Report",
+      "id": 149,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21745,6 +21914,7 @@
     },
     "031701": {
       "name": "Hunters Report",
+      "id": 150,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21752,6 +21922,7 @@
     },
     "031702": {
       "name": "Hunters Report",
+      "id": 151,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21759,6 +21930,7 @@
     },
     "031703": {
       "name": "Hunters Report",
+      "id": 152,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21766,6 +21938,7 @@
     },
     "031704": {
       "name": "Hunters Report",
+      "id": 153,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21773,6 +21946,7 @@
     },
     "031800": {
       "name": "Tablet",
+      "id": 154,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21780,6 +21954,7 @@
     },
     "031801": {
       "name": "UNKNOWN2",
+      "id": 155,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21787,6 +21962,7 @@
     },
     "031802": {
       "name": "Dragon Scale",
+      "id": 156,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21794,6 +21970,7 @@
     },
     "031803": {
       "name": "Heaven Striker Coat",
+      "id": 157,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21801,6 +21978,7 @@
     },
     "031804": {
       "name": "Pioneer Parts",
+      "id": 158,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21808,6 +21986,7 @@
     },
     "031805": {
       "name": "Amitie's Memo",
+      "id": 159,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21815,6 +21994,7 @@
     },
     "031806": {
       "name": "Heart of Morolian",
+      "id": 160,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21822,6 +22002,7 @@
     },
     "031807": {
       "name": "Rappy's Beak",
+      "id": 161,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21829,6 +22010,7 @@
     },
     "031808": {
       "name": "Yahoo!'s engine",
+      "id": 162,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21836,6 +22018,7 @@
     },
     "031809": {
       "name": "D-Photon Core",
+      "id": 163,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21843,6 +22026,7 @@
     },
     "03180A": {
       "name": "Liberta Kit",
+      "id": 164,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21850,6 +22034,7 @@
     },
     "03180B": {
       "name": "Cell of MAG 0503",
+      "id": 165,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21857,6 +22042,7 @@
     },
     "03180C": {
       "name": "Cell of MAG 0504",
+      "id": 166,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21864,6 +22050,7 @@
     },
     "03180D": {
       "name": "Cell of MAG 0505",
+      "id": 167,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21871,6 +22058,7 @@
     },
     "03180E": {
       "name": "Cell of MAG 0506",
+      "id": 168,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21878,6 +22066,7 @@
     },
     "03180F": {
       "name": "Cell of MAG 0507",
+      "id": 169,
       "cost": 80,
       "amount": 0,
       "tech": 0,
@@ -21885,6 +22074,7 @@
     },
     "031900": {
       "name": "Team Points 500",
+      "id": 170,
       "cost": 500,
       "amount": 0,
       "tech": 0,
@@ -21892,6 +22082,7 @@
     },
     "031901": {
       "name": "Team Points 1000",
+      "id": 171,
       "cost": 1000,
       "amount": 0,
       "tech": 0,
@@ -21899,6 +22090,7 @@
     },
     "031902": {
       "name": "Team Points 5000",
+      "id": 172,
       "cost": 5000,
       "amount": 0,
       "tech": 0,
@@ -21906,6 +22098,7 @@
     },
     "031903": {
       "name": "Team Points 10000",
+      "id": 173,
       "cost": 10000,
       "amount": 0,
       "tech": 0,
@@ -21913,10 +22106,218 @@
     },
     "031A00": {
       "name": "????",
+      "id": 639,
       "cost": 10,
       "amount": 0,
       "tech": 0,
       "stars": 0
+    }
+  },
+  "specials": {
+    "0": {
+      "type": 0,
+      "amount": 0,
+      "stars": 12
+    },
+    "1": {
+      "type": 1,
+      "amount": 5,
+      "stars": 1
+    },
+    "2": {
+      "type": 1,
+      "amount": 9,
+      "stars": 2
+    },
+    "3": {
+      "type": 1,
+      "amount": 13,
+      "stars": 3
+    },
+    "4": {
+      "type": 1,
+      "amount": 17,
+      "stars": 4
+    },
+    "5": {
+      "type": 2,
+      "amount": 3,
+      "stars": 1
+    },
+    "6": {
+      "type": 2,
+      "amount": 4,
+      "stars": 2
+    },
+    "7": {
+      "type": 2,
+      "amount": 5,
+      "stars": 3
+    },
+    "8": {
+      "type": 2,
+      "amount": 6,
+      "stars": 4
+    },
+    "9": {
+      "type": 3,
+      "amount": 8,
+      "stars": 2
+    },
+    "10": {
+      "type": 3,
+      "amount": 10,
+      "stars": 3
+    },
+    "11": {
+      "type": 3,
+      "amount": 12,
+      "stars": 4
+    },
+    "12": {
+      "type": 4,
+      "amount": 100,
+      "stars": 2
+    },
+    "13": {
+      "type": 5,
+      "amount": 100,
+      "stars": 3
+    },
+    "14": {
+      "type": 6,
+      "amount": 100,
+      "stars": 4
+    },
+    "15": {
+      "type": 7,
+      "amount": 32,
+      "stars": 1
+    },
+    "16": {
+      "type": 7,
+      "amount": 48,
+      "stars": 2
+    },
+    "17": {
+      "type": 7,
+      "amount": 64,
+      "stars": 3
+    },
+    "18": {
+      "type": 7,
+      "amount": 80,
+      "stars": 4
+    },
+    "19": {
+      "type": 8,
+      "amount": 32,
+      "stars": 1
+    },
+    "20": {
+      "type": 8,
+      "amount": 48,
+      "stars": 2
+    },
+    "21": {
+      "type": 8,
+      "amount": 64,
+      "stars": 3
+    },
+    "22": {
+      "type": 8,
+      "amount": 80,
+      "stars": 4
+    },
+    "23": {
+      "type": 9,
+      "amount": 1,
+      "stars": 1
+    },
+    "24": {
+      "type": 9,
+      "amount": 2,
+      "stars": 2
+    },
+    "25": {
+      "type": 9,
+      "amount": 3,
+      "stars": 3
+    },
+    "26": {
+      "type": 9,
+      "amount": 4,
+      "stars": 4
+    },
+    "27": {
+      "type": 10,
+      "amount": 1,
+      "stars": 1
+    },
+    "28": {
+      "type": 10,
+      "amount": 2,
+      "stars": 2
+    },
+    "29": {
+      "type": 10,
+      "amount": 3,
+      "stars": 3
+    },
+    "30": {
+      "type": 10,
+      "amount": 4,
+      "stars": 4
+    },
+    "31": {
+      "type": 11,
+      "amount": 48,
+      "stars": 1
+    },
+    "32": {
+      "type": 11,
+      "amount": 66,
+      "stars": 2
+    },
+    "33": {
+      "type": 11,
+      "amount": 78,
+      "stars": 3
+    },
+    "34": {
+      "type": 11,
+      "amount": 93,
+      "stars": 4
+    },
+    "35": {
+      "type": 12,
+      "amount": 29,
+      "stars": 1
+    },
+    "36": {
+      "type": 12,
+      "amount": 44,
+      "stars": 2
+    },
+    "37": {
+      "type": 12,
+      "amount": 60,
+      "stars": 3
+    },
+    "38": {
+      "type": 12,
+      "amount": 76,
+      "stars": 4
+    },
+    "39": {
+      "type": 13,
+      "amount": 50,
+      "stars": 3
+    },
+    "40": {
+      "type": 13,
+      "amount": 25,
+      "stars": 4
     }
   }
 }

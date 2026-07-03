@@ -7,7 +7,8 @@ import { CLASSES, LEVEL_CAP } from "../engine/classes";
 import { xpForLevel } from "../engine/progression";
 import type { AttackType } from "../engine/combat";
 import { CONSUMABLES_LIST, type Supply } from "../engine/consumables";
-import type { Item } from "../engine/items";
+import type { Item, Weapon } from "../engine/items";
+import { specialName } from "../engine/data/item-table";
 import type { IconId } from "./icons";
 
 export type Screen = "select" | "create" | "hub";
@@ -71,16 +72,39 @@ export function supplyLine(supply: Supply): string {
   return parts.length ? parts.join(", ") : "—";
 }
 
+/** PSO-style attribute-bonus tag: [native/aBeast/machine/dark|hit]. */
+function bonusesTag(b: NonNullable<Weapon["bonuses"]>): string {
+  const pct = (v?: number) => `${v ?? 0}`;
+  return `[${pct(b.native)}/${pct(b.aBeast)}/${pct(b.machine)}/${pct(b.dark)}|${pct(b.hit)}]`;
+}
+
+function starsTag(item: Item): string {
+  return item.stars !== undefined ? ` · ${item.stars}★` : "";
+}
+
 export function itemMeta(item: Item): string {
-  return item.kind === "weapon"
-    ? `wpn · ATP ${item.minAtp}+${item.spread} · ${Math.round(item.attribute * 100)}% · +${item.grind}/${item.maxGrind}`
-    : item.kind === "frame"
-      ? `frame · DFP ${item.dfp} EVP ${item.evp} · ${item.unitSlots} slots`
-      : item.kind === "barrier"
-        ? `barrier · DFP ${item.dfp} EVP ${item.evp}`
-        : `unit · ${Object.entries(item.bonus)
-            .map(([k, v]) => `${k}+${v}`)
-            .join(" ")}`;
+  if (item.kind === "weapon") {
+    const parts = [
+      `wpn · ATP ${item.minAtp}+${item.spread} · ${Math.round(item.attribute * 100)}% · +${item.grind}/${item.maxGrind}`,
+    ];
+    if (item.bonuses) parts.push(bonusesTag(item.bonuses));
+    const special = item.special !== undefined ? specialName(item.special) : null;
+    if (special) parts.push(special);
+    return parts.join(" · ") + starsTag(item);
+  }
+  if (item.kind === "frame") {
+    return `frame · DFP ${item.dfp} EVP ${item.evp} · ${item.unitSlots} slots${starsTag(item)}`;
+  }
+  if (item.kind === "barrier") {
+    return `barrier · DFP ${item.dfp} EVP ${item.evp}${starsTag(item)}`;
+  }
+  if (item.kind === "unit") {
+    const bonus = Object.entries(item.bonus)
+      .map(([k, v]) => `${k}+${v}`)
+      .join(" ");
+    return `unit · ${bonus || "—"}${starsTag(item)}`;
+  }
+  return `tool · sells for ${item.sellValue} meseta`;
 }
 
 export function xpLine(classId: string, level: number, xp: number): string {

@@ -125,6 +125,7 @@ const FLAVOR_BY_KIND: Record<string, string> = {
   heal: "A recovery item for use mid-run.",
   revive: "An emergency revival item. Hope you won't need it.",
   grinder: "Workshop-grade abrasive for weapon tuning.",
+  tool: "Field supplies with no use here — the shop pays for them.",
 };
 
 export function flavor(name: string, kind: string): string {

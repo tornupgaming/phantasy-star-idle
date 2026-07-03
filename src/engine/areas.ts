@@ -7,7 +7,7 @@
  * seeded RNG. Each generated room lists enemy definition-ids and a number of
  * item boxes (with a box drop table). The run clears rooms in order
  * (run-simulation spec). Difficulty selects the enemies' authentic stat rows
- * (enemy-stat-data spec) and a drop tier; XP and base meseta come from those rows.
+ * (enemy-stat-data spec). XP comes from those rows; meseta comes only from drops.
  */
 
 import type { Episode } from "./data/enemy-stats";
@@ -40,18 +40,41 @@ export interface AreaDef {
   floor: number;
   /** Optional boss floor appended after the main floor (e.g. the Dragon). */
   bossFloor?: number;
-  /** Drop table id for this area's item boxes. */
-  boxDropTableId: string;
 }
 
 export type DifficultyId = "normal" | "hard" | "ultimate";
 
+/** Explicit common-drop table area_norm mapping (Forest 1 = 0). */
+export const AREA_NORM_BY_FLOOR: Record<number, number> = {
+  1: 0, // Forest 1
+  2: 1, // Forest 2
+  3: 2, // Cave 1
+  4: 3, // Cave 2
+  5: 4, // Cave 3
+  6: 5, // Mine 1
+  7: 6, // Mine 2
+  8: 7, // Ruins 1
+  9: 8, // Ruins 2
+  10: 9, // Ruins 3 / final boss rule
+  11: 2, // Dragon boss floor → Cave 1
+};
+
+export function areaNormForFloor(floor: number): number {
+  const areaNorm = AREA_NORM_BY_FLOOR[floor];
+  if (areaNorm === undefined) throw new Error(`no area_norm mapping for floor ${floor}`);
+  return areaNorm;
+}
+
 export interface DifficultyDef {
   id: DifficultyId;
   label: string;
-  /** Which drop tier to select from a drop table (0 = base). */
-  dropTier: number;
-  /** Multiplier applied to meseta drops (economy knob; enemy base comes from the stat row). */
+  /**
+   * Multiplier applied to dropped meseta (economy knob). The authentic tables
+   * already scale meseta ranges by difficulty (~10–20× Normal → Ultimate);
+   * the mult stacks on top because higher difficulties burn dimates/trimates
+   * at 3–8× the monomate price — raw drops alone don't cover restock
+   * (authentic-drop-generation 7.2 baseline).
+   */
   mesetaMult: number;
 }
 
@@ -59,19 +82,16 @@ export const DIFFICULTIES: Record<DifficultyId, DifficultyDef> = {
   normal: {
     id: "normal",
     label: "Normal",
-    dropTier: 0,
     mesetaMult: 1,
   },
   hard: {
     id: "hard",
     label: "Hard",
-    dropTier: 1,
     mesetaMult: 2,
   },
   ultimate: {
     id: "ultimate",
     label: "Ultimate",
-    dropTier: 2,
     mesetaMult: 4,
   },
 };

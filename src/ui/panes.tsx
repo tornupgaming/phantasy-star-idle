@@ -406,17 +406,19 @@ export function BankPane() {
                   <ItemDetailHead item={item()} />
                   <Show when={equippedInSlot(item())}>{(cur) => <EquippedLine current={cur()} />}</Show>
                   <div class="row" style="margin-top:12px">
-                    <button
-                      class="primary"
-                      data-action="equip"
-                      data-id={item().id}
-                      onClick={() => {
-                        const id = item().id;
-                        if (ui.act(() => ui.game.equipFromInventory(id), "equipped")) ui.setEquipCand(null);
-                      }}
-                    >
-                      Equip
-                    </button>
+                    <Show when={item().kind !== "tool"}>
+                      <button
+                        class="primary"
+                        data-action="equip"
+                        data-id={item().id}
+                        onClick={() => {
+                          const id = item().id;
+                          if (ui.act(() => ui.game.equipFromInventory(id), "equipped")) ui.setEquipCand(null);
+                        }}
+                      >
+                        Equip
+                      </button>
+                    </Show>
                     <button
                       data-action="sell"
                       data-id={item().id}

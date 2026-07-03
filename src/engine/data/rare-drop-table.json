@@ -1,0 +1,4262 @@
+{
+  "source": "newserv/system/tables/rare-table-v4.json",
+  "itemTableSource": "src/engine/data/item-table.json",
+  "episode": "Ep1",
+  "mode": "Normal",
+  "difficulties": [
+    "Normal",
+    "Hard",
+    "Ultimate"
+  ],
+  "sectionIds": [
+    "Viridia",
+    "Greenill",
+    "Skyly",
+    "Bluefull",
+    "Purplenum",
+    "Pinkal",
+    "Redria",
+    "Oran",
+    "Yellowboze",
+    "Whitill"
+  ],
+  "retainedWhereKeys": [
+    "AL_RAPPY",
+    "BARBAROUS_WOLF",
+    "BOOMA",
+    "Box-Cave1",
+    "Box-Forest1",
+    "Box-Mine1",
+    "CANADINE",
+    "CANADINE_GROUP",
+    "CANANE",
+    "DRAGON",
+    "EVIL_SHARK",
+    "GIGOBOOMA",
+    "GILLCHIC",
+    "GOBOOMA",
+    "GRASS_ASSASSIN",
+    "GUIL_SHARK",
+    "HIDOOM",
+    "MIGIUM",
+    "MONEST",
+    "MOTHMANT",
+    "NANO_DRAGON",
+    "NAR_LILY",
+    "PAL_SHARK",
+    "PAN_ARMS",
+    "POISON_LILY",
+    "RAG_RAPPY",
+    "SAVAGE_WOLF",
+    "SINOW_BEAT",
+    "SINOW_GOLD"
+  ],
+  "tables": {
+    "Normal": {
+      "Viridia": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024C",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024C",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010305",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Greenill": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010305",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Skyly": {
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010305",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Bluefull": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000244140625,
+            "probabilityRaw": "1/4096",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010312",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Purplenum": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000213623046875,
+            "probabilityRaw": "7/32768",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "01030D",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Pinkal": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000244140625,
+            "probabilityRaw": "1/4096",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010306",
+            "kind": "unit"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024A",
+            "kind": "barrier"
+          }
+        ]
+      },
+      "Redria": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010306",
+            "kind": "unit"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ]
+      },
+      "Oran": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010312",
+            "kind": "unit"
+          }
+        ]
+      },
+      "Yellowboze": {
+        "CANADINE": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000244140625,
+            "probabilityRaw": "1/4096",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010312",
+            "kind": "unit"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ]
+      },
+      "Whitill": {
+        "EVIL_SHARK": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.000335693359375,
+            "probabilityRaw": "11/32768",
+            "code": "010218",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "010306",
+            "kind": "unit"
+          }
+        ]
+      }
+    },
+    "Hard": {
+      "Viridia": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": 2359296,
+            "code": "01024C",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000905",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000406",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000905",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000905",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Greenill": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000606",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000705",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000706",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000705",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000606",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Skyly": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000206",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000106",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000705",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000205",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000205",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000205",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000206",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000705",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000106",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000205",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Bluefull": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024A",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000B04",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000B04",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000406",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Purplenum": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000806",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024A",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000806",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Pinkal": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A05",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000A05",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000C05",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A05",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Redria": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024A",
+            "kind": "barrier"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00079345703125,
+            "probabilityRaw": "13/16384",
+            "code": "01024C",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.00079345703125,
+            "probabilityRaw": "13/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000905",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000905",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Oran": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024A",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024A",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000D00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000205",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Yellowboze": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000A05",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024D",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000A04",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000C04",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000305",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000405",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000606",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Whitill": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.00054931640625,
+            "probabilityRaw": "9/16384",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.0625,
+            "probabilityRaw": "1/16",
+            "code": "008900",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "01021F",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "000D00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000505",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000105",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0078125,
+            "probabilityRaw": "1/128",
+            "code": "000605",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000805",
+            "kind": "weapon"
+          }
+        ]
+      }
+    },
+    "Ultimate": {
+      "Viridia": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "008B02",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000907",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000906",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000906",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000907",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "009300",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "009300",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.0048828125,
+            "probabilityRaw": "5/1024",
+            "code": "010226",
+            "kind": "barrier"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "00070A",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000907",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003E00",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "008A01",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008C01",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008901",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003400",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "010303",
+            "kind": "unit"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000907",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008A00",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000907",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.0048828125,
+            "probabilityRaw": "5/1024",
+            "code": "010127",
+            "kind": "frame"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003900",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.0000095367431640625,
+            "probabilityRaw": "5/524288",
+            "code": "001E00",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Greenill": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "010129",
+            "kind": "frame"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000706",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000706",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "00070A",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004400",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006500",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000E01",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "009A00",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002C00",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008C01",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "01030B",
+            "kind": "unit"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.875,
+            "probabilityRaw": "7/8",
+            "code": "009000",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003900",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "008D00",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Skyly": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.046875,
+            "probabilityRaw": "3/64",
+            "code": "009900",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "01030B",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000206",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000206",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008902",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002100",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010216",
+            "kind": "barrier"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003900",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010313",
+            "kind": "unit"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.0048828125,
+            "probabilityRaw": "5/1024",
+            "code": "010226",
+            "kind": "barrier"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008901",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004100",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "008A00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003400",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000E01",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01012B",
+            "kind": "frame"
+          }
+        ]
+      },
+      "Bluefull": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "010335",
+            "kind": "unit"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003C00",
+            "kind": "weapon"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000406",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000406",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000B06",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000B06",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010216",
+            "kind": "barrier"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "001300",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003E00",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010345",
+            "kind": "unit"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008C01",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "009A00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000B06",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001F00",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Purplenum": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "010133",
+            "kind": "frame"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "01030B",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000807",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000806",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000806",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000807",
+            "kind": "weapon"
+          },
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006C00",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001F00",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "008F03",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010134",
+            "kind": "frame"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010307",
+            "kind": "unit"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000807",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "009304",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.0048828125,
+            "probabilityRaw": "5/1024",
+            "code": "001D00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003900",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000807",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004400",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000807",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Pinkal": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.046875,
+            "probabilityRaw": "3/64",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010307",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000C05",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000C05",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000C06",
+            "kind": "weapon"
+          },
+          {
+            "probability": 0.00146484375,
+            "probabilityRaw": "3/2048",
+            "code": "01024A",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.00146484375,
+            "probabilityRaw": "3/2048",
+            "code": "01024C",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.00146484375,
+            "probabilityRaw": "3/2048",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010134",
+            "kind": "frame"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "01035E",
+            "kind": "unit"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01012B",
+            "kind": "frame"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002D00",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002500",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "002200",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008901",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000E01",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010344",
+            "kind": "unit"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.0000095367431640625,
+            "probabilityRaw": "5/524288",
+            "code": "001E00",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Redria": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "004400",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "010307",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000507",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000507",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "009005",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "009005",
+            "kind": "weapon"
+          }
+        ],
+        "DRAGON": [
+          {
+            "probability": 0.02734375,
+            "probabilityRaw": "7/256",
+            "code": "000B07",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002D00",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "010338",
+            "kind": "unit"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "001400",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008902",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003400",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "010345",
+            "kind": "unit"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "01031F",
+            "kind": "unit"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008C01",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004100",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "009A00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010216",
+            "kind": "barrier"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008A00",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "010342",
+            "kind": "unit"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010133",
+            "kind": "frame"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "010115",
+            "kind": "frame"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Oran": {
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008F06",
+            "kind": "weapon"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000306",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000306",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008902",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003600",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003E00",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010335",
+            "kind": "unit"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008901",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "010123",
+            "kind": "frame"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "PAN_ARMS": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010317",
+            "kind": "unit"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_GOLD": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001F00",
+            "kind": "weapon"
+          }
+        ]
+      },
+      "Yellowboze": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "01031F",
+            "kind": "unit"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010345",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004400",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024D",
+            "kind": "barrier"
+          },
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024E",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "008D00",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "008D00",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000407",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "002D00",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.0000095367431640625,
+            "probabilityRaw": "5/524288",
+            "code": "001E00",
+            "kind": "weapon"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003400",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000B06",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000707",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000207",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008B02",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "008A00",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "006800",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010129",
+            "kind": "frame"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000307",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000C06",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "01022B",
+            "kind": "barrier"
+          }
+        ]
+      },
+      "Whitill": {
+        "AL_RAPPY": [
+          {
+            "probability": 0.5,
+            "probabilityRaw": "1/2",
+            "code": "003E00",
+            "kind": "weapon"
+          }
+        ],
+        "BARBAROUS_WOLF": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "010346",
+            "kind": "unit"
+          }
+        ],
+        "BOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000D01",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Cave1": [
+          {
+            "probability": 0.002197265625,
+            "probabilityRaw": "9/4096",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Forest1": [
+          {
+            "probability": 0.0015869140625,
+            "probabilityRaw": "13/8192",
+            "code": "000506",
+            "kind": "weapon"
+          }
+        ],
+        "Box-Mine1": [
+          {
+            "probability": 0.001708984375,
+            "probabilityRaw": "7/4096",
+            "code": "000507",
+            "kind": "weapon"
+          },
+          {
+            "probability": 0.0008544921875,
+            "probabilityRaw": "7/8192",
+            "code": "01024B",
+            "kind": "barrier"
+          }
+        ],
+        "CANADINE": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "009309",
+            "kind": "weapon"
+          }
+        ],
+        "CANADINE_GROUP": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "009309",
+            "kind": "weapon"
+          }
+        ],
+        "CANANE": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008902",
+            "kind": "weapon"
+          }
+        ],
+        "EVIL_SHARK": [
+          {
+            "probability": 0.001953125,
+            "probabilityRaw": "1/512",
+            "code": "01033B",
+            "kind": "unit"
+          }
+        ],
+        "GIGOBOOMA": [
+          {
+            "probability": 0.00009918212890625,
+            "probabilityRaw": "13/131072",
+            "code": "004300",
+            "kind": "weapon"
+          }
+        ],
+        "GILLCHIC": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000807",
+            "kind": "weapon"
+          }
+        ],
+        "GOBOOMA": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008B01",
+            "kind": "weapon"
+          }
+        ],
+        "GRASS_ASSASSIN": [
+          {
+            "probability": 0.0009765625,
+            "probabilityRaw": "1/1024",
+            "code": "010216",
+            "kind": "barrier"
+          }
+        ],
+        "GUIL_SHARK": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "003400",
+            "kind": "weapon"
+          }
+        ],
+        "HIDOOM": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "008B02",
+            "kind": "weapon"
+          }
+        ],
+        "MIGIUM": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000F01",
+            "kind": "weapon"
+          }
+        ],
+        "MOTHMANT": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "000507",
+            "kind": "weapon"
+          }
+        ],
+        "NANO_DRAGON": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004000",
+            "kind": "weapon"
+          }
+        ],
+        "NAR_LILY": [
+          {
+            "probability": 0.046875,
+            "probabilityRaw": "3/64",
+            "code": "001001",
+            "kind": "weapon"
+          }
+        ],
+        "PAL_SHARK": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "000E01",
+            "kind": "weapon"
+          }
+        ],
+        "POISON_LILY": [
+          {
+            "probability": 0.003173828125,
+            "probabilityRaw": "13/4096",
+            "code": "004400",
+            "kind": "weapon"
+          }
+        ],
+        "RAG_RAPPY": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008F08",
+            "kind": "weapon"
+          }
+        ],
+        "SAVAGE_WOLF": [
+          {
+            "probability": 0.015625,
+            "probabilityRaw": "1/64",
+            "code": "008901",
+            "kind": "weapon"
+          }
+        ],
+        "SINOW_BEAT": [
+          {
+            "probability": 0.0000095367431640625,
+            "probabilityRaw": "5/524288",
+            "code": "001E00",
+            "kind": "weapon"
+          }
+        ]
+      }
+    }
+  }
+}

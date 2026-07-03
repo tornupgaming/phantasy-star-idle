@@ -1,41 +1,26 @@
 import { describe, it, expect } from "vitest";
 import { createRng } from "../src/engine/rng";
-import { rollDrop, filterItem, DEFAULT_FILTER, sellFromInventory, type EconomyState } from "../src/engine/loot";
-import { getDropTable, GEAR } from "../src/engine/content";
-import type { Item } from "../src/engine/items";
+import { filterItem, DEFAULT_FILTER, sellFromInventory, type EconomyState } from "../src/engine/loot";
+import { GEAR } from "../src/engine/content";
+import { generateCommonWeapon, rollEnemyDropPipeline } from "../src/engine/drop-gen";
+import { itemSellValue, type Item, type Tool } from "../src/engine/items";
 
 describe("drop generation (seeded)", () => {
-  it("reproduces the same drops for the same seed", () => {
-    const table = getDropTable("forest-enemies");
+  it("reproduces the same enemy pipeline decisions for the same seed", () => {
+    const context = { difficulty: "Normal" as const, sectionId: "Viridia" as const, areaNorm: 0 };
     const runA = createRng("run", 1);
     const runB = createRng("run", 1);
-    let a = 0;
-    let b = 0;
-    const mintA = () => `a-${a++}`;
-    const mintB = () => `b-${b++}`;
-    const seqA = Array.from({ length: 30 }, () => rollDrop(table, 0, runA, mintA));
-    const seqB = Array.from({ length: 30 }, () => rollDrop(table, 0, runB, mintB));
-    // Compare on the meaningful fields (ids differ by mint prefix by design).
-    const strip = (o: ReturnType<typeof rollDrop>) => ({
-      meseta: o.meseta,
-      item: o.item?.defId ?? null,
-      consumable: o.consumable,
-      grinders: o.grinders,
-    });
-    expect(seqA.map(strip)).toEqual(seqB.map(strip));
+    const seqA = Array.from({ length: 30 }, () => rollEnemyDropPipeline("BOOMA", context, runA));
+    const seqB = Array.from({ length: 30 }, () => rollEnemyDropPipeline("BOOMA", context, runB));
+    expect(seqA).toEqual(seqB);
   });
 
-  it("higher tiers can produce rares the base tier does not", () => {
-    const table = getDropTable("forest-enemies");
-    const rng = createRng("tiers", 5);
-    let n = 0;
-    const mint = () => `x-${n++}`;
-    const rares = new Set<string>();
-    for (let i = 0; i < 400; i++) {
-      const d = rollDrop(table, 2, rng, mint);
-      if (d.item?.rarity === "rare") rares.add(d.item.defId);
-    }
-    expect(rares.size).toBeGreaterThan(0);
+  it("generated common weapons are authentic item-table items", () => {
+    const context = { difficulty: "Hard" as const, sectionId: "Viridia" as const, areaNorm: 2 };
+    const rng = createRng("weapons", 5);
+    const item = generateCommonWeapon(context, rng, () => "x")!;
+    expect(item.code).toMatch(/^00/);
+    expect(item.defId).toBe(item.code);
   });
 });
 
@@ -48,11 +33,28 @@ describe("loot filter", () => {
   });
 
   it("auto-sells low-value gear below the bar", () => {
-    expect(filterItem(junk, DEFAULT_FILTER)).toBe("sell"); // handBlade sell 40 < 100
+    expect(filterItem(junk, DEFAULT_FILTER)).toBe("sell"); // handBlade sells well below the bar
   });
 
   it("keeps gear at or above the bar", () => {
-    expect(filterItem({ ...GEAR.greatBlade, id: "g" } as Item, DEFAULT_FILTER)).toBe("keep");
+    const valuable = { ...GEAR.greatBlade, id: "g", sellValue: DEFAULT_FILTER.autoSellBelow } as Item;
+    expect(filterItem(valuable, DEFAULT_FILTER)).toBe("keep");
+  });
+
+  it("filters inert tool items by rarity and sell value", () => {
+    const monofluid: Tool = {
+      kind: "tool",
+      id: "tool-1",
+      defId: "030100",
+      code: "030100",
+      name: "Monofluid",
+      rarity: "common",
+      stars: 0,
+      sellValue: 12,
+    };
+    expect(itemSellValue(monofluid)).toBe(12);
+    expect(filterItem(monofluid, DEFAULT_FILTER)).toBe("sell");
+    expect(filterItem({ ...monofluid, rarity: "rare" }, DEFAULT_FILTER)).toBe("keep");
   });
 });
 

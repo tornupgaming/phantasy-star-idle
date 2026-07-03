@@ -15,12 +15,14 @@ import {
   allFrames,
   allUnits,
   allWeapons,
+  allTools,
   frameDef,
   rarityForStars,
   templateFromCode,
   unitAttackSpeedBoost,
   unitBonus,
   unitDef,
+  toolDef,
   weaponDef,
 } from "../src/engine/data/item-table";
 import { attackStepMs } from "../src/engine/data/frame-data";
@@ -64,12 +66,20 @@ describe("item dataset", () => {
   });
 
   it("excludes unnamed entries from iterators but resolves them by code", () => {
-    for (const def of [...allWeapons(), ...allFrames(), ...allBarriers(), ...allUnits()]) {
+    for (const def of [...allWeapons(), ...allFrames(), ...allBarriers(), ...allUnits(), ...allTools()]) {
       expect(def.name).not.toBeNull();
     }
     // The bare-hands weapon entry has no name but is still addressable.
     expect(weaponDef("000000")!.name).toBeNull();
     expect(allWeapons().some((w) => w.code === "000000")).toBe(false);
+  });
+
+  it("exposes tool definitions with cost-derived sell values", () => {
+    const monofluid = toolDef("030100")!;
+    expect(monofluid.name).toBe("Monofluid");
+    expect(monofluid.cost).toBe(100);
+    expect(monofluid.sellValue).toBe(12);
+    expect(allTools().some((t) => t.code === "030100")).toBe(true);
   });
 
   it("buckets stars into the three-tier rarity", () => {
