@@ -30,13 +30,20 @@
 }
 
 /*
- * Gulim is PSO BB's UI typeface. NOTE: GULIM.TTC (Microsoft/HanYang) and the
- * reference UI spritesheet are NOT redistributable — fine for this personal
- * project, but swap for a free look-alike before any public release.
+ * PSO BB's UI typeface is Gulim (Microsoft/HanYang, not redistributable).
+ * Nanum Gothic (SIL OFL, see assets/OFL-NanumGothic.txt) is the free
+ * look-alike used in its place.
  */
 @font-face {
-  font-family: "Gulim";
-  src: url(./assets/gulim.ttc);
+  font-family: "Nanum Gothic";
+  src: url(./assets/nanum-gothic.ttf);
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url(./assets/nanum-gothic-bold.ttf);
+  font-weight: 600 700;
   font-display: swap;
 }
 
@@ -53,7 +60,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--ink);
-  font: 14px/1.5 "Gulim", "Segoe UI", system-ui, sans-serif;
+  font: 14px/1.5 "Nanum Gothic", "Gulim", "Segoe UI", system-ui, sans-serif;
 }
 
 /* Full-width app shell: gutters, no max-width (D6). */

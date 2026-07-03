@@ -1,7 +1,7 @@
 # pso-visual-theme Specification
 
 ## Purpose
-Give the UI an authentic PSO Blue Burst look: CSS-only window chrome, a tokenized palette, PSO-style menus and controls, Gulim typography with fallback, and a full-width responsive layout. (TBD: refine as the capability evolves.)
+Give the UI an authentic PSO Blue Burst look: CSS-only window chrome, a tokenized palette, PSO-style menus and controls, Gulim-style typography with fallback, and a full-width responsive layout. (TBD: refine as the capability evolves.)
 
 ## Requirements
 
@@ -28,10 +28,10 @@ Interactive lists SHALL use PSO-style menu rows with an orange highlight bar on 
 - **THEN** the restyled bar SHALL reflect the update using the same element/class structure as before the theme change
 
 ### Requirement: Typography
-The UI SHALL load the Gulim typeface via `@font-face` from a locally served font asset with `font-display: swap` and a system-font fallback stack, so layout SHALL remain usable when the font is unavailable. The non-redistributable status of the font (and reference spritesheet) SHALL be noted in a source comment at the `@font-face` declaration.
+The UI SHALL load a freely redistributable Gulim look-alike typeface (Nanum Gothic, SIL OFL) via `@font-face` from a locally served font asset with `font-display: swap` and a system-font fallback stack, so layout SHALL remain usable when the font is unavailable. The font's license SHALL ship alongside the asset, and the provenance (Gulim being PSO BB's original, non-redistributable typeface) SHALL be noted in a source comment at the `@font-face` declaration.
 
 #### Scenario: Font fallback
-- **WHEN** the Gulim font asset fails to load
+- **WHEN** the font asset fails to load
 - **THEN** text SHALL render in the fallback stack with no broken layout
 
 ### Requirement: Full-width layout
