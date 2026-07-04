@@ -20,10 +20,18 @@ export interface SceneEnemy {
   dead: boolean;
 }
 
+/** What a revealed room's grid cell shows; grows with spawns as they appear. */
+export interface SceneRoom {
+  enemies: number;
+  boxes: number;
+}
+
 export interface Scene {
   roomIndex: number; // 0-based; -1 before the first room event
   totalRooms: number;
   boxes: number;
+  /** Revealed rooms by index (sparse up to roomIndex); unreached rooms are absent. */
+  rooms: SceneRoom[];
   enemies: SceneEnemy[];
   charHp: number;
   charMaxHp: number;
@@ -36,6 +44,7 @@ export function createScene(charMaxHp: number, supply: Supply): Scene {
     roomIndex: -1,
     totalRooms: 0,
     boxes: 0,
+    rooms: [],
     enemies: [],
     charHp: charMaxHp,
     charMaxHp,
@@ -52,6 +61,7 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
         scene.roomIndex = e.room.roomIndex;
         scene.totalRooms = e.room.totalRooms;
         scene.boxes = e.room.boxes;
+        scene.rooms[e.room.roomIndex] = { enemies: e.room.enemies.length, boxes: e.room.boxes };
         scene.enemies = e.room.enemies.map((x) => ({
           id: x.id,
           name: x.name,
@@ -72,6 +82,8 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
           dead: false,
         };
         scene.phase = "fighting";
+        const room = scene.rooms[scene.roomIndex];
+        if (room) room.enemies += 1; // revealed roster grows with the spawn
       }
       break;
     case "attack":
@@ -110,6 +122,23 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
       break;
     // "box" and "loot" don't change scene state; they only ticker.
   }
+}
+
+/**
+ * Room-based progress bar fill in [0, 1]: (roomsCleared + roomKills /
+ * roomEnemies) / totalRooms, from revealed events only — outcome-blind by
+ * construction. `totalRooms` comes from RunProgress so the bar works before
+ * the first room event (the scene's own copy is 0 until then). Spawns grow
+ * the current room's denominator, so the fill can dip slightly within a room,
+ * but it never regresses past a cleared-room boundary.
+ */
+export function progressFill(scene: Scene, totalRooms: number): number {
+  if (totalRooms <= 0 || scene.roomIndex < 0) return 0;
+  if (scene.phase === "complete") return 1;
+  const kills = scene.enemies.filter((e) => e.dead).length;
+  // An empty or fully-cleared current room counts as done (0/0 → 1).
+  const roomFraction = scene.enemies.length > 0 ? kills / scene.enemies.length : 1;
+  return Math.min(1, Math.max(0, (scene.roomIndex + roomFraction) / totalRooms));
 }
 
 /** The scene after all `events` — deterministic fold from a fresh scene. */

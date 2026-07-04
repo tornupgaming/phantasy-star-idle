@@ -37,6 +37,10 @@ with intermediate output when only the conclusion matters. Definitions in
   distributions, knob tuning); returns aggregate tables + a recommendation.
 - `playcheck` — headless-Chromium play-checks per the `verify` skill; returns
   findings + screenshot paths (Read only the key screenshots afterward).
+- `coder` — general implementation agent (Sonnet) for well-scoped coding
+  tasks; give it a goal + acceptance criteria, it edits and runs tests.
+- `pi-second-opinion` — cross-model review via the local Pi CLI (GPT-5.5);
+  use for independent design/diff review or to break ties between approaches.
 
 Also use the built-in Explore agent for broad code/spec searches, and prefer
 one full-suite `vitest run` triage pass in a subagent when many tests fail at

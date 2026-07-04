@@ -49,6 +49,28 @@ describe("game clock + settle (tasks 7.4, 9.3)", () => {
     expect(game.state.economy.meseta).toBeGreaterThanOrEqual(mesetaBefore);
   });
 
+  it("totalRooms is the full planned count even when the run ends in defeat early", () => {
+    const clock = fakeClock();
+    // Level-1 starter into ultimate Mines: guaranteed ejection long before the
+    // last room. totalRooms must still be the stage's full plan, not the
+    // truncated reached-room count (no outcome oracle).
+    const game = Game.loadOrNew(memoryStorage(), clock.now);
+    expect(game.sendRun("mines", "ultimate").ok).toBe(true);
+    const progress = game.runProgress()!;
+    expect(progress.outcome).toBe("ejected");
+    expect(progress.roomPlan.length).toBeLessThan(progress.totalRooms);
+    expect(progress.totalRooms).toBeGreaterThan(0);
+  });
+
+  it("totalRooms matches the rooms actually reached on a completed run", () => {
+    const clock = fakeClock();
+    const game = Game.loadOrNew(memoryStorage(), clock.now);
+    game.sendRun("forest", "normal");
+    const progress = game.runProgress()!;
+    expect(progress.outcome).toBe("complete");
+    expect(progress.totalRooms).toBe(progress.roomPlan.length);
+  });
+
   it("offline cap bounds elapsed game time to a single run's worth", () => {
     const clock = fakeClock();
     const game = Game.loadOrNew(memoryStorage(), clock.now);

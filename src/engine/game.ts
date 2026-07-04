@@ -125,7 +125,13 @@ export interface RunProgress {
   finished: boolean;
   outcome: "complete" | "ejected";
   revealedEvents: RunEvent[];
-  /** The generated stage's per-room plan (room strip UI). */
+  /**
+   * The stage's planned room count, from the pre-rolled stage layout. Always
+   * the full plan, even when the result ends in defeat before the last room —
+   * safe to show before the run settles (no outcome leak).
+   */
+  totalRooms: number;
+  /** The generated stage's per-room plan (settlement report only; truncated on defeat — an outcome oracle, so the stage UI must not read it). */
   roomPlan: { enemies: number; boxes: number }[];
 }
 
@@ -615,6 +621,7 @@ export class Game {
       finished: isRunFinished(result, gameTime),
       outcome: result.outcome,
       revealedEvents: revealUpTo(result, gameTime),
+      totalRooms: result.totalRooms,
       roomPlan: result.roomPlan,
     };
   }

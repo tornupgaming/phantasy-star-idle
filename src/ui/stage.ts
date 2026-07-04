@@ -16,7 +16,7 @@ import type { Game } from "../engine/game";
 import type { RunEvent } from "../engine/run";
 import { effectiveStats } from "../engine/character";
 import { CONSUMABLES_LIST } from "../engine/consumables";
-import { createScene, applyEvent, type Scene } from "./scene";
+import { createScene, applyEvent, progressFill, type Scene } from "./scene";
 import { enemyArtUrl } from "./enemy-art";
 import damageFontUrl from "./assets/damage-font.png";
 import damageFont from "./assets/damage-font.json";
@@ -123,9 +123,11 @@ export class BattleStage {
       this.played = revealed.length;
     }
 
-    const pct = Math.min(100, Math.round((prog.gameTime / Math.max(1, prog.endTime)) * 100));
-    this.q(".stage-progress").style.width = `${pct}%`;
-    this.q(".stage-pct").textContent = `${pct}%`;
+    // Room-based, outcome-blind fill: a doomed run's bar just stops partway.
+    const fill = progressFill(this.scene, prog.totalRooms);
+    this.q(".stage-progress").style.width = `${fill * 100}%`;
+    this.q(".stage-pct").textContent =
+      `Room ${Math.max(0, this.scene.roomIndex + 1)}/${prog.totalRooms}`;
 
     this.raf = requestAnimationFrame(this.tick);
   };
@@ -255,8 +257,6 @@ export class BattleStage {
     bar.classList.toggle("low", pctHp <= 30);
     // The capsule carries the static `HP` label; this element is numbers only.
     this.q(".stage-char-hp-text").textContent = `${s.charHp}/${s.charMaxHp}`;
-    this.q(".stage-room-label").textContent =
-      s.roomIndex >= 0 ? `Room ${s.roomIndex + 1}/${s.totalRooms}` : "—";
     const parts = CONSUMABLES_LIST.filter((c) => (s.supply[c.id] ?? 0) > 0).map(
       (c) => `${c.name} ×${s.supply[c.id]}`,
     );
@@ -264,20 +264,24 @@ export class BattleStage {
   }
 
   private updateRooms(): void {
-    const roomPlan = this.game.runProgress()?.roomPlan ?? [];
+    // Always the full planned grid; cells reveal from folded room events only.
+    // RunProgress.roomPlan is truncated on defeat (an outcome oracle) — never read it here.
+    const totalRooms = this.game.runProgress()?.totalRooms ?? this.scene.totalRooms;
     const s = this.scene;
     const done = s.phase === "complete" || s.phase === "ejected";
-    this.q(".stage-rooms").innerHTML = roomPlan
-      .map((room, i) => {
-        const cls =
-          i < s.roomIndex || (done && s.phase === "complete")
-            ? "cleared"
-            : i === s.roomIndex && !done
-              ? "current"
-              : "";
-        return `<div class="room-cell ${cls}">R${i + 1}<br><span class="muted">${room.enemies}👾 ${room.boxes}📦</span></div>`;
-      })
-      .join("");
+    const cells: string[] = [];
+    for (let i = 0; i < totalRooms; i++) {
+      const room = s.rooms[i];
+      const cls =
+        i < s.roomIndex || (done && s.phase === "complete")
+          ? "cleared"
+          : i === s.roomIndex && !done
+            ? "current"
+            : "";
+      const detail = room ? `${room.enemies}👾 ${room.boxes}📦` : "?";
+      cells.push(`<div class="room-cell ${cls}">R${i + 1}<br><span class="muted">${detail}</span></div>`);
+    }
+    this.q(".stage-rooms").innerHTML = cells.join("");
     if (done) this.updateStatus();
   }
 

@@ -74,7 +74,7 @@ export function StageIsland() {
         </div>
         <div class="stat-row" style="margin-top:8px">
           <span>
-            Progress <b class="stage-pct">0%</b>
+            Progress <b class="stage-pct">—</b>
           </span>
           <span>
             Enemies defeated <b class="stage-kills">0</b>
@@ -86,7 +86,6 @@ export function StageIsland() {
         <div class="stage-ticker">…</div>
         <div class="stage-field"></div>
         <div class="stage-bottom">
-          <span class="stage-side stage-room-label muted">—</span>
           <div class="stage-side stage-supply muted"></div>
         </div>
       </div>
