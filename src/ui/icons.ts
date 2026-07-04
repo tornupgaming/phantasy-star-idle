@@ -50,7 +50,8 @@ export function iconForKind(kind: string): IconId {
     case "grinder":
       return "grinder";
     case "tool":
-      return "mate"; // inert tools (fluids, sols, …) fall back to the flask glyph
+    case "inert":
+      return "mate"; // inert tools/consumables (fluids, sols, …) fall back to the flask glyph
     default:
       return "meseta";
   }

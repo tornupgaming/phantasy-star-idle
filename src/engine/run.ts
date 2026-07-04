@@ -26,7 +26,7 @@ import { rigForClass } from "./classes";
 import { attackSpeedBoost } from "./character";
 import { KIND_FOR_ARCHETYPE } from "./items";
 import type { Item } from "./items";
-import { itemSellValue } from "./items";
+import { sellPrice } from "./pricing";
 import { filterItem, type LootFilter } from "./loot";
 import type { Supply } from "./consumables";
 import { addToSupply } from "./consumables";
@@ -191,7 +191,7 @@ export function simulateRun(input: RunInput): RunResult {
   const diff = difficulty(input.difficultyId);
   const baseAreaNorm = areaNormForFloor(area.floor);
   const bossAreaNorm = area.bossFloor === undefined ? baseAreaNorm : areaNormForFloor(area.bossFloor);
-  const dropDifficulty = diff.label as DropContext["difficulty"];
+  const dropDifficulty = diff.dropKey;
   const dropContext = (areaNorm: number): DropContext => ({
     difficulty: dropDifficulty,
     sectionId: input.character.sectionId,
@@ -240,7 +240,7 @@ export function simulateRun(input: RunInput): RunResult {
   const collectItem = (item: Item, source: string) => {
     const decision = filterItem(item, input.filter);
     if (decision === "sell") {
-      const value = itemSellValue(item);
+      const value = sellPrice(item);
       loot.meseta += value;
       log("loot", `${source} dropped ${item.name} — auto-sold for ${value} meseta.`);
     } else {

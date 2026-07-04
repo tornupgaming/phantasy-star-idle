@@ -12,8 +12,11 @@
  * `all*()` iterators but still resolvable by code.
  */
 
-import { archetypeForWeaponKind, type Rarity, type EquipRequirements } from "../items";
+import { archetypeForWeaponKind, type Item, type Rarity, type EquipRequirements } from "../items";
 import type { GearTemplate } from "../loot";
+// Function-level circular import: pricing resolves defs from this module at
+// call time; neither side touches the other during module init.
+import { sellPrice } from "../pricing";
 import type { Stats } from "../stats";
 import rawDataset from "./item-table.json";
 
@@ -98,6 +101,18 @@ interface Dataset {
 }
 
 const dataset = rawDataset as unknown as Dataset;
+
+/** Global PMT sale divisors for armor/shield/unit pricing. */
+export const SALE_DIVISORS = {
+  armor: dataset.armorSaleDivisor,
+  shield: dataset.shieldSaleDivisor,
+  unit: dataset.unitSaleDivisor,
+} as const;
+
+export function specialDef(index: number): SpecialDef | null {
+  const d = dataset.specials[String(index)];
+  return d ? { ...d, index } : null;
+}
 
 /** Star value → the engine's three-tier rarity (raw stars stay on the def). */
 export function rarityForStars(stars: number): Rarity {
@@ -215,14 +230,14 @@ export function unitAttackSpeedBoost(def: UnitDef): number {
 }
 
 /**
- * PLACEHOLDER pricing until the shop/drop-table port brings the authentic
- * client formulas: buy ≈ potency²/saleDivisor (the documented PMT shape),
- * sell = buy/8 (PSO's sell ratio). Non-contractual — nothing extracted
- * circulates yet, and retuning this touches no generated data.
+ * Base sell value stamped onto fresh templates: the authentic buy price of the
+ * unmodified item ÷ 8 (item-pricing spec). Live sale/filter values recompute
+ * via `sellPrice(item)` so grind/bonus/special modifications are reflected;
+ * this stored field is only the template-time default.
  */
-function sellValueFor(potency: number, saleDivisor: number | null): number {
-  if (saleDivisor === null || saleDivisor <= 0) return 0;
-  return Math.max(1, Math.floor((potency * potency) / saleDivisor / 8));
+function withAuthenticSell<T extends GearTemplate>(template: T): T {
+  template.sellValue = sellPrice(template as unknown as Item);
+  return template;
 }
 
 function sellValueForToolCost(cost: number): number {
@@ -257,7 +272,7 @@ function requirementsFor(def: {
 export function templateFromCode(code: string): GearTemplate {
   const w = weaponDef(code);
   if (w) {
-    return {
+    return withAuthenticSell({
       kind: "weapon",
       defId: code,
       code,
@@ -270,16 +285,17 @@ export function templateFromCode(code: string): GearTemplate {
       ata: w.ata,
       grind: 0,
       maxGrind: w.maxGrind,
+      tekked: true, // all current mints are identified; untekked drops are a future change
       group: w.group,
       weaponKind: w.weaponKind,
       rarity: rarityForStars(w.stars),
-      sellValue: sellValueFor(w.atpMax, w.saleDivisor),
+      sellValue: 0,
       requirements: requirementsFor(w),
-    };
+    });
   }
   const f = frameDef(code);
   if (f) {
-    return {
+    return withAuthenticSell({
       kind: "frame",
       defId: code,
       code,
@@ -290,13 +306,13 @@ export function templateFromCode(code: string): GearTemplate {
       unitSlots: 4,
       slots: 4,
       rarity: rarityForStars(f.stars),
-      sellValue: sellValueFor(f.dfp + f.evp, dataset.armorSaleDivisor),
+      sellValue: 0,
       requirements: requirementsFor(f),
-    };
+    });
   }
   const b = barrierDef(code);
   if (b) {
-    return {
+    return withAuthenticSell({
       kind: "barrier",
       defId: code,
       code,
@@ -305,14 +321,14 @@ export function templateFromCode(code: string): GearTemplate {
       dfp: b.dfp,
       evp: b.evp,
       rarity: rarityForStars(b.stars),
-      sellValue: sellValueFor(b.dfp + b.evp, dataset.shieldSaleDivisor),
+      sellValue: 0,
       requirements: requirementsFor(b),
-    };
+    });
   }
   const u = unitDef(code);
   if (u) {
     const speedBoost = unitAttackSpeedBoost(u);
-    return {
+    return withAuthenticSell({
       kind: "unit",
       defId: code,
       code,
@@ -321,8 +337,8 @@ export function templateFromCode(code: string): GearTemplate {
       bonus: unitBonus(u),
       ...(speedBoost > 0 ? { attackSpeedBoost: speedBoost } : {}),
       rarity: rarityForStars(u.stars),
-      sellValue: sellValueFor(u.statAmount * 10, dataset.unitSaleDivisor),
-    };
+      sellValue: 0,
+    });
   }
   throw new Error(`unknown item code ${code} (not a weapon/frame/barrier/unit)`);
 }

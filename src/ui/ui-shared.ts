@@ -104,6 +104,9 @@ export function itemMeta(item: Item): string {
       .join(" ");
     return `unit · ${bonus || "—"}${starsTag(item)}`;
   }
+  if (item.kind === "tool" && item.tech !== undefined) {
+    return `tech disk · Lv.${item.techLevel ?? 1} · unusable for now${starsTag(item)}`;
+  }
   return `tool · sells for ${item.sellValue} meseta`;
 }
 

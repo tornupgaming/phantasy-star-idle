@@ -3,7 +3,8 @@ import { createRng } from "../src/engine/rng";
 import { filterItem, DEFAULT_FILTER, sellFromInventory, type EconomyState } from "../src/engine/loot";
 import { GEAR } from "../src/engine/content";
 import { generateCommonWeapon, rollEnemyDropPipeline } from "../src/engine/drop-gen";
-import { itemSellValue, type Item, type Tool } from "../src/engine/items";
+import { type Item, type Tool } from "../src/engine/items";
+import { sellPrice } from "../src/engine/pricing";
 
 describe("drop generation (seeded)", () => {
   it("reproduces the same enemy pipeline decisions for the same seed", () => {
@@ -52,7 +53,7 @@ describe("loot filter", () => {
       stars: 0,
       sellValue: 12,
     };
-    expect(itemSellValue(monofluid)).toBe(12);
+    expect(sellPrice(monofluid)).toBe(12);
     expect(filterItem(monofluid, DEFAULT_FILTER)).toBe("sell");
     expect(filterItem({ ...monofluid, rarity: "rare" }, DEFAULT_FILTER)).toBe("keep");
   });

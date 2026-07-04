@@ -10,9 +10,10 @@ import { For, Show, Switch, Match, type JSX } from "solid-js";
 import { AREA_LIST } from "../engine/content";
 import { DIFFICULTIES, type DifficultyId } from "../engine/areas";
 import { unitCapacity } from "../engine/character";
-import { isUnit, itemSellValue, type Item } from "../engine/items";
-import { GRINDER_PRICE, gearPrice, type ShopKind } from "../engine/shop";
-import { CONSUMABLES_LIST, type ConsumableId } from "../engine/consumables";
+import { isUnit, type Item } from "../engine/items";
+import { priceForItem, sellPrice } from "../engine/pricing";
+import { GRINDER_PRICE, type ToolOffer } from "../engine/shop";
+import { CONSUMABLES, CONSUMABLES_LIST, type ConsumableId } from "../engine/consumables";
 import { flavor, itemFlavor } from "./dialogue";
 import { useUi } from "./context";
 import { Icon, KindIcon, StatPreview, WindowBox } from "./components";
@@ -204,7 +205,7 @@ function useEquippedInSlot() {
 
 // ---- Gear shops (weapon / armour counters) ----------------------------------
 
-export function GearShopPane(props: { kind: ShopKind }) {
+export function GearShopPane(props: { kind: "weapon" | "armour" }) {
   const ui = useUi();
   const equippedInSlot = useEquippedInSlot();
   const stock = () => ui.selectedEntry().shop[props.kind];
@@ -223,7 +224,7 @@ export function GearShopPane(props: { kind: ShopKind }) {
           <div class="pso-menu shop-list">
             <Show when={stock().offers.length > 0} fallback={<div class="muted">{emptyMsg()}</div>}>
               <For each={stock().offers}>
-                {(o) => <ItemRow item={o} trailing={`${gearPrice(o)}m`} onSelect={() => ui.setDetailId(o.id)} />}
+                {(o) => <ItemRow item={o} trailing={`${priceForItem(o)}m`} onSelect={() => ui.setDetailId(o.id)} />}
               </For>
             </Show>
           </div>
@@ -245,7 +246,7 @@ export function GearShopPane(props: { kind: ShopKind }) {
                     <StatPreview slot={item().kind as "weapon" | "frame" | "barrier" | "unit"} item={item()} />
                   </Show>
                   <div class="row" style="margin-top:12px">
-                    <span class="muted">{gearPrice(item())}m</span>
+                    <span class="muted">{priceForItem(item())}m</span>
                     <button
                       class="primary"
                       data-action="buy-gear"
@@ -275,39 +276,60 @@ export function GearShopPane(props: { kind: ShopKind }) {
 
 export function ToolShopPane() {
   const ui = useUi();
+  const stock = () => ui.game.toolShopStock();
   const selCons = () => CONSUMABLES_LIST.find((c) => c.id === ui.detailId());
+  const selToolItem = () => {
+    const offer = stock().offers.find((o) => o.type === "item" && o.item.id === ui.detailId());
+    return offer ? (offer as Extract<ToolOffer, { type: "item" }>).item : undefined;
+  };
 
   return (
     <>
       <section class="hud-pane">
-        <WindowBox title="Tool Shop">
+        <WindowBox title="Tool Shop" trailing={`${stock().offers.length} in stock`}>
           <div class="pso-menu shop-list">
-            <For each={CONSUMABLES_LIST}>
-              {(c) => (
-                <button
-                  class="pso-menu-row"
-                  classList={{ selected: c.id === ui.detailId() }}
-                  data-action="detail"
-                  data-id={c.id}
-                  onClick={() => ui.setDetailId(c.id)}
-                >
-                  <KindIcon kind={c.kind} />
-                  <span style="flex:1">{c.name}</span>
-                  <span class="meta num">{c.price}m</span>
-                </button>
-              )}
+            <For each={stock().offers}>
+              {(offer) => {
+                if (offer.type === "consumable") {
+                  const c = CONSUMABLES[offer.id];
+                  return (
+                    <button
+                      class="pso-menu-row"
+                      classList={{ selected: c.id === ui.detailId() }}
+                      data-action="detail"
+                      data-id={c.id}
+                      onClick={() => ui.setDetailId(c.id)}
+                    >
+                      <KindIcon kind={c.kind} />
+                      <span style="flex:1">{c.name}</span>
+                      <span class="meta num">{c.price}m</span>
+                    </button>
+                  );
+                }
+                if (offer.type === "grinder") {
+                  return (
+                    <button
+                      class="pso-menu-row"
+                      classList={{ selected: ui.detailId() === "grinder" }}
+                      data-action="detail"
+                      data-id="grinder"
+                      onClick={() => ui.setDetailId("grinder")}
+                    >
+                      <Icon id="grinder" />
+                      <span style="flex:1">Grinder</span>
+                      <span class="meta num">{GRINDER_PRICE}m</span>
+                    </button>
+                  );
+                }
+                return (
+                  <ItemRow
+                    item={offer.item}
+                    trailing={`${priceForItem(offer.item)}m`}
+                    onSelect={() => ui.setDetailId(offer.item.id)}
+                  />
+                );
+              }}
             </For>
-            <button
-              class="pso-menu-row"
-              classList={{ selected: ui.detailId() === "grinder" }}
-              data-action="detail"
-              data-id="grinder"
-              onClick={() => ui.setDetailId("grinder")}
-            >
-              <Icon id="grinder" />
-              <span style="flex:1">Grinder</span>
-              <span class="meta num">{GRINDER_PRICE}m</span>
-            </button>
           </div>
         </WindowBox>
       </section>
@@ -333,6 +355,34 @@ export function ToolShopPane() {
                   </button>
                 </div>
               </Match>
+              <Match when={selToolItem()}>
+                {(item) => (
+                  <>
+                    <ItemDetailHead item={item()} />
+                    <div class="muted small" style="margin-bottom:8px">
+                      {item().tech !== undefined
+                        ? "A technique disk. No one aboard can learn techniques yet — one day."
+                        : "Kept in inventory; no use for it yet."}
+                    </div>
+                    <div class="row" style="margin-top:12px">
+                      <span class="muted">{priceForItem(item())}m</span>
+                      <button
+                        class="primary"
+                        data-action="buy-tool-item"
+                        data-id={item().id}
+                        onClick={() => {
+                          const id = item().id;
+                          if (ui.act(() => ui.game.buyToolItemFromShop(id), "bought")) {
+                            if (ui.detailId() === id) ui.setDetailId(null);
+                          }
+                        }}
+                      >
+                        Buy
+                      </button>
+                    </div>
+                  </>
+                )}
+              </Match>
               <Match when={selCons()}>
                 {(c) => (
                   <>
@@ -343,7 +393,9 @@ export function ToolShopPane() {
                     <div class="muted small" style="margin-bottom:8px">
                       {c().kind === "heal"
                         ? `Restores ${c().amount} HP during a run.`
-                        : "Revives once when defeated during a run."}
+                        : c().kind === "revive"
+                          ? "Revives once when defeated during a run."
+                          : "No use yet — carried for the day its system comes online."}
                     </div>
                     <div class="row" style="margin-top:12px">
                       <span class="muted">{c().price}m each</span>
@@ -391,7 +443,7 @@ export function BankPane() {
           <div class="pso-menu shop-list">
             <Show when={inv().length > 0} fallback={<div class="muted">{emptyMsg}</div>}>
               <For each={inv()}>
-                {(i) => <ItemRow item={i} trailing={`${itemSellValue(i)}m`} onSelect={() => ui.setDetailId(i.id)} />}
+                {(i) => <ItemRow item={i} trailing={`${sellPrice(i)}m`} onSelect={() => ui.setDetailId(i.id)} />}
               </For>
             </Show>
           </div>
@@ -429,7 +481,7 @@ export function BankPane() {
                         }
                       }}
                     >
-                      Sell ({itemSellValue(item())}m)
+                      Sell ({sellPrice(item())}m)
                     </button>
                   </div>
                 </>

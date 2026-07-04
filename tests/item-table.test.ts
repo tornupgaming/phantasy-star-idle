@@ -147,9 +147,12 @@ describe("template adapter", () => {
     expect(gt.requirements?.level).toBe(gated.requiredLevel);
   });
 
-  it("marks unsellable weapons with sellValue 0", () => {
+  it("prices no-divisor weapons at the rare flat rate (80 buy → 10 sell)", () => {
+    // Every null-saleDivisor weapon in the dataset is a rare; price_for_item
+    // gives rares a flat 80 before the divisor is ever consulted.
     const unsellable = allWeapons().find((w) => w.saleDivisor === null)!;
-    expect(templateFromCode(unsellable.code).sellValue).toBe(0);
+    expect(unsellable.stars).toBeGreaterThanOrEqual(9);
+    expect(templateFromCode(unsellable.code).sellValue).toBe(10);
   });
 
   it("rejects unknown codes", () => {

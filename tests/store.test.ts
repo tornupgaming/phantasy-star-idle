@@ -56,7 +56,8 @@ describe("createGameStore", () => {
       expect(res).toBeUndefined(); // setPattern returns void; result passes through
       expect(gs.state.roster[0].pattern).toEqual(["heavy", "heavy", "heavy"]);
 
-      const before = gs.state.economy.meseta;
+      game.state.economy.meseta = 10_000; // cover the authentic grinder price
+      const before = 10_000;
       const buy = gs.run(() => game.buyGrinders(1));
       expect(buy.ok).toBe(true);
       expect(gs.state.economy.meseta).toBeLessThan(before);

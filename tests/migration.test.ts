@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { memoryStorage, SaveManager, SAVE_KEY, SAVE_VERSION } from "../src/engine/save";
 import { Game, migrateSave, type GameState } from "../src/engine/game";
 import { statsAtLevel, sectionIdFromName, xpForLevel, levelForXp } from "../src/engine/progression";
+import { isTekked } from "../src/engine/items";
 
 /** A realistic v1 save: the old single-character GameState shape. */
 function v1Save() {
@@ -133,12 +134,12 @@ function v2Save() {
 }
 
 describe("v2 → v3 save migration (pioneer2-hub-redesign)", () => {
-  it("splits the mixed gear stock into weapon and armour stocks at the current band", () => {
+  it("splits the mixed gear stock into weapon and armour stocks at the current level", () => {
     const state = migrateSave(2, v2Save().state)!;
     expect(state).not.toBeNull();
     const shop = state.roster[0].shop;
-    expect(shop.weapon.band).toBe(1);
-    expect(shop.armour.band).toBe(1);
+    expect(shop.weapon.level).toBe(7);
+    expect(shop.armour.level).toBe(7);
     expect(shop.weapon.offers.every((o) => o.kind === "weapon")).toBe(true);
     expect(shop.armour.offers.every((o) => ["frame", "barrier", "unit"].includes(o.kind))).toBe(
       true,
@@ -254,7 +255,26 @@ describe("v3 → v4 save migration (authentic-drop-generation)", () => {
   });
 });
 
-describe("v4 round-trip: generated variance and tool items persist intact", () => {
+describe("v4 → v5 save migration (authentic-shop-inventory)", () => {
+  it("regenerates stocks in the {level, offers} shape and adds the tool counter", () => {
+    // A v4 save's stocks share the v3 {band, restock} shape and lack `tool`.
+    const state = migrateSave(4, v3Save().state)!;
+    const shop = state.roster[0].shop;
+    expect(shop.weapon.level).toBe(7);
+    expect(shop.armour.level).toBe(7);
+    expect(shop.tool.offers.length).toBeGreaterThan(0);
+    expect((shop.weapon as { band?: number }).band).toBeUndefined();
+  });
+
+  it("weapons saved without a tekked field read as tekked", () => {
+    const state = migrateSave(4, v3Save().state)!;
+    const equipped = state.roster[0].character.equipment.weapon!;
+    expect(equipped.tekked).toBeUndefined();
+    expect(isTekked(equipped)).toBe(true);
+  });
+});
+
+describe("v5 round-trip: generated variance and tool items persist intact", () => {
   it("bonuses/special/slots/stars and inert tools survive save → load", () => {
     const storage = memoryStorage();
     const game = Game.loadOrNew(storage, () => 1000);

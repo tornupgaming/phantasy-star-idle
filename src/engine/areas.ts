@@ -11,6 +11,7 @@
  */
 
 import type { Episode } from "./data/enemy-stats";
+import type { DropDifficulty } from "./drop-gen";
 
 export interface RoomBroodDef {
   /** Enemy definition id that owns the brood spawner. */
@@ -42,7 +43,7 @@ export interface AreaDef {
   bossFloor?: number;
 }
 
-export type DifficultyId = "normal" | "hard" | "ultimate";
+export type DifficultyId = "normal" | "hard" | "vhard" | "ultimate";
 
 /** Explicit common-drop table area_norm mapping (Forest 1 = 0). */
 export const AREA_NORM_BY_FLOOR: Record<number, number> = {
@@ -68,6 +69,8 @@ export function areaNormForFloor(floor: number): number {
 export interface DifficultyDef {
   id: DifficultyId;
   label: string;
+  /** Key into the extracted drop-table datasets (extractor emits "VeryHard" without a space). */
+  dropKey: DropDifficulty;
   /**
    * Multiplier applied to dropped meseta (economy knob). The authentic tables
    * already scale meseta ranges by difficulty (~10–20× Normal → Ultimate);
@@ -82,16 +85,25 @@ export const DIFFICULTIES: Record<DifficultyId, DifficultyDef> = {
   normal: {
     id: "normal",
     label: "Normal",
+    dropKey: "Normal",
     mesetaMult: 1,
   },
   hard: {
     id: "hard",
     label: "Hard",
+    dropKey: "Hard",
     mesetaMult: 2,
+  },
+  vhard: {
+    id: "vhard",
+    label: "Very Hard",
+    dropKey: "VeryHard",
+    mesetaMult: 3,
   },
   ultimate: {
     id: "ultimate",
     label: "Ultimate",
+    dropKey: "Ultimate",
     mesetaMult: 4,
   },
 };

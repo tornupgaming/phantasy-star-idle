@@ -43,26 +43,26 @@ Meseta SHALL be the currency earned from drops and auto-sold items and spent in 
 - **THEN** the player's meseta SHALL be unchanged by that kill
 
 ### Requirement: Shop purchasing
-The player SHALL be able to spend meseta in the meta layer to buy consumables (healing and revive items) and grinders at flat prices, and to buy gear from two per-character shop stocks: a weapon stock offering weapons, and an armour stock offering frames, barriers, and units. Each stock SHALL be generated deterministically for its character and shop kind, drawn from content appropriate to that character's level band, and SHALL restock independently when the character's level band changes.
+The player SHALL be able to spend meseta in the meta layer at three per-character shop counters generated authentically (shop-generation capability): a weapon counter, an armour counter (armors, shields, units), and a tool counter (recovery consumables, grinders, technique disks). Prices SHALL come from the authentic price formulas (item-pricing capability). Each counter's stock SHALL be generated deterministically for its character from that character's level and section ID, and SHALL restock when the character's level changes.
 
 #### Scenario: Buy consumables
 - **WHEN** the player buys a consumable and has sufficient meseta
-- **THEN** the system SHALL deduct the price, add the consumable to the player's stock, and reject the purchase if meseta is insufficient
+- **THEN** the system SHALL deduct the authentic price, add the consumable to the player's stock, and reject the purchase if meseta is insufficient
 
-#### Scenario: Stocks are segregated by kind
-- **WHEN** the selected character views the weapon shop or the armour shop
-- **THEN** the weapon stock SHALL contain only weapons and the armour stock only frames, barriers, and units, each generated for that character's current level band
+#### Scenario: Stocks are segregated by counter
+- **WHEN** the selected character views a counter
+- **THEN** the weapon counter SHALL contain only weapons, the armour counter only armors, shields, and units, and the tool counter only recovery items, grinders, and technique disks
 
-#### Scenario: Deterministic per character and kind
-- **WHEN** two stocks are generated for the same character, level band, and restock counter
-- **THEN** the same shop kind SHALL yield identical offers, and the weapon and armour stocks SHALL be drawn from independent RNG streams
+#### Scenario: Deterministic per character and counter
+- **WHEN** stock is generated twice for the same character id, level, and counter
+- **THEN** the offers SHALL be identical, and the three counters SHALL draw from independent RNG streams
 
-#### Scenario: Stock refreshes on level-band change
-- **WHEN** a character's level crosses into a new level band
-- **THEN** both of that character's shop stocks SHALL be regenerated for the new band
+#### Scenario: Stock refreshes on level-up
+- **WHEN** a character's level changes
+- **THEN** all three of that character's counters SHALL be restocked for the new level
 
 #### Scenario: Purchased gear enters shared inventory
-- **WHEN** the player buys a gear item from either shop stock
+- **WHEN** the player buys a gear item or technique disk from a counter
 - **THEN** the meseta price SHALL be deducted from the shared balance and the item added to the shared inventory
 
 ### Requirement: Inventory

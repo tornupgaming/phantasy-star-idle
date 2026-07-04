@@ -149,6 +149,11 @@ export interface Weapon extends ItemBase {
   bonuses?: WeaponBonuses;
   /** Generated PSO special ability tier/id; stored/displayed but combat-inert for now. */
   special?: number;
+  /**
+   * Identified state. All current mints (shop and drops) are tekked; untekked
+   * drops and the tekker are future changes. Absent on legacy items = tekked.
+   */
+  tekked?: boolean;
 }
 
 export interface Frame extends ItemBase {
@@ -183,6 +188,15 @@ export interface Unit extends ItemBase {
 
 export interface Tool extends ItemBase {
   kind: "tool";
+  /** Technique number for tech disks (0302xx); inert until techniques exist. */
+  tech?: number;
+  /** Tech disk level, 1-based display value. */
+  techLevel?: number;
+}
+
+/** Missing tekked field (legacy saves, pre-field mints) reads as identified. */
+export function isTekked(weapon: Weapon): boolean {
+  return weapon.tekked !== false;
 }
 
 export type Item = Weapon | Frame | Barrier | Unit | Tool;
@@ -203,8 +217,3 @@ export function isTool(item: Item): item is Tool {
   return item.kind === "tool";
 }
 
-/** Grind adds to sell value so grinding is not economically lost on sale. */
-export function itemSellValue(item: Item): number {
-  if (isWeapon(item)) return item.sellValue + item.grind * 10;
-  return item.sellValue;
-}

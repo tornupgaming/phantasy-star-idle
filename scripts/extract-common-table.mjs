@@ -30,7 +30,7 @@ const ITEM_TABLE_PATH = join(DATA_DIR, "item-table.json");
 
 const EPISODE = "Ep1";
 const MODE = "Normal";
-const DIFFICULTIES = ["Normal", "Hard", "Ultimate"];
+const DIFFICULTIES = ["Normal", "Hard", "VeryHard", "Ultimate"];
 // newserv's JSON token keeps the historical misspelling "Greennill"; the
 // engine-facing dataset uses the engine's SectionId spelling ("Greenill").
 const SECTION_IDS = [
@@ -348,8 +348,11 @@ function wiredBoxWhereKeys() {
     [11, "Cave1"],
   ]);
   const boxes = new Set();
-  const areaBlockRe = /\w+:\s*\{[\s\S]*?floor:\s*(\d+)[\s\S]*?boxDropTableId:/g;
-  for (const match of content.matchAll(areaBlockRe)) {
+  // Area blocks wire floors via `floor:` and optional `bossFloor:`; every wired
+  // floor's boxes draw from its rare-table Box area (boxDropTableId is gone).
+  const areasBlock = content.slice(content.indexOf("export const AREAS"));
+  const floorRe = /(?:floor|bossFloor):\s*(\d+)/g;
+  for (const match of areasBlock.matchAll(floorRe)) {
     const floor = Number(match[1]);
     const rareBoxArea = floorToRareBoxArea.get(floor);
     if (!rareBoxArea) fail(`wired area floor ${floor} has no rare-table Box area mapping`);

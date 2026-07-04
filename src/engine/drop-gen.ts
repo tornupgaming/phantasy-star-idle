@@ -24,7 +24,7 @@ import {
 import commonDropDataset from "./data/common-drop-table.json";
 import rareDropDataset from "./data/rare-drop-table.json";
 
-export type DropDifficulty = "Normal" | "Hard" | "Ultimate";
+export type DropDifficulty = "Normal" | "Hard" | "VeryHard" | "Ultimate";
 
 export type CommonItemClass = "weapon" | "armor" | "shield" | "unit" | "tool" | "meseta" | "nothing";
 

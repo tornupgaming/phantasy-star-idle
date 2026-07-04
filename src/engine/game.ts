@@ -36,10 +36,12 @@ import {
   buyConsumable,
   buyGrinders,
   buyGear,
+  buyToolItem,
   generateGearStock,
-  levelBand,
+  generateToolStock,
   type ShopKind,
   type ShopStock,
+  type ToolShopStock,
 } from "./shop";
 import type { AttackType } from "./combat";
 import type { DifficultyId } from "./areas";
@@ -88,10 +90,11 @@ export interface RunReport {
  * attack pattern, and survival rules describe how *that* character runs;
  * inventory, meseta, and consumable supply stay account-wide (loot-economy spec).
  */
-/** One stock per Pioneer 2 gear counter (pioneer2-hub-redesign). */
+/** One stock per Pioneer 2 counter (authentic-shop-inventory). */
 export interface ShopStocks {
   weapon: ShopStock;
   armour: ShopStock;
+  tool: ToolShopStock;
 }
 
 export interface RosterEntry {
@@ -130,10 +133,10 @@ export type ActionResult = { ok: true } | { ok: false; reason: string };
 
 /** Fresh weapon + armour stocks for a character at its current band. */
 function freshShopStocks(character: Character): ShopStocks {
-  const band = levelBand(character.level);
   return {
-    weapon: generateGearStock(character.id, "weapon", band, 0),
-    armour: generateGearStock(character.id, "armour", band, 0),
+    weapon: generateGearStock(character.id, "weapon", character.level, character.sectionId),
+    armour: generateGearStock(character.id, "armour", character.level, character.sectionId),
+    tool: generateToolStock(character.id, character.level),
   };
 }
 
@@ -199,6 +202,7 @@ function autoEquipStarter(state: GameState): void {
  * survive as-is.
  */
 export function migrateSave(version: number, old: unknown): GameState | null {
+  if (version === 4) return migrateV4(old);
   if (version === 3) return migrateV3(old);
   if (version === 2) return migrateV2(old); // its fresh stocks already use the authentic templates
   if (version === 1) {
@@ -206,6 +210,15 @@ export function migrateSave(version: number, old: unknown): GameState | null {
     return v2 ? migrateV2(v2) : null;
   }
   return null;
+}
+
+/**
+ * v4 → v5: shop stocks change shape ({band, restock} → {level}) and gain the
+ * tool counter — stock is ephemeral by design, so regenerate it. Player-owned
+ * items are untouched (tekked/tech fields are optional and default sensibly).
+ */
+function migrateV4(old: unknown): GameState | null {
+  return migrateV2(old); // same operation: fresh stocks per roster entry
 }
 
 /** v3 → v4: purge placeholder-template shop offers by regenerating every stock. */
@@ -493,23 +506,41 @@ export class Game {
   }
 
   /**
-   * The selected character's gear stock for one shop kind, regenerated first if
-   * its level band changed since the stock was produced (loot-economy spec).
+   * The selected character's gear stock for one counter, regenerated first if
+   * the character leveled since the stock was produced (shop-generation spec:
+   * stock is a pure function of (kind, characterId, level)).
    */
-  shopStock(kind: ShopKind): ShopStock {
+  shopStock(kind: Exclude<ShopKind, "tool">): ShopStock {
     const entry = this.selectedEntry();
-    const band = levelBand(entry.character.level);
-    const stock = entry.shop[kind];
-    if (stock.band !== band) {
-      entry.shop[kind] = generateGearStock(entry.character.id, kind, band, stock.restock + 1);
+    const { character } = entry;
+    if (entry.shop[kind].level !== character.level) {
+      entry.shop[kind] = generateGearStock(character.id, kind, character.level, character.sectionId);
       this.save();
     }
     return entry.shop[kind];
   }
 
+  /** The selected character's tool-counter stock, regenerated on level change. */
+  toolShopStock(): ToolShopStock {
+    const entry = this.selectedEntry();
+    const { character } = entry;
+    if (entry.shop.tool.level !== character.level) {
+      entry.shop.tool = generateToolStock(character.id, character.level);
+      this.save();
+    }
+    return entry.shop.tool;
+  }
+
   /** Buy a gear offer from one of the selected character's shops into the shared inventory. */
-  buyGearFromShop(kind: ShopKind, offerId: string): ActionResult {
+  buyGearFromShop(kind: Exclude<ShopKind, "tool">, offerId: string): ActionResult {
     const r = buyGear(this.state.economy, this.shopStock(kind), offerId);
+    if (r.ok) this.save();
+    return r.ok ? { ok: true } : { ok: false, reason: r.reason };
+  }
+
+  /** Buy a one-shot tool-counter item (tech disk, Scape Doll) into inventory. */
+  buyToolItemFromShop(itemId: string): ActionResult {
+    const r = buyToolItem(this.state.economy, this.toolShopStock(), itemId);
     if (r.ok) this.save();
     return r.ok ? { ok: true } : { ok: false, reason: r.reason };
   }

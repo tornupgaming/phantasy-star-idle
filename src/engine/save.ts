@@ -33,7 +33,7 @@ export function memoryStorage(initial?: Record<string, string>): StoragePort {
 }
 
 export const SAVE_KEY = "psi.save";
-export const SAVE_VERSION = 4; // v4: authentic drop generation (item variance fields, tool items)
+export const SAVE_VERSION = 5; // v5: authentic shop inventory (stock shape {level, offers} + tool counter)
 
 export interface SaveEnvelope<T> {
   version: number;

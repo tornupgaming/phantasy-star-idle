@@ -48,19 +48,24 @@ function averageIncome(areaId: string, level: number, weapon: GearTemplate): { m
   return { meseta: meseta / runs, kept: kept / runs };
 }
 
+// Bands retuned for authentic pricing (authentic-shop-inventory 4.4 balance
+// sweep): sell = price_for_item >> 3 raised sell-side income, and the default
+// filter bar moved 300 → 550. Measured means: forest/8 ≈ 759, mines/30 ≈ 15.1k;
+// bands are ±~30%. At these rates tier-appropriate shop gear costs well under
+// 2 runs and the 5000m grinder ~6.5 early-game runs tapering to <1 mid-game.
 describe("meseta income stays within the tuned band", () => {
   it("forest normal (early game): everything auto-sells, modest income", () => {
     const { meseta, kept } = averageIncome("forest", 8, GEAR.ironSaber);
-    expect(meseta).toBeGreaterThanOrEqual(200);
-    expect(meseta).toBeLessThanOrEqual(450);
+    expect(meseta).toBeGreaterThanOrEqual(530);
+    expect(meseta).toBeLessThanOrEqual(990);
     // The default bar sells the entire early-game drop flood.
     expect(kept).toBeLessThan(1);
   });
 
   it("mines normal (mid game): income scales up, kept items stay manageable", () => {
     const { meseta, kept } = averageIncome("mines", 30, GEAR.photonEdge);
-    expect(meseta).toBeGreaterThanOrEqual(3500);
-    expect(meseta).toBeLessThanOrEqual(6500);
+    expect(meseta).toBeGreaterThanOrEqual(10500);
+    expect(meseta).toBeLessThanOrEqual(19500);
     // Upgrades are kept, but the filter default prevents inventory flooding.
     expect(kept).toBeLessThan(15);
   });

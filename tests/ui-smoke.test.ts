@@ -2,7 +2,8 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
-import { gearPrice } from "../src/engine/shop";
+import { priceForItem } from "../src/engine/pricing";
+import { meetsRequirements } from "../src/engine/character";
 import { mountApp } from "../src/ui/app";
 
 const click = (root: HTMLElement, sel: string) => {
@@ -57,11 +58,19 @@ describe("UI smoke (manual-pass stand-in)", () => {
     expect(root.textContent).toContain("To Next Lv");
     expect(root.textContent).toContain("Hunter's Guild");
 
-    // Weapon Shop pane: buy an affordable offer into the shared inventory.
+    // Weapon Shop pane: buy an offer into the shared inventory. Authentic
+    // prices exceed the starting purse and a fresh RAmarl meets no shop
+    // weapon's stat requirement, so bankroll and level her a little first.
+    game.state.economy.meseta = 100_000;
+    game.selectedCharacter().level = 5;
     click(root, '[data-action="pane"][data-pane="weapon-shop"]');
     const offer = game
       .shopStock("weapon")
-      .offers.find((o) => gearPrice(o) <= game.state.economy.meseta)!;
+      .offers.find(
+        (o) =>
+          priceForItem(o) <= game.state.economy.meseta &&
+          o.kind === "weapon" && meetsRequirements(game.selectedCharacter(), o).ok,
+      )!;
     expect(offer.kind).toBe("weapon");
     const mesetaBefore = game.state.economy.meseta;
     click(root, `[data-action="detail"][data-id="${offer.id}"]`);
@@ -96,6 +105,14 @@ describe("UI smoke (manual-pass stand-in)", () => {
 
     // Accept a quest from the Guild pane → run view renders.
     click(root, '[data-action="pane"][data-pane="guild"]');
+    // All four difficulties are selectable, Very Hard included.
+    const diffButtons = [...root.querySelectorAll('[data-action="diff"]')];
+    expect(diffButtons.map((b) => b.getAttribute("data-id"))).toEqual([
+      "normal",
+      "hard",
+      "vhard",
+      "ultimate",
+    ]);
     click(root, '[data-action="send"]');
     expect(root.textContent).toContain("Run in progress");
   });
@@ -266,7 +283,7 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
       click(root, `[data-action="pane"][data-pane="${kind}-shop"]`);
       const offer = game
         .shopStock(kind)
-        .offers.find((o) => gearPrice(o) <= game.state.economy.meseta)!;
+        .offers.find((o) => priceForItem(o) <= game.state.economy.meseta)!;
       click(root, `[data-action="detail"][data-id="${offer.id}"]`);
       click(root, `[data-action="buy-gear"][data-kind="${kind}"][data-id="${offer.id}"]`);
       expect(game.state.economy.inventory.some((i) => i.id === offer.id)).toBe(true);

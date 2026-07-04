@@ -1,9 +1,6 @@
-# drop-table-data Specification
+# drop-table-data Delta
 
-## Purpose
-Reproducibly extract resolved common-drop tables and sliced rare-drop specs from the newserv clone into checked-in engine datasets, including the per-enemy rt-index mapping (mirrors the item-parameter-data pipeline pattern).
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Resolved common-drop dataset
 
@@ -37,35 +34,3 @@ The engine SHALL ship a checked-in, generated dataset of rare-drop specs derived
 
 - **WHEN** a source spec's item code resolves to a tool, mag, or meseta
 - **THEN** the spec SHALL NOT appear in the emitted dataset
-
-### Requirement: Enemy rt-index and key mapping validation
-
-The extraction SHALL map each wired enemy's `statsType` to its newserv `EnemyType`, emit the enemy's `rt_index`, and validate the mapping: every enemy referenced by a wired area SHALL resolve to an rt-index row, and every retained rare-table `Where` key SHALL match a wired enemy type or a wired box area. A mapping failure SHALL fail the extraction with a diagnostic rather than emit a partial dataset.
-
-#### Scenario: Unmapped enemy fails the build
-
-- **WHEN** a wired enemy's `statsType` cannot be mapped to an rt-index
-- **THEN** the extraction script SHALL exit with an error naming the enemy, and no dataset SHALL be written
-
-### Requirement: Tech-disk exclusion baked into tool tables
-
-The extracted tool-class tables SHALL have the weights of all technique-disk tool classes set to zero, so that tech disks can never be selected by the drop generator.
-
-#### Scenario: Tech disks cannot drop
-
-- **WHEN** the tool-class table for any scenario and area is sampled exhaustively
-- **THEN** no technique-disk class SHALL have a nonzero weight
-
-### Requirement: Reproducible extraction pipeline
-
-The datasets SHALL be regenerable from the newserv clone via npm scripts (following the existing `extract:*` pattern), producing byte-identical output for unchanged inputs. The scripts SHALL fail loudly if the upstream file shapes drift from the expected format.
-
-#### Scenario: Regeneration is deterministic
-
-- **WHEN** the extraction scripts run twice against the same newserv checkout
-- **THEN** the emitted dataset files SHALL be byte-identical
-
-#### Scenario: Upstream format drift is detected
-
-- **WHEN** an expected table key or shape is missing from the newserv source
-- **THEN** the script SHALL exit with a diagnostic error instead of emitting a dataset

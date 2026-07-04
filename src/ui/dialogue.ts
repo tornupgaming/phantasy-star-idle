@@ -126,6 +126,7 @@ const FLAVOR_BY_KIND: Record<string, string> = {
   revive: "An emergency revival item. Hope you won't need it.",
   grinder: "Workshop-grade abrasive for weapon tuning.",
   tool: "Field supplies with no use here — the shop pays for them.",
+  inert: "Standard Pioneer 2 field supply. No system on this ship can use it yet.",
 };
 
 export function flavor(name: string, kind: string): string {

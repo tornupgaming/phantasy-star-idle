@@ -14,7 +14,8 @@
     "extract:frame-data": "node scripts/extract-frame-data.mjs",
     "extract:item-table": "node scripts/extract-item-table.mjs",
     "extract:map-spawns": "node scripts/extract-map-spawns.mjs",
-    "extract:common-table": "node scripts/extract-common-table.mjs"
+    "extract:common-table": "node scripts/extract-common-table.mjs",
+    "extract:shop-tables": "node scripts/extract-shop-tables.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.1.0",
