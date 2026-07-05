@@ -90,6 +90,10 @@ export function StageIsland() {
         </div>
       </div>
       <div class="panel" style="margin-top:14px">
+        <h3>Enemy drops</h3>
+        <div class="stage-loot-tally muted">No enemy drops yet.</div>
+      </div>
+      <div class="panel" style="margin-top:14px">
         <h3>Battle log</h3>
         <div class="log log-compact stage-log"></div>
       </div>

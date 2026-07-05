@@ -1291,6 +1291,24 @@ details.advanced summary {
   height: 160px;
 }
 
+.stage-loot-tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+  align-items: center;
+  font-size: 12.5px;
+}
+.loot-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid var(--pso-edge-dim);
+  border-radius: 999px;
+  background: rgba(3, 14, 20, 0.72);
+  color: var(--accent);
+}
+
 .report {
   position: relative;
   border: 1px solid var(--accent);

@@ -149,6 +149,15 @@ export interface HpEventData {
   hpAfter: number;
 }
 
+export interface LootEventData {
+  /** Enemy drops are tallied separately from boxes in the run UI. */
+  source: "enemy" | "box";
+  name: string;
+  count: number;
+  kind: "item" | "consumable" | "grinder" | "meseta";
+  sold?: boolean;
+}
+
 export interface RunEvent {
   t: number; // game ms since run start
   kind: RunEventKind;
@@ -159,6 +168,7 @@ export interface RunEvent {
   attack?: AttackEventData;
   kill?: KillEventData;
   hp?: HpEventData;
+  loot?: LootEventData;
 }
 
 export interface RunLoot {
@@ -234,41 +244,51 @@ export function simulateRun(input: RunInput): RunResult {
   const log = (
     kind: RunEventKind,
     text: string,
-    data?: Pick<RunEvent, "room" | "spawn" | "attack" | "kill" | "hp">,
+    data?: Pick<RunEvent, "room" | "spawn" | "attack" | "kill" | "hp" | "loot">,
   ) => events.push({ t, kind, text, ...data });
 
-  const collectItem = (item: Item, source: string) => {
+  const collectItem = (item: Item, source: string, sourceKind: "enemy" | "box") => {
     const decision = filterItem(item, input.filter);
     if (decision === "sell") {
       const value = sellPrice(item);
       loot.meseta += value;
-      log("loot", `${source} dropped ${item.name} — auto-sold for ${value} meseta.`);
+      log("loot", `${source} dropped ${item.name} — auto-sold for ${value} meseta.`, {
+        loot: { source: sourceKind, name: item.name, count: 1, kind: "item", sold: true },
+      });
     } else {
       loot.items.push(item);
-      log("loot", `${source} dropped ${item.name} — kept.`);
+      log("loot", `${source} dropped ${item.name} — kept.`, {
+        loot: { source: sourceKind, name: item.name, count: 1, kind: "item" },
+      });
     }
   };
 
-  const collectCommon = (itemClass: CommonItemClass, context: DropContext, source: string, statsType?: string) => {
+  const collectCommon = (
+    itemClass: CommonItemClass,
+    context: DropContext,
+    source: string,
+    sourceKind: "enemy" | "box",
+    statsType?: string,
+  ) => {
     switch (itemClass) {
       case "weapon": {
         const item = generateCommonWeapon(context, rng, mintId);
-        if (item) collectItem(item, source);
+        if (item) collectItem(item, source, sourceKind);
         break;
       }
       case "armor": {
         const item = generateCommonFrame(context, rng, mintId);
-        if (item) collectItem(item, source);
+        if (item) collectItem(item, source, sourceKind);
         break;
       }
       case "shield": {
         const item = generateCommonBarrier(context, rng, mintId);
-        if (item) collectItem(item, source);
+        if (item) collectItem(item, source, sourceKind);
         break;
       }
       case "unit": {
         const item = generateCommonUnit(context, rng, mintId);
-        if (item) collectItem(item, source);
+        if (item) collectItem(item, source, sourceKind);
         break;
       }
       case "tool": {
@@ -278,12 +298,16 @@ export function simulateRun(input: RunInput): RunResult {
           // Picked-up consumables are usable for the rest of the run (PSO-style
           // pickup); settle nets them out as gained − used, so no double count.
           addToSupply(supply, out.id, out.count);
-          log("loot", `${source} dropped ${out.count}× ${out.id}.`);
+          log("loot", `${source} dropped ${out.count}× ${out.id}.`, {
+            loot: { source: sourceKind, name: out.id, count: out.count, kind: "consumable" },
+          });
         } else if (out.kind === "grinders") {
           loot.grinders += out.count;
-          log("loot", `${source} dropped ${out.count}× grinder.`);
+          log("loot", `${source} dropped ${out.count}× grinder.`, {
+            loot: { source: sourceKind, name: "grinder", count: out.count, kind: "grinder" },
+          });
         } else if (out.kind === "item") {
-          collectItem(out.item, source);
+          collectItem(out.item, source, sourceKind);
         }
         break;
       }
@@ -293,7 +317,9 @@ export function simulateRun(input: RunInput): RunResult {
           : rollBoxMeseta(context, rng, diff.mesetaMult);
         if (gained > 0) {
           loot.meseta += gained;
-          log("loot", `${source} dropped ${gained} meseta.`);
+          log("loot", `${source} dropped ${gained} meseta.`, {
+            loot: { source: sourceKind, name: "meseta", count: gained, kind: "meseta" },
+          });
         }
         break;
       }
@@ -306,9 +332,9 @@ export function simulateRun(input: RunInput): RunResult {
     const context = dropContext(areaNorm);
     const decision = rollEnemyDropPipeline(statsType, context, rng);
     if (decision.kind === "rare") {
-      collectItem(mintRareItem(decision.spec, context, rng, mintId), source);
+      collectItem(mintRareItem(decision.spec, context, rng, mintId), source, "enemy");
     } else if (decision.kind === "common") {
-      collectCommon(decision.itemClass, context, source, statsType);
+      collectCommon(decision.itemClass, context, source, "enemy", statsType);
     }
   };
 
@@ -316,9 +342,9 @@ export function simulateRun(input: RunInput): RunResult {
     const context = dropContext(areaNorm);
     const decision = rollBoxDropPipeline(context, rng);
     if (decision.kind === "rare") {
-      collectItem(mintRareItem(decision.spec, context, rng, mintId), source);
+      collectItem(mintRareItem(decision.spec, context, rng, mintId), source, "box");
     } else if (decision.kind === "common") {
-      collectCommon(decision.itemClass, context, source);
+      collectCommon(decision.itemClass, context, source, "box");
     }
   };
 

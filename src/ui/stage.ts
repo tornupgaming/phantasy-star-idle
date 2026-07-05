@@ -128,6 +128,7 @@ export class BattleStage {
     this.q(".stage-progress").style.width = `${fill * 100}%`;
     this.q(".stage-pct").textContent =
       `Room ${Math.max(0, this.scene.roomIndex + 1)}/${prog.totalRooms}`;
+    this.updateLootTally();
 
     this.raf = requestAnimationFrame(this.tick);
   };
@@ -305,6 +306,38 @@ export class BattleStage {
     if (!prog) return;
     const kills = prog.revealedEvents.filter((e) => e.kind === "kill").length;
     this.q(".stage-kills").textContent = `${kills}`;
+  }
+
+  private updateLootTally(): void {
+    const prog = this.game.runProgress();
+    if (!prog) return;
+    const tally = new Map<string, { name: string; count: number; sold: boolean }>();
+    for (const e of prog.revealedEvents) {
+      if (e.kind !== "loot" || e.loot?.source !== "enemy") continue;
+      const name = e.loot.kind === "meseta" ? "meseta" : e.loot.name;
+      const key = `${name}\u0000${e.loot.sold ? "sold" : "kept"}`;
+      const row = tally.get(key) ?? { name, count: 0, sold: !!e.loot.sold };
+      row.count += e.loot.count;
+      tally.set(key, row);
+    }
+
+    const el = this.q(".stage-loot-tally");
+    if (tally.size === 0) {
+      el.classList.add("muted");
+      el.textContent = "No enemy drops yet.";
+      return;
+    }
+
+    el.classList.remove("muted");
+    el.replaceChildren(
+      ...[...tally.values()].map((row) => {
+        const chip = document.createElement("span");
+        chip.className = "loot-chip";
+        const count = row.name === "meseta" ? row.count : `×${row.count}`;
+        chip.textContent = `${row.name} ${count}${row.sold ? " (sold)" : ""}`;
+        return chip;
+      }),
+    );
   }
 
   // ---- Effects ---------------------------------------------------------------
