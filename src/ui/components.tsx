@@ -16,6 +16,7 @@ import type { Item } from "../engine/items";
 import type { SectionId } from "../engine/classes";
 import { iconForKind, sectionIcon, spriteDefs, type IconId } from "./icons";
 import { useUi } from "./context";
+import mesetaIconUrl from "./assets/meseta_icon.png";
 import type { Screen } from "./ui-shared";
 
 export function Icon(props: { id: IconId }) {
@@ -28,6 +29,20 @@ export function Icon(props: { id: IconId }) {
 
 export function KindIcon(props: { kind: string }) {
   return <Icon id={iconForKind(props.kind)} />;
+}
+
+export function MesetaIcon() {
+  return <img class="meseta-icon" src={mesetaIconUrl} alt="Meseta" />;
+}
+
+export function MesetaAmount(props: { value: number; suffix?: JSX.Element | string }) {
+  return (
+    <span class="meseta-amount" aria-label={`${props.value} meseta`}>
+      <span>{props.value}</span>
+      <MesetaIcon />
+      <Show when={props.suffix}>{(suffix) => <span>{suffix()}</span>}</Show>
+    </span>
+  );
 }
 
 /** Hidden <symbol> sprite sheet; rows reference glyphs with <use>. */
@@ -127,7 +142,7 @@ export function Topbar(props: { title: string; back?: { label: string; screen: S
         ✦ {props.title}
       </h1>
       <div class="resources">
-        <span class="meseta">{ui.state.economy.meseta} meseta</span>
+        <span class="meseta"><MesetaAmount value={ui.state.economy.meseta} /></span>
         <span>{ui.state.economy.grinders} grinders</span>
       </div>
     </div>

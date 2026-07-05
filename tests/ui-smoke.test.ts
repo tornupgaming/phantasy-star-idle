@@ -78,8 +78,8 @@ describe("UI smoke (manual-pass stand-in)", () => {
     click(root, `[data-action="buy-gear"][data-kind="weapon"][data-id="${offer.id}"]`);
     expect(game.state.economy.meseta).toBeLessThan(mesetaBefore);
     expect(game.state.economy.inventory.some((i) => i.id === offer.id)).toBe(true);
-    // Status bar reflects the new balance.
-    expect(root.textContent).toContain(`${game.state.economy.meseta} Meseta`);
+    // Status bar reflects the new balance with the meseta image icon.
+    expect(root.querySelector(`.meseta-amount[aria-label="${game.state.economy.meseta} meseta"] .meseta-icon`)).toBeTruthy();
 
     // Armour shop pane offers only frames/barriers/units.
     click(root, '[data-action="pane"][data-pane="armour-shop"]');
@@ -154,7 +154,7 @@ describe("UI smoke (manual-pass stand-in)", () => {
     app.sync();
     expect(root.querySelector(".hud")).toBe(hud);
     expect(root.querySelector(".hud-pane .pso-menu")).toBe(list);
-    expect(root.textContent).toContain(`${game.state.economy.meseta} Meseta`);
+    expect(root.querySelector(`.meseta-amount[aria-label="${game.state.economy.meseta} meseta"] .meseta-icon`)).toBeTruthy();
   });
 
   it("dialogue typewriter survives unrelated re-renders mid-reveal", async () => {

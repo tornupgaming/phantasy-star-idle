@@ -12,7 +12,7 @@ import { LEVEL_CAP } from "../engine/classes";
 import { effectiveStats } from "../engine/character";
 import { xpForLevel } from "../engine/progression";
 import { useUi } from "./context";
-import { Icon, PlayerHud, SpriteDefs, WindowBox } from "./components";
+import { Icon, MesetaAmount, PlayerHud, SpriteDefs, WindowBox } from "./components";
 import { GuildPane, GearShopPane, ToolShopPane, BankPane, EquipmentPane } from "./panes";
 import { PANES, PANE_LABELS, supplyLine } from "./ui-shared";
 
@@ -39,7 +39,7 @@ function SidePanel() {
       </div>
       <div class="side-economy">
         <span class="meseta">
-          <Icon id="meseta" /> {ui.state.economy.meseta} Meseta
+          <MesetaAmount value={ui.state.economy.meseta} />
         </span>
         <span class="muted">
           <Icon id="grinder" /> {ui.state.economy.grinders} grinders
@@ -67,7 +67,7 @@ function ReportBanner() {
           </b>
         </span>
         <span>
-          Meseta <b>{r().meseta}</b>
+          Meseta <b><MesetaAmount value={r().meseta} /></b>
         </span>
         <span>
           XP{" "}

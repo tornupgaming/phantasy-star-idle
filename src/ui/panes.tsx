@@ -16,7 +16,7 @@ import { GRINDER_PRICE, type ToolOffer } from "../engine/shop";
 import { CONSUMABLES, CONSUMABLES_LIST, type ConsumableId } from "../engine/consumables";
 import { flavor, itemFlavor } from "./dialogue";
 import { useUi } from "./context";
-import { Icon, KindIcon, StatPreview, WindowBox } from "./components";
+import { Icon, KindIcon, MesetaAmount, MesetaIcon, StatPreview, WindowBox } from "./components";
 import {
   PANE_LABELS,
   PATTERN_PRESETS,
@@ -112,7 +112,7 @@ export function GuildPane() {
                 value={ui.selectedEntry().filter.autoSellBelow}
                 style="width:90px"
               />{" "}
-              m
+              <MesetaIcon />
             </label>
           </div>
           <div class="row">
@@ -152,7 +152,7 @@ export function GuildPane() {
 
 // ---- Shared shop/bank building blocks ---------------------------------------
 
-function ItemRow(props: { item: Item; trailing: string; onSelect: () => void }) {
+function ItemRow(props: { item: Item; trailing: JSX.Element; onSelect: () => void }) {
   const ui = useUi();
   return (
     <button
@@ -224,7 +224,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
           <div class="pso-menu shop-list">
             <Show when={stock().offers.length > 0} fallback={<div class="muted">{emptyMsg()}</div>}>
               <For each={stock().offers}>
-                {(o) => <ItemRow item={o} trailing={`${priceForItem(o)}m`} onSelect={() => ui.setDetailId(o.id)} />}
+                {(o) => <ItemRow item={o} trailing={<MesetaAmount value={priceForItem(o)} />} onSelect={() => ui.setDetailId(o.id)} />}
               </For>
             </Show>
           </div>
@@ -246,7 +246,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
                     <StatPreview slot={item().kind as "weapon" | "frame" | "barrier" | "unit"} item={item()} />
                   </Show>
                   <div class="row" style="margin-top:12px">
-                    <span class="muted">{priceForItem(item())}m</span>
+                    <span class="muted"><MesetaAmount value={priceForItem(item())} /></span>
                     <button
                       class="primary"
                       data-action="buy-gear"
@@ -302,7 +302,7 @@ export function ToolShopPane() {
                     >
                       <KindIcon kind={c.kind} />
                       <span style="flex:1">{c.name}</span>
-                      <span class="meta num">{c.price}m</span>
+                      <span class="meta num"><MesetaAmount value={c.price} /></span>
                     </button>
                   );
                 }
@@ -317,14 +317,14 @@ export function ToolShopPane() {
                     >
                       <Icon id="grinder" />
                       <span style="flex:1">Grinder</span>
-                      <span class="meta num">{GRINDER_PRICE}m</span>
+                      <span class="meta num"><MesetaAmount value={GRINDER_PRICE} /></span>
                     </button>
                   );
                 }
                 return (
                   <ItemRow
                     item={offer.item}
-                    trailing={`${priceForItem(offer.item)}m`}
+                    trailing={<MesetaAmount value={priceForItem(offer.item)} />}
                     onSelect={() => ui.setDetailId(offer.item.id)}
                   />
                 );
@@ -346,7 +346,7 @@ export function ToolShopPane() {
                   Raises an equipped weapon's grind by 1, up to its cap.
                 </div>
                 <div class="row" style="margin-top:12px">
-                  <span class="muted">{GRINDER_PRICE}m each</span>
+                  <span class="muted"><MesetaAmount value={GRINDER_PRICE} suffix="each" /></span>
                   <button data-action="buy-grinder" data-qty="1" onClick={() => ui.act(() => ui.game.buyGrinders(1), "bought")}>
                     Buy 1
                   </button>
@@ -365,7 +365,7 @@ export function ToolShopPane() {
                         : "Kept in inventory; no use for it yet."}
                     </div>
                     <div class="row" style="margin-top:12px">
-                      <span class="muted">{priceForItem(item())}m</span>
+                      <span class="muted"><MesetaAmount value={priceForItem(item())} /></span>
                       <button
                         class="primary"
                         data-action="buy-tool-item"
@@ -398,7 +398,7 @@ export function ToolShopPane() {
                           : "No use yet — carried for the day its system comes online."}
                     </div>
                     <div class="row" style="margin-top:12px">
-                      <span class="muted">{c().price}m each</span>
+                      <span class="muted"><MesetaAmount value={c().price} suffix="each" /></span>
                       <button
                         data-action="buy"
                         data-id={c().id}
@@ -443,7 +443,7 @@ export function BankPane() {
           <div class="pso-menu shop-list">
             <Show when={inv().length > 0} fallback={<div class="muted">{emptyMsg}</div>}>
               <For each={inv()}>
-                {(i) => <ItemRow item={i} trailing={`${sellPrice(i)}m`} onSelect={() => ui.setDetailId(i.id)} />}
+                {(i) => <ItemRow item={i} trailing={<MesetaAmount value={sellPrice(i)} />} onSelect={() => ui.setDetailId(i.id)} />}
               </For>
             </Show>
           </div>
@@ -481,7 +481,7 @@ export function BankPane() {
                         }
                       }}
                     >
-                      Sell ({sellPrice(item())}m)
+                      Sell (<MesetaAmount value={sellPrice(item())} />)
                     </button>
                   </div>
                 </>

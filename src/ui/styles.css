@@ -111,6 +111,19 @@ h3 {
 .resources .meseta {
   color: var(--gold);
 }
+.meseta-amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.meseta-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex: 0 0 14px;
+  image-rendering: pixelated;
+}
 
 /* ---- Scene layer (hub-scene-backdrop) --------------------------------------
  * Persistent canvas glyph wall + animatable tint + motif silhouette. Mounted
