@@ -14,7 +14,7 @@ import { xpForLevel } from "../engine/progression";
 import { useUi } from "./context";
 import { Icon, MesetaAmount, PlayerHud, SpriteDefs, WindowBox } from "./components";
 import { GuildPane, GearShopPane, ToolShopPane, BankPane, EquipmentPane } from "./panes";
-import { PANES, PANE_LABELS, supplyLine } from "./ui-shared";
+import { itemDisplayName, itemNameClass, PANES, PANE_LABELS, supplyLine } from "./ui-shared";
 
 /**
  * XP/economy side panel beside the capsule (player-hud D5, hub-only): total
@@ -81,7 +81,19 @@ function ReportBanner() {
         </span>
       </div>
       <div style="margin-top:6px">
-        Kept: <b>{r().items.length ? r().items.map((i) => i.name).join(", ") : "no gear kept"}</b>
+        Kept:{" "}
+        <b>
+          <Show when={r().items.length > 0} fallback="no gear kept">
+            <For each={r().items}>
+              {(item, idx) => (
+                <>
+                  <span class={itemNameClass(item)}>{itemDisplayName(item)}</span>
+                  {idx() < r().items.length - 1 ? ", " : ""}
+                </>
+              )}
+            </For>
+          </Show>
+        </b>
       </div>
       <div class="muted">
         Consumables gained: {supplyLine(r().consumablesGained)} · used: {supplyLine(r().consumablesUsed)}

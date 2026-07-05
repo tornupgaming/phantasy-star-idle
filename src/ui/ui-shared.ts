@@ -82,6 +82,20 @@ function starsTag(item: Item): string {
   return item.stars !== undefined ? ` · ${item.stars}★` : "";
 }
 
+export function weaponHasAttributeBonuses(item: Item): item is Weapon {
+  if (item.kind !== "weapon" || !item.bonuses) return false;
+  return Object.values(item.bonuses).some((v) => (v ?? 0) > 0);
+}
+
+export function itemDisplayName(item: Item): string {
+  if (item.kind === "weapon" && item.grind > 0) return `${item.name} +${item.grind}`;
+  return item.name;
+}
+
+export function itemNameClass(item: Item): string | undefined {
+  return weaponHasAttributeBonuses(item) ? "weapon-attributes" : undefined;
+}
+
 export function itemMeta(item: Item): string {
   if (item.kind === "weapon") {
     const parts = [

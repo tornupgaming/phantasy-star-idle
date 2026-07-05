@@ -21,7 +21,9 @@ import {
   PANE_LABELS,
   PATTERN_PRESETS,
   SLOT_ICONS,
+  itemDisplayName,
   itemMeta,
+  itemNameClass,
   patternMeta,
   patternName,
   supplyLine,
@@ -152,6 +154,10 @@ export function GuildPane() {
 
 // ---- Shared shop/bank building blocks ---------------------------------------
 
+function ItemName(props: { item: Item }) {
+  return <span class={itemNameClass(props.item)}>{itemDisplayName(props.item)}</span>;
+}
+
 function ItemRow(props: { item: Item; trailing: JSX.Element; onSelect: () => void }) {
   const ui = useUi();
   return (
@@ -164,7 +170,7 @@ function ItemRow(props: { item: Item; trailing: JSX.Element; onSelect: () => voi
     >
       <KindIcon kind={props.item.kind} />
       <span class="name" style="flex:1">
-        {props.item.name}
+        <ItemName item={props.item} />
       </span>
       <span class="meta num">{props.trailing}</span>
     </button>
@@ -175,7 +181,7 @@ function ItemDetailHead(props: { item: Item }) {
   return (
     <>
       <div class="detail-name">
-        <KindIcon kind={props.item.kind} /> {props.item.name}
+        <KindIcon kind={props.item.kind} /> <ItemName item={props.item} />
       </div>
       <div class="detail-flavor">{itemFlavor(props.item)}</div>
       <div class="muted small" style="margin-bottom:8px">
@@ -188,7 +194,7 @@ function ItemDetailHead(props: { item: Item }) {
 function EquippedLine(props: { current: Item }) {
   return (
     <div class="equipped-line">
-      <span class="equipped-mark">E</span> {props.current.name} —{" "}
+      <span class="equipped-mark">E</span> <ItemName item={props.current} /> —{" "}
       <span class="muted small">{itemMeta(props.current)}</span>
     </div>
   );
@@ -502,16 +508,20 @@ export function EquipmentPane() {
   const inv = () => ui.state.economy.inventory;
   const cap = () => unitCapacity(eq());
 
-  const slotRows = (): Array<[EquipSlot, string, string]> => [
-    ["weapon", "Weapon", eq().weapon ? `${eq().weapon!.name} +${eq().weapon!.grind}` : "— none —"],
-    ["frame", "Frame", eq().frame ? eq().frame!.name : "— none —"],
-    ["barrier", "Barrier", eq().barrier ? eq().barrier!.name : "— none —"],
-    ["units", `Units ${eq().units.length}/${cap()}`, eq().units.map((u) => u.name).join(", ") || "— none —"],
+  const slotRows = (): Array<[EquipSlot, string, JSX.Element]> => [
+    ["weapon", "Weapon", eq().weapon ? <ItemName item={eq().weapon!} /> : "— none —"],
+    ["frame", "Frame", eq().frame ? <ItemName item={eq().frame!} /> : "— none —"],
+    ["barrier", "Barrier", eq().barrier ? <ItemName item={eq().barrier!} /> : "— none —"],
+    [
+      "units",
+      `Units ${eq().units.length}/${cap()}`,
+      eq().units.length ? <>{eq().units.map((u) => itemDisplayName(u)).join(", ")}</> : "— none —",
+    ],
   ];
 
   const CandRow = (props: {
     id: string;
-    name: string;
+    name: JSX.Element;
     meta: JSX.Element;
     rarity?: string;
     kind?: string;
@@ -564,11 +574,11 @@ export function EquipmentPane() {
               <Match when={ui.equipSlot() === "units"}>
                 <For each={eq().units}>
                   {(u) => (
-                    <CandRow id={`remove:${u.id}`} name={`Remove ${u.name}`} meta={equippedMark()} rarity={u.rarity} kind={u.kind} />
+                    <CandRow id={`remove:${u.id}`} name={<>Remove <ItemName item={u} /></>} meta={equippedMark()} rarity={u.rarity} kind={u.kind} />
                   )}
                 </For>
                 <For each={inv().filter(isUnit)}>
-                  {(u) => <CandRow id={u.id} name={u.name} meta={itemMeta(u)} rarity={u.rarity} kind={u.kind} />}
+                  {(u) => <CandRow id={u.id} name={<ItemName item={u} />} meta={itemMeta(u)} rarity={u.rarity} kind={u.kind} />}
                 </For>
                 <Show when={eq().units.length === 0 && inv().filter(isUnit).length === 0}>
                   <div class="muted">Nothing equippable — visit the shops or send a run.</div>
@@ -583,11 +593,11 @@ export function EquipmentPane() {
                     <>
                       <Show when={equipped()}>
                         {(cur) => (
-                          <CandRow id="remove" name={`Remove ${cur().name}`} meta={equippedMark()} rarity={cur().rarity} kind={cur().kind} />
+                          <CandRow id="remove" name={<>Remove <ItemName item={cur()} /></>} meta={equippedMark()} rarity={cur().rarity} kind={cur().kind} />
                         )}
                       </Show>
                       <For each={candidates()}>
-                        {(i) => <CandRow id={i.id} name={i.name} meta={itemMeta(i)} rarity={i.rarity} kind={i.kind} />}
+                        {(i) => <CandRow id={i.id} name={<ItemName item={i} />} meta={itemMeta(i)} rarity={i.rarity} kind={i.kind} />}
                       </For>
                       <Show when={!equipped() && candidates().length === 0}>
                         <div class="muted">Nothing equippable — visit the shops or send a run.</div>
@@ -628,7 +638,7 @@ function EquipDetail() {
           {(w) => (
             <>
               <div class="muted" style="margin:8px 0 4px">
-                {w().name} +{w().grind}/{w().maxGrind}
+                <ItemName item={w()} /> {w().grind > 0 ? `/${w().maxGrind}` : `+0/${w().maxGrind}`}
               </div>
               <div class="row">
                 <button class="small" data-action="grind" onClick={() => ui.act(() => ui.game.grindEquippedWeapon(), "grind")}>
@@ -647,7 +657,7 @@ function EquipDetail() {
             <Show when={equipped()} fallback={<div class="muted">Nothing equipped.</div>}>
               {(cur) => (
                 <>
-                  <div class="detail-name">Remove {cur().name}</div>
+                  <div class="detail-name">Remove <ItemName item={cur()} /></div>
                   <StatPreview slot={slot()} item={null} />
                   <Show when={slot() === "frame" && eq().units.length > 0}>
                     <div class="muted">Mounted units return to the inventory too.</div>
@@ -678,7 +688,7 @@ function EquipDetail() {
             <Show when={unit()} fallback={<div class="muted">Nothing equipped.</div>}>
               {(u) => (
                 <>
-                  <div class="detail-name">Remove {u().name}</div>
+                  <div class="detail-name">Remove <ItemName item={u()} /></div>
                   <StatPreview slot="unit" item={null} removeUnitId={unitId()} />
                   <div class="row" style="margin-top:12px">
                     <button
@@ -702,7 +712,7 @@ function EquipDetail() {
         {(item) => (
           <>
             <div class="detail-name">
-              <KindIcon kind={item().kind} /> {item().name}
+              <KindIcon kind={item().kind} /> <ItemName item={item()} />
             </div>
             <div class="detail-flavor">{itemFlavor(item())}</div>
             <div class="muted small" style="margin-bottom:8px">

@@ -301,6 +301,12 @@ h3 {
 .rarity-rare .name {
   color: var(--gold);
 }
+.weapon-attributes,
+.rarity-uncommon .name .weapon-attributes,
+.rarity-rare .name .weapon-attributes,
+.detail-name .weapon-attributes {
+  color: var(--good);
+}
 
 .list {
   max-height: 260px;
