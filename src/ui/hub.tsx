@@ -111,7 +111,13 @@ export function HubScreen() {
   const ui = useUi();
   let hudEl!: HTMLDivElement;
 
-  const hubMenus = () => Array.from(hudEl.querySelectorAll<HTMLElement>(".pso-menu"));
+  // Keyboard-navigable menus: classic PSO menus plus the Nova shop card
+  // stacks, which expose listbox/option semantics instead of menu-row classes.
+  const hubMenus = () => Array.from(hudEl.querySelectorAll<HTMLElement>('.pso-menu, [role="listbox"]'));
+  const menuRows = (menu: HTMLElement) =>
+    Array.from(menu.querySelectorAll<HTMLElement>('.pso-menu-row, [role="option"]'));
+  const rowSelected = (row: HTMLElement) =>
+    row.classList.contains("selected") || row.getAttribute("aria-selected") === "true";
 
   // Keyboard focus indicator: derived from the kbdMenu signal. Menu DOM nodes
   // persist across fine-grained updates, so there is no restoration pass —
@@ -161,9 +167,9 @@ export function HubScreen() {
         break;
       case "ArrowUp":
       case "ArrowDown": {
-        const rows = Array.from(menus[cur].querySelectorAll<HTMLElement>(".pso-menu-row"));
+        const rows = menuRows(menus[cur]);
         if (!rows.length) break;
-        const at = rows.findIndex((r) => r.classList.contains("selected"));
+        const at = rows.findIndex(rowSelected);
         const next =
           at < 0 ? 0 : Math.min(rows.length - 1, Math.max(0, at + (e.key === "ArrowDown" ? 1 : -1)));
         if (next !== at) rows[next].click();

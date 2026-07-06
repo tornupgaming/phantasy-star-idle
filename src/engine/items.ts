@@ -62,6 +62,19 @@ export const KIND_FOR_ARCHETYPE: Record<WeaponType, number> = {
 };
 
 /**
+ * Resolve a weapon to its authentic animation category: the item's own
+ * `weaponKind` when the table provides one, else the coarse archetype's
+ * representative kind (curated/legacy weapons); `null` means barehanded.
+ * Single source for the run loop and every UI stat display.
+ */
+export function weaponKindOf(
+  weapon: Pick<Weapon, "weaponKind" | "weaponType"> | null | undefined,
+): number | null {
+  if (!weapon) return null;
+  return weapon.weaponKind ?? KIND_FOR_ARCHETYPE[weapon.weaponType];
+}
+
+/**
  * Coarse display archetype for an authentic animation category (0..18),
  * grouped by tempo. Label only — timing reads the frame data directly.
  */

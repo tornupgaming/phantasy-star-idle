@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game, OFFLINE_CAP_MS } from "../src/engine/game";
 import { sectionIdFromName } from "../src/engine/progression";
+import { GEAR } from "../src/engine/content";
+import type { Weapon } from "../src/engine/items";
 
 /** A controllable clock for deterministic time-travel in tests. */
 function fakeClock(start = 1_000_000) {
@@ -107,6 +109,21 @@ describe("meta-layer operations", () => {
     game.sendRun("forest", "normal");
     const r = game.unequipToInventory("weapon");
     expect(r.ok).toBe(false);
+  });
+
+  it("refuses to equip an unmet-requirement item and keeps it in inventory", () => {
+    const clock = fakeClock();
+    const game = Game.loadOrNew(memoryStorage(), clock.now);
+    const rifle = { ...GEAR.scoutRifle, id: "req-rifle", requirements: { ata: 999 } } as Weapon;
+    game.state.economy.inventory.push(rifle);
+    const equippedBefore = game.selectedCharacter().equipment.weapon;
+
+    const r = game.equipFromInventory("req-rifle");
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.reason).toContain("requires 999 ATA");
+    // The item survives the refusal and the current weapon stays equipped.
+    expect(game.state.economy.inventory.some((i) => i.id === "req-rifle")).toBe(true);
+    expect(game.selectedCharacter().equipment.weapon).toBe(equippedBefore);
   });
 
   it("grinds the equipped weapon consuming a grinder", () => {

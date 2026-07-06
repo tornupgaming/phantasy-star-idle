@@ -117,6 +117,57 @@ describe("UI smoke (manual-pass stand-in)", () => {
     expect(root.textContent).toContain("Run in progress");
   });
 
+  it("weapon-range-avoidance: AVD chip on shop cards, avoidance shown when equipping/barehanded", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    mount(root, game);
+    click(root, '[data-action="select-char"]');
+
+    // Weapon shop: every listed weapon card shows an AVD chip (design D4).
+    click(root, '[data-action="pane"][data-pane="weapon-shop"]');
+    const cards = [...root.querySelectorAll('.shop-list [role="option"]')];
+    expect(cards.length).toBeGreaterThan(0);
+    for (const card of cards) expect(card.textContent).toContain("AVD");
+
+    // Equipment pane, weapon slot: unequip the starter weapon and confirm the
+    // barehanded (fist) avoidance shows (character-equipment spec: barehanded
+    // scenario). Fist and starter saber share the same 20% tier (design D1),
+    // so removing it first is the only way to distinguish the two states.
+    click(root, '[data-action="pane"][data-pane="equipment"]');
+    expect(game.selectedCharacter().equipment.weapon).not.toBeNull();
+    click(root, `[data-action="equip-cand"][data-id="remove"]`);
+    click(root, '[data-action="unequip"][data-slot="weapon"]');
+    expect(game.selectedCharacter().equipment.weapon).toBeNull();
+    expect(root.textContent).toMatch(/AVD 20%/); // fist tier (design D1)
+
+    // Previewing a candidate weapon shows its avoidance in the preview table
+    // alongside the other stat rows (swap-preview scenario).
+    game.state.economy.meseta = 100_000;
+    game.selectedCharacter().level = 5;
+    click(root, '[data-action="pane"][data-pane="weapon-shop"]');
+    const offer = game
+      .shopStock("weapon")
+      .offers.find(
+        (o) =>
+          priceForItem(o) <= game.state.economy.meseta &&
+          o.kind === "weapon" &&
+          meetsRequirements(game.selectedCharacter(), o).ok,
+      )!;
+    click(root, `[data-action="detail"][data-id="${offer.id}"]`);
+    click(root, `[data-action="buy-gear"][data-kind="weapon"][data-id="${offer.id}"]`);
+
+    click(root, '[data-action="pane"][data-pane="equipment"]');
+    const weapon = game.state.economy.inventory.find((i) => i.kind === "weapon")!;
+    click(root, `[data-action="equip-cand"][data-id="${weapon.id}"]`);
+    const previewRows = [...root.querySelectorAll(".diff-table tr")].map((r) => r.textContent);
+    expect(previewRows.some((r) => r?.includes("AVD"))).toBe(true);
+
+    // Equip it, then the equipped-weapon display shows its avoidance too.
+    click(root, `[data-action="equip"][data-id="${weapon.id}"]`);
+    expect(root.textContent).toMatch(/AVD \d+%/);
+  });
+
   it("unlimited roster on the select screen", () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
@@ -196,20 +247,21 @@ describe("keyboard menu navigation (ui-navigation)", () => {
     key("4");
     expect(root.textContent).toContain("Tool Shop");
 
-    // Nav window (menu 0) has keyboard focus; ArrowRight moves to the pane list.
+    // Nav window (menu 0) has keyboard focus; ArrowRight moves to the pane
+    // list (the tool shop's Nova card stack, a listbox of option cards).
     expect(root.querySelector(".hud-nav .pso-menu")!.classList.contains("kbd-active")).toBe(true);
     key("ArrowRight");
-    expect(root.querySelector(".hud-pane .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+    expect(root.querySelector('.hud-pane [role="listbox"]')!.classList.contains("kbd-active")).toBe(true);
 
     // ArrowDown selects the first row (no prior selection), then advances.
     key("ArrowDown");
-    const rows = root.querySelectorAll(".hud-pane .pso-menu-row");
-    expect(rows[0].classList.contains("selected")).toBe(true);
+    const rows = root.querySelectorAll('.hud-pane [role="option"]');
+    expect(rows[0].getAttribute("aria-selected")).toBe("true");
     key("ArrowDown");
-    expect(rows[1].classList.contains("selected")).toBe(true);
+    expect(rows[1].getAttribute("aria-selected")).toBe("true");
 
     // Focus survives an unrelated selection change (no restoration pass).
-    expect(root.querySelector(".hud-pane .pso-menu")!.classList.contains("kbd-active")).toBe(true);
+    expect(root.querySelector('.hud-pane [role="listbox"]')!.classList.contains("kbd-active")).toBe(true);
 
     // ArrowLeft steps back to the nav window.
     key("ArrowLeft");

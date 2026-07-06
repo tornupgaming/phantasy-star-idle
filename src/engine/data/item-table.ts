@@ -134,6 +134,18 @@ export function frameDef(code: string): FrameDef | null {
 export function barrierDef(code: string): BarrierDef | null {
   return withCode(code, dataset.barriers[code]);
 }
+/**
+ * Maximum DFP/EVP an armour item's definition allows (base + PMT variance
+ * range), for current/max displays. Null when the item has no code or its
+ * code isn't a frame/barrier — callers fall back to flat display.
+ */
+export function armorStatCeiling(item: Pick<Item, "kind" | "code">): { dfp: number; evp: number } | null {
+  if (!item.code) return null;
+  const def = item.kind === "frame" ? frameDef(item.code) : item.kind === "barrier" ? barrierDef(item.code) : null;
+  if (!def) return null;
+  return { dfp: def.dfp + def.dfpRange, evp: def.evp + def.evpRange };
+}
+
 export function unitDef(code: string): UnitDef | null {
   return withCode(code, dataset.units[code]);
 }

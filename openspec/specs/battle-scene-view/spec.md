@@ -61,13 +61,17 @@ The stage SHALL play newly revealed events at their run timestamps with visual f
 - **WHEN** an attack event that misses is revealed
 - **THEN** the stage SHALL show a red "MISS" indicator composed of bitmap glyphs from the atlas on the target, without changing any health bar
 
+#### Scenario: Sidestep feedback
+- **WHEN** a sidestep event is revealed
+- **THEN** the stage SHALL show an evade indicator on the character, visually distinct from the MISS indicator (a sidestep is the player moving, not the enemy missing), without changing any health bar
+
 #### Scenario: Atlas unavailable fallback
 - **WHEN** the glyph atlas image fails to load
 - **THEN** floating damage numbers and the MISS indicator SHALL render as plain text with the same colors and animation
 
 #### Scenario: Log and ticker miss styling unchanged
-- **WHEN** a miss event is written to the battle log or ticker
-- **THEN** those lines SHALL keep their existing muted styling (only the floating MISS indicator is red)
+- **WHEN** a miss or sidestep event is written to the battle log or ticker
+- **THEN** those lines SHALL keep the existing muted styling (only the floating stage indicators are emphasized)
 
 #### Scenario: Death feedback
 - **WHEN** a kill event is revealed

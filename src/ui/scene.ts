@@ -120,7 +120,8 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
     case "eject":
       scene.phase = "ejected";
       break;
-    // "box" and "loot" don't change scene state; they only ticker.
+    // "box", "loot", and "sidestep" don't change scene state; they only ticker
+    // (a sidestep is an avoided attack — no HP change, per design D3).
   }
 }
 

@@ -136,6 +136,31 @@ describe("scene reducer", () => {
     expect(scene.rooms[1]).toEqual({ enemies: 1, boxes: 0 });
   });
 
+  it("sidestep events are folded without changing HP or breaking reconstruction", () => {
+    const scene = createScene(100, {});
+    applyEvent(scene, roomEvent);
+    const before = { ...scene, enemies: scene.enemies.map((e) => ({ ...e })) };
+    const sidestepEvent: RunEvent = {
+      t: 2,
+      kind: "sidestep",
+      text: "Booma lunges — you sidestep.",
+      sidestep: { actor: 0 },
+    };
+    applyEvent(scene, sidestepEvent);
+    expect(scene.charHp).toBe(before.charHp);
+    expect(scene.enemies).toEqual(before.enemies);
+    expect(scene.phase).toBe(before.phase);
+
+    // Reconstruction from a prefix that includes the sidestep matches
+    // incremental application (mid-run reload tolerance).
+    const events = [roomEvent, sidestepEvent, charHits(0, 12, 18, 3)];
+    const folded = sceneAt(events, 100, {});
+    const incremental = createScene(100, {});
+    for (const e of events) applyEvent(incremental, e);
+    expect(folded).toEqual(incremental);
+    expect(folded.enemies[0].hp).toBe(18);
+  });
+
   it("complete and eject set the terminal phase", () => {
     const scene = createScene(100, {});
     applyEvent(scene, { t: 9, kind: "complete", text: "Area cleared!" });

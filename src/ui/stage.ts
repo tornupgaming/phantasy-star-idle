@@ -57,6 +57,7 @@ function logClass(e: RunEvent): string {
     if (e.attack.crit) return "l-crit";
     return "l-attack";
   }
+  if (e.kind === "sidestep") return "l-miss"; // muted styling, same as a miss (design D3)
   return `l-${e.kind}`;
 }
 
@@ -174,6 +175,11 @@ export class BattleStage {
         }
         break;
       }
+      case "sidestep":
+        // The character moved, not the enemy missing (design D3) — a distinct
+        // evade indicator on the character, no health-bar change.
+        this.float(this.q(".player-hud"), "SIDESTEP", "float-sidestep");
+        break;
       case "kill": {
         const el = this.enemyEl(e.kill?.enemyIndex ?? -1);
         if (el) el.classList.add("dead");
@@ -354,7 +360,7 @@ export class BattleStage {
     span.className = cls;
     if (damageFontReady) {
       const tint: FloatTint = cls.includes("miss") ? "red" : cls.includes("crit") ? "gold" : "white";
-      const scale = cls.includes("crit") ? 2 : 1;
+      const scale = cls.includes("crit") ? 3 : 2;
       for (const ch of text) {
         const glyph = floatGlyph(ch, tint, scale);
         if (glyph) span.appendChild(glyph);

@@ -19,6 +19,7 @@ import {
   applyRunXp,
   emptyEquipment,
   equip,
+  meetsRequirements,
   unequip,
   grindWeapon,
   unitCapacity,
@@ -424,6 +425,13 @@ export class Game {
     if (idx < 0) return { ok: false, reason: "item not in inventory" };
     const item = this.inv()[idx];
     const eq = this.selectedCharacter().equipment;
+
+    // Gate before any mutation: `equip` refuses unmet requirements, and the
+    // splice below must not run in that case or the item is destroyed.
+    if (isWeapon(item) || isFrame(item) || isBarrier(item) || isUnit(item)) {
+      const gate = meetsRequirements(this.selectedCharacter(), item);
+      if (!gate.ok) return gate;
+    }
 
     if (isUnit(item)) {
       if (eq.units.length >= unitCapacity(eq)) {

@@ -13,6 +13,7 @@ import dataset from "../src/engine/data/item-table.json";
 import {
   allBarriers,
   allFrames,
+  armorStatCeiling,
   allUnits,
   allWeapons,
   allTools,
@@ -206,5 +207,27 @@ describe("attack-speed units", () => {
     expect(t.attackSpeedBoost).toBe(40);
     const plain = templateFromCode("010300") as Omit<Unit, "id">;
     expect(plain.attackSpeedBoost).toBeUndefined();
+  });
+});
+
+describe("armorStatCeiling", () => {
+  it("returns base + range for frames and barriers (shop-list-card spec)", () => {
+    // Frame 010100: DFP 5 range 2, EVP 5 range 2 → ceiling 7/7.
+    expect(armorStatCeiling({ kind: "frame", code: "010100" })).toEqual({ dfp: 7, evp: 7 });
+    const b = { kind: "barrier" as const, code: "010200" };
+    const def = allBarriers().find((d) => d.code === "010200")!;
+    expect(armorStatCeiling(b)).toEqual({ dfp: def.dfp + def.dfpRange, evp: def.evp + def.evpRange });
+  });
+
+  it("returns null without a code, for non-armour kinds, and for unknown codes", () => {
+    expect(armorStatCeiling({ kind: "frame" })).toBeNull();
+    expect(armorStatCeiling({ kind: "weapon", code: "000100" })).toBeNull();
+    expect(armorStatCeiling({ kind: "barrier", code: "ffffff" })).toBeNull();
+  });
+
+  it("does not mutate its argument", () => {
+    const item = { kind: "frame" as const, code: "010100" };
+    armorStatCeiling(item);
+    expect(item).toEqual({ kind: "frame", code: "010100" });
   });
 });

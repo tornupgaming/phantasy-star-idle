@@ -22,9 +22,10 @@ import { areaNormForFloor, difficulty, type DifficultyId } from "./areas";
 import { generateStage } from "./stage-gen";
 import { instantiateEnemy, isDead, type EnemyInstance } from "./enemies";
 import { engageDelayMs, nextComboDelay, enemyInterval } from "./pacing";
+import { weaponAvoidancePct } from "./data/avoidance";
 import { rigForClass } from "./classes";
 import { attackSpeedBoost } from "./character";
-import { KIND_FOR_ARCHETYPE } from "./items";
+import { weaponKindOf } from "./items";
 import type { Item } from "./items";
 import { sellPrice } from "./pricing";
 import { filterItem, type LootFilter } from "./loot";
@@ -101,6 +102,7 @@ export type RunEventKind =
   | "room"
   | "spawn"
   | "attack"
+  | "sidestep"
   | "kill"
   | "box"
   | "loot"
@@ -139,6 +141,11 @@ export interface AttackEventData {
   hpAfter: number;
 }
 
+export interface SidestepEventData {
+  /** The attacking enemy's roster index; the character avoided its attack. */
+  actor: number;
+}
+
 export interface KillEventData {
   enemyIndex: number;
   xp: number;
@@ -166,6 +173,7 @@ export interface RunEvent {
   room?: RoomEventData;
   spawn?: SpawnEventData;
   attack?: AttackEventData;
+  sidestep?: SidestepEventData;
   kill?: KillEventData;
   hp?: HpEventData;
   loot?: LootEventData;
@@ -219,8 +227,11 @@ export function simulateRun(input: RunInput): RunResult {
   // Item-table weapons carry their authentic animation category; curated/old
   // weapons fall back through their coarse archetype; barehanded = fists.
   const weapon = input.character.equipment.weapon;
-  const weaponKind = weapon ? (weapon.weaponKind ?? KIND_FOR_ARCHETYPE[weapon.weaponType]) : null;
+  const weaponKind = weaponKindOf(weapon);
   const rig = rigForClass(input.character.classId);
+  // Movement layer (weapon-avoidance spec): chance to sidestep each incoming
+  // attack, fixed for the run by the dispatched weapon's kind.
+  const avoidancePct = weaponAvoidancePct(weaponKind);
   const speedBoost = attackSpeedBoost(input.character.equipment);
   const pattern = new AttackPattern(input.pattern.length ? input.pattern : ["normal"]);
   const supply: Supply = { ...input.supply };
@@ -244,7 +255,7 @@ export function simulateRun(input: RunInput): RunResult {
   const log = (
     kind: RunEventKind,
     text: string,
-    data?: Pick<RunEvent, "room" | "spawn" | "attack" | "kill" | "hp" | "loot">,
+    data?: Pick<RunEvent, "room" | "spawn" | "attack" | "sidestep" | "kill" | "hp" | "loot">,
   ) => events.push({ t, kind, text, ...data });
 
   const collectItem = (item: Item, source: string, sourceKind: "enemy" | "box") => {
@@ -546,6 +557,15 @@ export function simulateRun(input: RunInput): RunResult {
         charNext += nextComboDelay(rig, weaponKind, type, step, killed, speedBoost);
       } else {
         const e = enemies[actor];
+        // Sidestep pre-roll (weapon-avoidance spec): the virtual player's
+        // movement. On success the attack never enters the authentic pipeline.
+        if (rng.chance(avoidancePct / 100)) {
+          log("sidestep", `${e.name} lunges — you sidestep.`, {
+            sidestep: { actor },
+          });
+          enemyNext[actor] += enemyInterval(e.def.enemyType);
+          continue;
+        }
         const out = resolveAttack(e.combatant, charCombatant, "normal", 0, rng);
         if (!out.hit) {
           log("attack", `${e.name} attacks — miss.`, {

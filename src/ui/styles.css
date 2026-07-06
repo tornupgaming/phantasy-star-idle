@@ -29,6 +29,78 @@
   --line: var(--pso-edge-dim);
   --panel: var(--pso-window);
   --panel-2: var(--pso-window-2);
+  --chamfer-grade: 4px;
+  /* Nova shop card (shop-list-card spec): attribute/stat chip hues + card glass. */
+  --psn-list-item-bg: #181f2999;
+  --psn-list-item-bg-hi: #1c2f4099;
+  --attr-native: #58c048;
+  --attr-abeast: #ff8a3c;
+  --attr-machine: #58a8ff;
+  --attr-dark: #9a68e8;
+  --attr-hit: #f0b83c;
+  --stat-evp: #38b8a0;
+  --stat-slot: #8aa4b4;
+  --stat-avd: #7c93ff;
+  --card-hi: var(--psn-list-item-bg);
+  --card-lo: var(--psn-list-item-bg);
+}
+
+/* Phantasy Star Nova Palette */
+:root {
+  --color-psn-amber-50:  #fffbeb;
+  --color-psn-amber-100: #fef3c7;
+  --color-psn-amber-200: #fde68a;
+  --color-psn-amber-300: #fcd34d;
+  --color-psn-amber-400: #fbbf24;
+  --color-psn-amber-500: #f59e0b;
+  --color-psn-amber-600: #d97706;
+  --color-psn-amber-700: #b45309;
+  --color-psn-amber-800: #92400e;
+  --color-psn-amber-900: #78350f;
+  --color-psn-amber-950: #451a03;
+
+  --color-psn-blue-50:  #ebf5ff;
+  --color-psn-blue-100: #cfe8ff;
+  --color-psn-blue-200: #9fd5ff;
+  --color-psn-blue-300: #4ec0ff;
+  --color-psn-blue-400: #04a9e7;
+  --color-psn-blue-500: #0392c9;
+  --color-psn-blue-600: #02729e;
+  --color-psn-blue-700: #015678;
+  --color-psn-blue-800: #003b54;
+  --color-psn-blue-900: #002030;
+  --color-psn-blue-950: #001522;
+}
+
+:root {
+  --color-psn-blue-300-00: color-mix(in srgb, var(--color-psn-blue-300) 0%, transparent);
+  --color-psn-blue-300-35: color-mix(in srgb, var(--color-psn-blue-300) 35%, transparent);
+  --color-psn-blue-500-00: color-mix(in srgb, var(--color-psn-blue-500) 0%, transparent);
+  --color-psn-blue-500-10: color-mix(in srgb, var(--color-psn-blue-500) 10%, transparent);
+  --color-psn-blue-500-35: color-mix(in srgb, var(--color-psn-blue-500) 35%, transparent);
+  --color-psn-blue-500-55: color-mix(in srgb, var(--color-psn-blue-500) 55%, transparent);
+  --color-psn-blue-500-60: color-mix(in srgb, var(--color-psn-blue-500) 60%, transparent);
+
+  --psn-surface-strong: 
+    linear-gradient(90deg, var(--color-psn-blue-500-60) , var(--color-psn-blue-500-00) 70px,
+      var(--color-psn-blue-500-00) calc(100% - 70px), var(--color-psn-blue-500-60)),
+    /* top gloss line */
+    linear-gradient(180deg, var(--color-psn-blue-300-35), var(--color-psn-blue-300-00) 40%),
+    /* base: dark at the top, lifting to mid blue at the bottom lip */
+    linear-gradient(180deg, var(--color-psn-blue-950) 0%, var(--color-psn-blue-800) 60%, var(--color-psn-blue-600) 100%);
+
+  --psn-surface-base:
+    /* cool glow rising off the bottom border and up the flanks */
+    linear-gradient(0deg, var(--color-psn-blue-500-35) -32px, var(--color-psn-blue-500-00) 64px),
+    linear-gradient(90deg, var(--color-psn-blue-500-10), var(--color-psn-blue-500-00) 64px,
+      var(--color-psn-blue-500-00) calc(100% - 64px), var(--color-psn-blue-500-10)),
+    linear-gradient(180deg, var(--color-psn-blue-950) 0%, var(--color-psn-blue-900) 100%);
+
+  --psn-surface-raised:
+    var(--color-psn-blue-900);
+
+  --psn-surface-raised-selected:
+    var(--psn-surface-strong);
 }
 
 /*
@@ -39,7 +111,7 @@
 @font-face {
   font-family: "Nanum Gothic";
   src: url(./assets/nanum-gothic.ttf);
-  font-weight: 400;
+  font-weight: 800;
   font-display: swap;
 }
 @font-face {
@@ -1255,18 +1327,22 @@ details.advanced summary {
     opacity: 1;
     transform: translate(-50%, 0);
   }
+  75% {
+    opacity: 1;
+  }
   100% {
     opacity: 0;
     transform: translate(-50%, -34px);
   }
 }
 .float-dmg,
-.float-miss {
+.float-miss,
+.float-sidestep {
   position: absolute;
   left: 50%;
   top: 4px;
   transform: translate(-50%, 0);
-  animation: stage-float 0.7s ease-out forwards;
+  animation: stage-float 1.15s ease-out forwards;
   display: flex;
   font-weight: 700;
   pointer-events: none;
@@ -1282,15 +1358,21 @@ details.advanced summary {
 /* color/font-size below only affect the plain-text fallback. */
 .float-dmg {
   color: #fff;
-  font-size: 16px;
+  font-size: 24px;
 }
 .float-dmg.crit {
   color: var(--gold);
-  font-size: 20px;
+  font-size: 30px;
 }
 .float-miss {
   color: var(--bad);
-  font-size: 12px;
+  font-size: 18px;
+}
+/* Sidestep (weapon-range-avoidance D3): the player moving, not the enemy
+ * missing — cool cyan tint keeps it visually distinct from the red MISS glyph. */
+.float-sidestep {
+  color: #6fe3ff;
+  font-size: 18px;
 }
 
 .log.log-compact {

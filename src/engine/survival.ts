@@ -15,10 +15,13 @@ export interface SurvivalConfig {
   healThresholdFraction: number;
 }
 
-// Authentic enemies can take ~half a low-level character's HP in one hit, so the
-// default must heal above that point: at 0.65 a full-heal leaves no HP window
-// where a single non-crit hit is lethal, without burning a heal on every chip hit.
-export const DEFAULT_SURVIVAL: SurvivalConfig = { healThresholdFraction: 0.65 };
+// With the weapon-avoidance sidestep layer absorbing much of the incoming
+// attack rate, the old 0.65 threshold (tuned for full enemy DPS) over-heals.
+// Sweeps favored 0.4 for geared characters, but that breaks the pacing
+// guarantee that a fresh level-1 with starter gear clears forest normal
+// (their HP pool is small enough that healing at 40% leaves lethal windows);
+// 0.5 keeps that guarantee while still cutting mate burn.
+export const DEFAULT_SURVIVAL: SurvivalConfig = { healThresholdFraction: 0.5 };
 
 export interface HealEvent {
   itemId: ConsumableId;

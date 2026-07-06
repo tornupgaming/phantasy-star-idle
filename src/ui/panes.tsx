@@ -15,8 +15,11 @@ import { priceForItem, sellPrice } from "../engine/pricing";
 import { GRINDER_PRICE, type ToolOffer } from "../engine/shop";
 import { CONSUMABLES, CONSUMABLES_LIST, type ConsumableId } from "../engine/consumables";
 import { flavor, itemFlavor } from "./dialogue";
+import { iconForKind } from "./icons";
 import { useUi } from "./context";
-import { Icon, KindIcon, MesetaAmount, MesetaIcon, StatPreview, WindowBox } from "./components";
+import { Icon, KindIcon, MesetaAmount, MesetaIcon, StatPreview, WindowBox, weaponAvd } from "./components";
+import { Panel } from "./components/panel";
+import { ShopCard, ShopList, ShopListItem } from "./components/shop-list-item";
 import {
   PANE_LABELS,
   PATTERN_PRESETS,
@@ -223,21 +226,33 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
   return (
     <>
       <section class="hud-pane">
-        <WindowBox
-          title={PANE_LABELS[props.kind === "weapon" ? "weapon-shop" : "armour-shop"]}
-          trailing={`${stock().offers.length} in stock`}
-        >
-          <div class="pso-menu shop-list">
-            <Show when={stock().offers.length > 0} fallback={<div class="muted">{emptyMsg()}</div>}>
-              <For each={stock().offers}>
-                {(o) => <ItemRow item={o} trailing={<MesetaAmount value={priceForItem(o)} />} onSelect={() => ui.setDetailId(o.id)} />}
-              </For>
-            </Show>
-          </div>
-        </WindowBox>
+        <Panel>
+          <Panel.Header actions={`${stock().offers.length} in stock`}>
+            {PANE_LABELS[props.kind === "weapon" ? "weapon-shop" : "armour-shop"]}
+          </Panel.Header>
+          <Panel.Body>
+            <ShopList>
+              <Show when={stock().offers.length > 0} fallback={<div class="muted">{emptyMsg()}</div>}>
+                <For each={stock().offers}>
+                  {(o, i) => (
+                    <ShopListItem
+                      index={i()}
+                      item={o}
+                      price={priceForItem(o)}
+                      selected={o.id === ui.detailId()}
+                      onSelect={() => ui.setDetailId(o.id)}
+                    />
+                  )}
+                </For>
+              </Show>
+            </ShopList>
+          </Panel.Body>
+        </Panel>
       </section>
       <aside class="hud-detail">
-        <WindowBox title="Item Info">
+        <Panel>
+          <Panel.Header>Item Info</Panel.Header>
+          <Panel.Body>
           <div class="shop-detail">
             <Show when={sel()} fallback={<div class="muted">{emptyMsg()}</div>}>
               {(item) => (
@@ -272,7 +287,8 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
               )}
             </Show>
           </div>
-        </WindowBox>
+          </Panel.Body>
+        </Panel>
       </aside>
     </>
   );
@@ -292,55 +308,68 @@ export function ToolShopPane() {
   return (
     <>
       <section class="hud-pane">
-        <WindowBox title="Tool Shop" trailing={`${stock().offers.length} in stock`}>
-          <div class="pso-menu shop-list">
+        <Panel>
+          <Panel.Header actions={`${stock().offers.length} in stock`}>Tool Shop</Panel.Header>
+          <Panel.Body>
+          <ShopList>
             <For each={stock().offers}>
-              {(offer) => {
+              {(offer, i) => {
                 if (offer.type === "consumable") {
                   const c = CONSUMABLES[offer.id];
                   return (
-                    <button
-                      class="pso-menu-row"
-                      classList={{ selected: c.id === ui.detailId() }}
-                      data-action="detail"
-                      data-id={c.id}
-                      onClick={() => ui.setDetailId(c.id)}
-                    >
-                      <KindIcon kind={c.kind} />
-                      <span style="flex:1">{c.name}</span>
-                      <span class="meta num"><MesetaAmount value={c.price} /></span>
-                    </button>
+                    <ShopCard
+                      index={i()}
+                      selected={c.id === ui.detailId()}
+                      onSelect={() => ui.setDetailId(c.id)}
+                      dataId={c.id}
+                      icon={iconForKind(c.kind)}
+                      rarityClass="rarity-common"
+                      name={<span class="name">{c.name}</span>}
+                      sub={
+                        c.kind === "heal"
+                          ? `Restores ${c.amount} HP during a run`
+                          : c.kind === "revive"
+                            ? "Revives once when defeated"
+                            : "No use yet — system offline"
+                      }
+                      price={c.price}
+                    />
                   );
                 }
                 if (offer.type === "grinder") {
                   return (
-                    <button
-                      class="pso-menu-row"
-                      classList={{ selected: ui.detailId() === "grinder" }}
-                      data-action="detail"
-                      data-id="grinder"
-                      onClick={() => ui.setDetailId("grinder")}
-                    >
-                      <Icon id="grinder" />
-                      <span style="flex:1">Grinder</span>
-                      <span class="meta num"><MesetaAmount value={GRINDER_PRICE} /></span>
-                    </button>
+                    <ShopCard
+                      index={i()}
+                      selected={ui.detailId() === "grinder"}
+                      onSelect={() => ui.setDetailId("grinder")}
+                      dataId="grinder"
+                      icon="grinder"
+                      rarityClass="rarity-common"
+                      name={<span class="name">Grinder</span>}
+                      sub="Raises a weapon's grind by 1"
+                      price={GRINDER_PRICE}
+                    />
                   );
                 }
                 return (
-                  <ItemRow
+                  <ShopListItem
+                    index={i()}
                     item={offer.item}
-                    trailing={<MesetaAmount value={priceForItem(offer.item)} />}
+                    price={priceForItem(offer.item)}
+                    selected={offer.item.id === ui.detailId()}
                     onSelect={() => ui.setDetailId(offer.item.id)}
                   />
                 );
               }}
             </For>
-          </div>
-        </WindowBox>
+          </ShopList>
+          </Panel.Body>
+        </Panel>
       </section>
       <aside class="hud-detail">
-        <WindowBox title="Item Info">
+        <Panel>
+          <Panel.Header>Item Info</Panel.Header>
+          <Panel.Body>
           <div class="shop-detail">
             <Switch fallback={<div class="muted">Select an item.</div>}>
               <Match when={ui.detailId() === "grinder"}>
@@ -427,7 +456,8 @@ export function ToolShopPane() {
               </Match>
             </Switch>
           </div>
-        </WindowBox>
+          </Panel.Body>
+        </Panel>
       </aside>
     </>
   );
@@ -634,6 +664,11 @@ function EquipDetail() {
       {/* No candidate highlighted: the slot's current state (+ grind on weapon). */}
       <Match when={cand() === null}>
         <div class="muted">Select an item to preview the stat change.</div>
+        <Show when={ui.equipSlot() === "weapon"}>
+          <div class="muted small" style="margin:8px 0 4px">
+            AVD {weaponAvd(eq().weapon)}%
+          </div>
+        </Show>
         <Show when={ui.equipSlot() === "weapon" && eq().weapon}>
           {(w) => (
             <>

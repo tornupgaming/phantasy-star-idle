@@ -12,7 +12,8 @@ import {
   previewEquipment,
   type Character,
 } from "../engine/character";
-import type { Item } from "../engine/items";
+import { weaponAvoidancePct } from "../engine/data/avoidance";
+import { weaponKindOf, type Item, type Weapon } from "../engine/items";
 import type { SectionId } from "../engine/classes";
 import { iconForKind, sectionIcon, spriteDefs, type IconId } from "./icons";
 import { useUi } from "./context";
@@ -156,6 +157,11 @@ export function Topbar(props: { title: string; back?: { label: string; screen: S
  * meaningful — effectiveStats alone carries weapon ATP via the damage
  * formula, not the stat block.
  */
+/** Weapon avoidance (weapon-range-avoidance); `null` is barehanded (fist). */
+export function weaponAvd(weapon: Weapon | null): number {
+  return weaponAvoidancePct(weaponKindOf(weapon));
+}
+
 export function StatPreview(props: {
   slot: "weapon" | "frame" | "barrier" | "unit";
   item: Item | null;
@@ -167,7 +173,7 @@ export function StatPreview(props: {
     const cur = effectiveStats(character);
     const nextEq = previewEquipment(character, props.slot, props.item as never, props.removeUnitId);
     const next = effectiveStats({ ...character, equipment: nextEq } as Character);
-    return [
+    const out: Array<[string, number, number]> = [
       ["ATP", cur.atp + Math.floor(equipmentAtp(character.equipment)), next.atp + Math.floor(equipmentAtp(nextEq))],
       ["DFP", cur.dfp, next.dfp],
       ["ATA", cur.ata, next.ata],
@@ -175,6 +181,10 @@ export function StatPreview(props: {
       ["LCK", cur.lck, next.lck],
       ["HP", cur.hp, next.hp],
     ];
+    if (props.slot === "weapon") {
+      out.push(["AVD%", weaponAvd(character.equipment.weapon), weaponAvd(nextEq.weapon)]);
+    }
+    return out;
   };
   return (
     <table class="diff-table">

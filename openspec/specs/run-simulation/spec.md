@@ -88,10 +88,10 @@ A run SHALL be reconstructible from its stored `(character snapshot, area, seed,
 - **THEN** the value SHALL be drawn from the run's seeded RNG stream and SHALL NOT use any non-reproducible source of randomness
 
 ### Requirement: Battle log
-The system SHALL produce a human-readable, scrollable log of run events (attacks, hits/misses, crits, kills, dynamic enemy spawns, box opens, loot, heals, ejection) that the player MAY read or ignore. Each event SHALL additionally carry structured, machine-readable data sufficient to reconstruct the battle scene state (initial room composition, dynamically appended enemies, per-enemy HP, character HP) without parsing the human-readable text.
+The system SHALL produce a human-readable, scrollable log of run events (attacks, hits/misses, crits, sidesteps, kills, dynamic enemy spawns, box opens, loot, heals, ejection) that the player MAY read or ignore. Each event SHALL additionally carry structured, machine-readable data sufficient to reconstruct the battle scene state (initial room composition, dynamically appended enemies, per-enemy HP, character HP) without parsing the human-readable text.
 
 #### Scenario: Log records combat, dynamic spawns, and loot events
-- **WHEN** an enemy dynamically spawns, an attack lands, an enemy dies, a box opens, or loot is collected
+- **WHEN** an enemy dynamically spawns, an attack lands, an attack is sidestepped, an enemy dies, a box opens, or loot is collected
 - **THEN** the system SHALL append a corresponding entry to the run's battle log
 
 #### Scenario: Room events carry the initial enemy roster
@@ -105,6 +105,10 @@ The system SHALL produce a human-readable, scrollable log of run events (attacks
 #### Scenario: Attack events identify actor, target, and outcome
 - **WHEN** an attack is resolved
 - **THEN** the attack event SHALL include the actor (character, or which enemy by index), the target (by index when the character attacks), whether it hit, whether it was a critical, the damage dealt, and the target's HP after the attack — unambiguous even when a room contains multiple enemies with the same name
+
+#### Scenario: Sidestep events identify the avoided attacker
+- **WHEN** an incoming enemy attack is sidestepped
+- **THEN** the log SHALL record a `sidestep` event, distinct from a missed attack event, whose structured payload identifies the attacking enemy by roster index, and no health value SHALL change as a result of the event
 
 #### Scenario: Kill, heal, and revive events carry resulting state
 - **WHEN** an enemy is defeated, or the character is auto-healed or revived

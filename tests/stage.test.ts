@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
 import { mountApp } from "../src/ui/app";
+import { BattleStage } from "../src/ui/stage";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -67,5 +68,44 @@ describe("battle stage (run screen)", () => {
     expect(root.textContent).toContain("Hunter's Guild");
     app.dispose();
     app2.dispose();
+  });
+
+  it("a revealed sidestep event shows an evade indicator on the character, no HP change, muted log line", async () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    const app = mountApp(root, game);
+    root.querySelector<HTMLElement>('[data-action="select-char"]')!.click();
+    root.querySelector<HTMLElement>('[data-action="send"]')!.click();
+    await sleep(50); // let the island's own BattleStage do its first catch-up fold
+
+    const hpBefore = root.querySelector(".stage-char-hp-text")!.textContent;
+
+    // Weapon-range-avoidance (design D3): drive a synthetic sidestep event
+    // directly through the same playback path a revealed engine event takes,
+    // independent of whether the seeded run happened to roll one.
+    const stage = new BattleStage(root, game);
+    (stage as unknown as { playEvent: (e: import("../src/engine/run").RunEvent) => void }).playEvent({
+      t: 0,
+      kind: "sidestep",
+      text: "Booma lunges — you sidestep.",
+      sidestep: { actor: 0 },
+    });
+
+    const hud = root.querySelector(".player-hud")!;
+    const indicator = hud.querySelector(".float-sidestep");
+    expect(indicator).not.toBeNull();
+    expect(indicator!.textContent).toContain("SIDESTEP");
+    // Distinct from the red MISS glyph indicator.
+    expect(hud.querySelector(".float-miss")).toBeNull();
+    expect(root.querySelector(".stage-char-hp-text")!.textContent).toBe(hpBefore);
+
+    const logLines = root.querySelectorAll(".stage-log > div");
+    const lastLine = logLines[logLines.length - 1];
+    expect(lastLine.className).toBe("l-miss"); // muted, same styling as a miss
+    expect(lastLine.textContent).toBe("Booma lunges — you sidestep.");
+
+    app.dispose();
   });
 });
