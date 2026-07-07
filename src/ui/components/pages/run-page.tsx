@@ -1,42 +1,19 @@
 /**
- * Imperative islands (convert-menu-ui-to-solidjs D3). Solid mounts the
- * container and owns the lifecycle; the Backdrop's canvas loop and the
- * BattleStage's rAF event playback stay fully imperative and are never
- * reactively rendered into.
+ * Run screen (imperative island, convert-menu-ui-to-solidjs D3): the static
+ * shell markup (every element the BattleStage updates carries a class hook),
+ * rendered once per run — shell values are deliberately read non-reactively
+ * at mount. The stage owns all dynamic updates from here (battle-scene-view
+ * D3/D4); Solid only mounts the container and owns the lifecycle.
  */
 
-import { createEffect, onCleanup, onMount } from "solid-js";
-import { effectiveStats } from "../engine/character";
-import { BattleStage } from "./stage";
-import { Backdrop } from "./backdrop";
-import { PlayerHud, SpriteDefs } from "./components";
-import { useUi } from "./context";
+import { onCleanup, onMount } from "solid-js";
+import { effectiveStats } from "../../../engine/character";
+import { BattleStage } from "../../stage";
+import { useUi } from "../../context";
+import { SpriteDefs } from "../atoms/sprite-defs";
+import { PlayerHud } from "../molecules/player-hud";
 
-/**
- * Persistent hub scene layer. The canvas element survives pane changes and
- * screen changes (hidden, not unmounted, off-hub per hub-scene-backdrop);
- * only the theme is forwarded reactively.
- */
-export function BackdropIsland() {
-  const ui = useUi();
-  let host!: HTMLDivElement;
-  onMount(() => {
-    const backdrop = new Backdrop(host);
-    createEffect(() => {
-      if (ui.screen() === "hub") backdrop.setTheme(ui.pane());
-    });
-    onCleanup(() => backdrop.destroy());
-  });
-  return <div class="scene-layer" classList={{ "scene-hidden": ui.screen() !== "hub" }} ref={host} />;
-}
-
-/**
- * Run-screen island: the static shell markup (every element the BattleStage
- * updates carries a class hook), rendered once per run — shell values are
- * deliberately read non-reactively at mount. The stage owns all dynamic
- * updates from here (battle-scene-view D3/D4).
- */
-export function StageIsland() {
+export function RunPage() {
   const ui = useUi();
   // Read once: the shell is static by design; the stage repaints the rest.
   const g = ui.game.state;

@@ -7,9 +7,15 @@ import { CLASSES, LEVEL_CAP } from "../engine/classes";
 import { xpForLevel } from "../engine/progression";
 import type { AttackType } from "../engine/combat";
 import { CONSUMABLES_LIST, type Supply } from "../engine/consumables";
-import type { Item, Weapon } from "../engine/items";
+import { weaponKindOf, type Item, type Weapon } from "../engine/items";
 import { specialName } from "../engine/data/item-table";
+import { weaponAvoidancePct } from "../engine/data/avoidance";
 import type { IconId } from "./icons";
+
+/** Weapon avoidance (weapon-range-avoidance); `null` is barehanded (fist). */
+export function weaponAvd(weapon: Weapon | null): number {
+  return weaponAvoidancePct(weaponKindOf(weapon));
+}
 
 export type Screen = "select" | "create" | "hub";
 

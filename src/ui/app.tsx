@@ -11,10 +11,11 @@ import { render } from "solid-js/web";
 import type { Game } from "../engine/game";
 import { createGameStore, type GameStore } from "./store";
 import { createUi, UiProvider, useUi } from "./context";
-import { BackdropIsland, StageIsland } from "./islands";
-import { SelectScreen } from "./select";
-import { CreateScreen } from "./create";
-import { HubScreen } from "./hub";
+import { BackdropIsland } from "./components/organisms/backdrop-island";
+import { SelectPage } from "./components/pages/select-page";
+import { CreatePage } from "./components/pages/create-page";
+import { HubPage } from "./components/pages/hub-page";
+import { RunPage } from "./components/pages/run-page";
 
 function MenuRegime() {
   const ui = useUi();
@@ -24,13 +25,13 @@ function MenuRegime() {
       <div class={`ui-layer screen-${ui.screen()}`}>
         <Switch>
           <Match when={ui.screen() === "select"}>
-            <SelectScreen />
+            <SelectPage />
           </Match>
           <Match when={ui.screen() === "create"}>
-            <CreateScreen />
+            <CreatePage />
           </Match>
           <Match when={ui.screen() === "hub"}>
-            <HubScreen />
+            <HubPage />
           </Match>
         </Switch>
       </div>
@@ -56,7 +57,7 @@ export function App(props: { game: Game; gs: GameStore }) {
   return (
     <UiProvider value={ui}>
       <Show when={ui.state.activeRun} fallback={<MenuRegime />}>
-        <StageIsland />
+        <RunPage />
       </Show>
     </UiProvider>
   );

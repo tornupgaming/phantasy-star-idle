@@ -8,10 +8,11 @@ battle log and loot. All the decisions live in the meta layer; the run runs itse
 
 ## Stack
 
-TypeScript + Vite (browser app, vanilla DOM) + Vitest. The simulation engine
-(`src/engine/*`) is runtime-agnostic and pure; the UI (`src/ui/*`) is a thin
-presentation layer, and persistence goes through a small storage port
-(localStorage in the browser, in-memory in tests).
+TypeScript + Vite (browser app, SolidJS menus + imperative canvas islands) +
+Vitest. The simulation engine (`src/engine/*`) is runtime-agnostic and pure;
+the UI (`src/ui/*`) is a thin presentation layer, and persistence goes
+through a small storage port (localStorage in the browser, in-memory in
+tests).
 
 ## Commands
 
@@ -33,7 +34,12 @@ npm run typecheck  # tsc --noEmit
 - `engine/loot.ts`, `shop.ts` — drop generation, loot filter, meseta, inventory, shop.
 - `engine/run.ts` — `simulateRun`: deterministic room-by-room run + battle log.
 - `engine/game.ts` — orchestration, persistence, the game clock + offline resume.
-- `ui/views.ts`, `main.ts` — prep view, run view, room map, post-run report.
+- `ui/components/` — SolidJS components in atomic-design layers
+  (`atoms/` → `molecules/` → `organisms/` → `templates/` → `pages/`); see
+  `CLAUDE.md` for the layer rules.
+- `ui/app.tsx`, `ui/context.tsx`, `ui/store.ts` — app shell/regime switch,
+  UI signals + actions, engine→store sync. `ui/stage.ts` and `ui/backdrop.ts`
+  are imperative canvas islands. `main.ts` boots the game clock and mounts.
 
 Design decisions and formulas are documented in
 `openspec/changes/establish-core-gameplay-loop/` (proposal, design, specs).
