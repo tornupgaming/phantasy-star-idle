@@ -22,7 +22,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
   const ui = useUi();
   const equippedInSlot = useEquippedInSlot();
   const stock = () => ui.selectedEntry().shop[props.kind];
-  const sel = () => stock().offers.find((o) => o.id === ui.detailId()) ?? stock().offers[0] ?? null;
+  const sel = () => stock().offers.find((o) => o.id === ui.detailId()) ?? null;
   const emptyMsg = () => `Sold out — stock refreshes as ${ui.selectedChar().name} gains levels.`;
   const atUnitCap = (item: Item) =>
     isUnit(item) && ui.selectedChar().equipment.units.length >= unitCapacity(ui.selectedChar().equipment);
@@ -58,7 +58,12 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
           <Panel.Header>Item Info</Panel.Header>
           <Panel.Body>
           <div>
-            <Show when={sel()} fallback={<div class="text-muted">{emptyMsg()}</div>}>
+            <Show
+              when={sel()}
+              fallback={
+                <div class="text-muted">{stock().offers.length > 0 ? "Select an item." : emptyMsg()}</div>
+              }
+            >
               {(item) => (
                 <>
                   <ItemDetailHead item={item()} />
