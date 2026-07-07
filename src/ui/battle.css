@@ -1,0 +1,342 @@
+/* ---- Battle stage (battle-scene-view D4) + shared bar/log hooks -------------
+ * Every class in this file is created, queried, or toggled imperatively by
+ * stage.ts (the vanilla-DOM BattleStage island) — or shared between that
+ * island and Solid components (the bar family, `.muted`). They must stay
+ * global: stage.ts builds HTML strings and calls classList.add/toggle with
+ * these literal names. Solid components may also apply them (e.g. run-page's
+ * static shell, player-hud's `.player-hud`/`.stage-char-hp` hooks).
+ */
+
+/* Generic muted text: kept global because stage.ts writes it into generated
+ * markup and swaps it via className. Solid components use `text-muted`. */
+.muted {
+  color: var(--color-muted);
+}
+.outcome-complete {
+  color: var(--color-good);
+}
+.outcome-ejected {
+  color: var(--color-bad);
+}
+
+/* ---- Bars: BB chunky green-on-bezel; width contract unchanged --------------- */
+.hpbar,
+.progress {
+  height: 12px;
+  border-radius: 2px;
+  background: #04141c;
+  overflow: hidden;
+  border: 1px solid var(--color-pso-edge-dim);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.hpbar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #8cf89c 0%, var(--color-pso-hp) 45%, #18a028 100%);
+}
+.progress > span,
+.hpbar.tpbar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #7cc8f8 0%, var(--color-pso-tp) 60%, #2050b0 100%);
+}
+.xp-bar {
+  height: 6px;
+  margin: 5px 0 3px;
+  border: 1px solid var(--color-pso-edge-dim);
+  border-radius: 2px;
+  background: #04141c;
+  overflow: hidden;
+}
+.xp-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #7cc8f8 0%, var(--color-pso-tp) 70%, #2050b0 100%);
+}
+
+/* Stage-driven player HUD hooks: bar transition, low-HP tint, hurt/heal
+ * flashes (stage.ts flashes the `.player-hud` root and drives
+ * `.stage-char-hp` / `.stage-char-hp-text`). The capsule's visual treatment
+ * lives in player-hud's colocated module. */
+.player-hud .hpbar > span {
+  transition: width 0.25s ease;
+}
+.player-hud .hpbar > span.low {
+  background: linear-gradient(180deg, var(--color-gold), var(--color-bad));
+}
+@keyframes stage-hurt {
+  0% {
+    box-shadow: 0 0 0 3px var(--color-bad);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+@keyframes stage-healed {
+  0% {
+    box-shadow: 0 0 0 3px var(--color-good);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+.player-hud.hurt {
+  animation: stage-hurt 0.35s ease-out;
+}
+.player-hud.healed {
+  animation: stage-healed 0.5s ease-out;
+}
+
+/* ---- Ticker + battle log ---------------------------------------------------- */
+.stage-ticker {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-pso-edge-dim);
+  background: rgba(3, 14, 20, 0.85);
+  font: 13px/1.5 ui-monospace, "Cascadia Code", monospace;
+  min-height: 40px;
+}
+.stage-ticker.l-miss {
+  color: var(--color-muted);
+}
+.stage-ticker.l-crit {
+  color: var(--color-gold);
+}
+.stage-ticker.l-kill {
+  color: var(--color-good);
+}
+.stage-ticker.l-loot {
+  color: var(--color-accent);
+}
+.stage-ticker.l-heal,
+.stage-ticker.l-revive {
+  color: #7fe0c0;
+}
+.stage-ticker.l-eject {
+  color: var(--color-bad);
+  font-weight: 700;
+}
+.stage-ticker.l-complete {
+  color: var(--color-good);
+  font-weight: 700;
+}
+
+.log {
+  height: 340px;
+  overflow: auto;
+  background: rgba(3, 14, 20, 0.85);
+  border: 1px solid var(--color-pso-edge-dim);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font: 12.5px/1.6 ui-monospace, "Cascadia Code", monospace;
+}
+.log.log-compact {
+  height: 160px;
+}
+.log .l-attack {
+  color: var(--color-ink);
+}
+.log .l-miss {
+  color: var(--color-muted);
+}
+.log .l-crit {
+  color: var(--color-gold);
+}
+.log .l-kill {
+  color: var(--color-good);
+}
+.log .l-loot {
+  color: var(--color-accent);
+}
+.log .l-heal {
+  color: #7fe0c0;
+}
+.log .l-eject {
+  color: var(--color-bad);
+  font-weight: 700;
+}
+.log .l-complete {
+  color: var(--color-good);
+  font-weight: 700;
+}
+.log .l-room {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ---- The enemy field: floor plane receding to a horizon, enemies in a row -- */
+.stage-field {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 28px;
+  min-height: 220px;
+  padding: 26px 20px 34px;
+  background:
+    linear-gradient(180deg, #04101e 0%, #0a2030 55%, transparent 55%),
+    repeating-linear-gradient(180deg, #12384a 0 2px, #0a2430 2px 26px);
+}
+.stage-empty {
+  align-self: center;
+  font-style: italic;
+}
+
+.stage-enemy {
+  position: relative;
+  width: 96px;
+  text-align: center;
+  transition: opacity 0.6s ease;
+}
+.stage-enemy.dead {
+  opacity: 0.15;
+}
+/* Sprite frame; enemies without art (see enemy-art.ts) keep the bare box. */
+.stage-enemy-box {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 6px;
+  border-radius: 3px;
+  border: 2px solid var(--color-accent);
+  background: linear-gradient(160deg, #143c50, #0a2838);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.stage-enemy-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 4px;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.stage-enemy-name {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.stage-enemy .hpbar {
+  height: 8px;
+}
+.stage-enemy .hpbar > span {
+  background: linear-gradient(90deg, var(--color-bad), #ff9d6b);
+  transition: width 0.25s ease;
+}
+.stage-enemy-hp {
+  font-size: 11px;
+}
+
+@keyframes stage-hit {
+  0% {
+    filter: brightness(3);
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  100% {
+    filter: none;
+    transform: translateX(0);
+  }
+}
+.stage-enemy.hit .stage-enemy-box {
+  animation: stage-hit 0.28s ease-out;
+}
+
+/* ---- Rooms strip (cells are generated by stage.ts) -------------------------- */
+.room-cell {
+  flex: 1;
+  min-width: 60px;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 2px;
+  border: 1px solid var(--color-pso-edge-dim);
+  background: rgba(10, 40, 52, 0.6);
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.room-cell.cleared {
+  border-color: var(--color-good);
+  color: var(--color-good);
+}
+.room-cell.current {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent) inset;
+}
+
+/* ---- Floating combat text ---------------------------------------------------- */
+@keyframes stage-float {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -34px);
+  }
+}
+.float-dmg,
+.float-miss,
+.float-sidestep {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translate(-50%, 0);
+  animation: stage-float 1.15s ease-out forwards;
+  display: flex;
+  font-weight: 700;
+  pointer-events: none;
+  text-shadow: 0 1px 3px #000;
+  filter: drop-shadow(0 1px 1px #000);
+}
+/* PSO bitmap glyphs (atlas regions; tints baked into the PNG rows). */
+.float-glyph {
+  display: inline-block;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+/* color/font-size below only affect the plain-text fallback. */
+.float-dmg {
+  color: #fff;
+  font-size: 24px;
+}
+.float-dmg.crit {
+  color: var(--color-gold);
+  font-size: 30px;
+}
+.float-miss {
+  color: var(--color-bad);
+  font-size: 18px;
+}
+/* Sidestep (weapon-range-avoidance D3): the player moving, not the enemy
+ * missing — cool cyan tint keeps it visually distinct from the red MISS glyph. */
+.float-sidestep {
+  color: #6fe3ff;
+  font-size: 18px;
+}
+
+/* ---- Loot tally chips (generated by stage.ts) ------------------------------- */
+.loot-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid var(--color-pso-edge-dim);
+  border-radius: 999px;
+  background: rgba(3, 14, 20, 0.72);
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-enemy.hit .stage-enemy-box,
+  .player-hud.hurt,
+  .player-hud.healed {
+    animation: none;
+  }
+}

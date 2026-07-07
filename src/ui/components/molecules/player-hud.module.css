@@ -1,0 +1,16 @@
+/*
+ * Player HUD chrome not expressible as utilities: the hex face's clip-path
+ * silhouette and the Lv pill's cyan gradient. The capsule fill/border/glow
+ * itself reuses chrome.surface (identical `--pso-surface-window` treatment).
+ */
+
+.hexFace {
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  box-shadow: inset 0 0 0 1px var(--color-pso-edge);
+}
+
+.lvPill {
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  border: 1px solid var(--color-pso-edge);
+}

@@ -16,6 +16,7 @@ import { EquippedLine, ItemDetailHead } from "../molecules/item-detail";
 import { MesetaAmount } from "../molecules/meseta-amount";
 import { ShopListItem } from "./shop-list-item";
 import { StatPreview } from "./stat-preview";
+import chrome from "../chrome.module.css";
 
 export function GearShopPane(props: { kind: "weapon" | "armour" }) {
   const ui = useUi();
@@ -35,7 +36,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
           </Panel.Header>
           <Panel.Body>
             <ShopList>
-              <Show when={stock().offers.length > 0} fallback={<div class="muted">{emptyMsg()}</div>}>
+              <Show when={stock().offers.length > 0} fallback={<div class="text-muted">{emptyMsg()}</div>}>
                 <For each={stock().offers}>
                   {(o, i) => (
                     <ShopListItem
@@ -56,8 +57,8 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
         <Panel>
           <Panel.Header>Item Info</Panel.Header>
           <Panel.Body>
-          <div class="shop-detail">
-            <Show when={sel()} fallback={<div class="muted">{emptyMsg()}</div>}>
+          <div>
+            <Show when={sel()} fallback={<div class="text-muted">{emptyMsg()}</div>}>
               {(item) => (
                 <>
                   <ItemDetailHead item={item()} />
@@ -65,14 +66,14 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
                   <h3>If equipped</h3>
                   <Show
                     when={!atUnitCap(item())}
-                    fallback={<div class="muted">No free unit slot — equip a frame with room first.</div>}
+                    fallback={<div class="text-muted">No free unit slot — equip a frame with room first.</div>}
                   >
                     <StatPreview slot={item().kind as "weapon" | "frame" | "barrier" | "unit"} item={item()} />
                   </Show>
-                  <div class="row" style="margin-top:12px">
-                    <span class="muted"><MesetaAmount value={priceForItem(item())} /></span>
+                  <div class="flex gap-2 items-center mt-3 mb-1.5 flex-wrap">
+                    <span class="text-muted"><MesetaAmount value={priceForItem(item())} /></span>
                     <button
-                      class="primary"
+                      class={`primary ${chrome.btnPrimary}`}
                       data-action="buy-gear"
                       data-kind={props.kind}
                       data-id={item().id}

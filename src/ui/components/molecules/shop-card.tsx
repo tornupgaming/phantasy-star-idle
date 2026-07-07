@@ -17,7 +17,10 @@ import styles from "./shop-card.module.css";
 /** Card stack container: spacing plus left padding for the slot-tab overhang. */
 export function ShopList(props: { children: JSX.Element }) {
   return (
-    <div class={`${styles.list} shop-list`} role="listbox">
+    <div
+      class={`${styles.list} shop-list max-h-[62vh] overflow-auto flex flex-col gap-[9px] p-1 pl-4`}
+      role="listbox"
+    >
       {props.children}
     </div>
   );

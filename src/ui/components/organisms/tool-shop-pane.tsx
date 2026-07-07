@@ -16,6 +16,7 @@ import { ShopCard, ShopList } from "../molecules/shop-card";
 import { ItemDetailHead } from "../molecules/item-detail";
 import { MesetaAmount } from "../molecules/meseta-amount";
 import { ShopListItem } from "./shop-list-item";
+import chrome from "../chrome.module.css";
 
 export function ToolShopPane() {
   const ui = useUi();
@@ -91,18 +92,18 @@ export function ToolShopPane() {
         <Panel>
           <Panel.Header>Item Info</Panel.Header>
           <Panel.Body>
-          <div class="shop-detail">
-            <Switch fallback={<div class="muted">Select an item.</div>}>
+          <div>
+            <Switch fallback={<div class="text-muted">Select an item.</div>}>
               <Match when={ui.detailId() === "grinder"}>
-                <div class="detail-name">
+                <div class="text-base font-bold text-accent mb-0.5">
                   <Icon id="grinder" /> Grinder
                 </div>
-                <div class="detail-flavor">{flavor("Grinder", "grinder")}</div>
-                <div class="muted small" style="margin-bottom:8px">
+                <div class="italic text-[#bcd8e0] text-[12.5px] mt-0.5 mb-1.5">{flavor("Grinder", "grinder")}</div>
+                <div class="text-muted text-[11.5px] mb-2">
                   Raises an equipped weapon's grind by 1, up to its cap.
                 </div>
-                <div class="row" style="margin-top:12px">
-                  <span class="muted"><MesetaAmount value={GRINDER_PRICE} suffix="each" /></span>
+                <div class="flex gap-2 items-center mt-3 mb-1.5 flex-wrap">
+                  <span class="text-muted"><MesetaAmount value={GRINDER_PRICE} suffix="each" /></span>
                   <button data-action="buy-grinder" data-qty="1" onClick={() => ui.act(() => ui.game.buyGrinders(1), "bought")}>
                     Buy 1
                   </button>
@@ -115,15 +116,15 @@ export function ToolShopPane() {
                 {(item) => (
                   <>
                     <ItemDetailHead item={item()} />
-                    <div class="muted small" style="margin-bottom:8px">
+                    <div class="text-muted text-[11.5px] mb-2">
                       {item().tech !== undefined
                         ? "A technique disk. No one aboard can learn techniques yet — one day."
                         : "Kept in inventory; no use for it yet."}
                     </div>
-                    <div class="row" style="margin-top:12px">
-                      <span class="muted"><MesetaAmount value={priceForItem(item())} /></span>
+                    <div class="flex gap-2 items-center mt-3 mb-1.5 flex-wrap">
+                      <span class="text-muted"><MesetaAmount value={priceForItem(item())} /></span>
                       <button
-                        class="primary"
+                        class={`primary ${chrome.btnPrimary}`}
                         data-action="buy-tool-item"
                         data-id={item().id}
                         onClick={() => {
@@ -142,19 +143,19 @@ export function ToolShopPane() {
               <Match when={selCons()}>
                 {(c) => (
                   <>
-                    <div class="detail-name">
+                    <div class="text-base font-bold text-accent mb-0.5">
                       <KindIcon kind={c().kind} /> {c().name}
                     </div>
-                    <div class="detail-flavor">{flavor(c().name, c().kind)}</div>
-                    <div class="muted small" style="margin-bottom:8px">
+                    <div class="italic text-[#bcd8e0] text-[12.5px] mt-0.5 mb-1.5">{flavor(c().name, c().kind)}</div>
+                    <div class="text-muted text-[11.5px] mb-2">
                       {c().kind === "heal"
                         ? `Restores ${c().amount} HP during a run.`
                         : c().kind === "revive"
                           ? "Revives once when defeated during a run."
                           : "No use yet — carried for the day its system comes online."}
                     </div>
-                    <div class="row" style="margin-top:12px">
-                      <span class="muted"><MesetaAmount value={c().price} suffix="each" /></span>
+                    <div class="flex gap-2 items-center mt-3 mb-1.5 flex-wrap">
+                      <span class="text-muted"><MesetaAmount value={c().price} suffix="each" /></span>
                       <button
                         data-action="buy"
                         data-id={c().id}

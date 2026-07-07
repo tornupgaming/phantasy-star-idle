@@ -12,6 +12,7 @@ import { BattleStage } from "../../stage";
 import { useUi } from "../../context";
 import { SpriteDefs } from "../atoms/sprite-defs";
 import { PlayerHud } from "../molecules/player-hud";
+import chrome from "../chrome.module.css";
 
 export function RunPage() {
   const ui = useUi();
@@ -31,7 +32,7 @@ export function RunPage() {
   return (
     <div class="run-screen" ref={host}>
       <SpriteDefs />
-      <div class="topbar run-topbar">
+      <div class="flex justify-between items-start gap-3 mb-4">
         <PlayerHud
           name={character.name}
           level={character.level}
@@ -41,15 +42,15 @@ export function RunPage() {
         />
         <h1>✦ Run in progress</h1>
       </div>
-      <div class="panel">
+      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5`}>
         <h2>
           {prog.areaName} — {prog.difficultyLabel}
         </h2>
-        <div class="rooms stage-rooms"></div>
+        <div class="flex gap-1.5 my-2.5 flex-wrap stage-rooms"></div>
         <div class="progress">
           <span class="stage-progress"></span>
         </div>
-        <div class="stat-row" style="margin-top:8px">
+        <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink mt-2">
           <span>
             Progress <b class="stage-pct">—</b>
           </span>
@@ -59,18 +60,20 @@ export function RunPage() {
           <span class="stage-status muted">Running…</span>
         </div>
       </div>
-      <div class="panel stage" style="margin-top:14px">
+      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-0 overflow-hidden mt-3.5`}>
         <div class="stage-ticker">…</div>
         <div class="stage-field"></div>
-        <div class="stage-bottom">
-          <div class="stage-side stage-supply muted"></div>
+        <div class="flex items-center gap-4 px-3.5 py-3 border-t border-pso-edge-dim bg-[rgba(10,40,52,0.6)] stage-bottom">
+          <div class="text-xs stage-side stage-supply muted"></div>
         </div>
       </div>
-      <div class="panel" style="margin-top:14px">
+      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5 mt-3.5`}>
         <h3>Enemy drops</h3>
-        <div class="stage-loot-tally muted">No enemy drops yet.</div>
+        <div class="flex flex-wrap gap-1.5 min-h-7 items-center text-[12.5px] stage-loot-tally muted">
+          No enemy drops yet.
+        </div>
       </div>
-      <div class="panel" style="margin-top:14px">
+      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5 mt-3.5`}>
         <h3>Battle log</h3>
         <div class="log log-compact stage-log"></div>
       </div>

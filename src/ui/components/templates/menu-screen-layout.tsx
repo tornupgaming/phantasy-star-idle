@@ -19,7 +19,7 @@ export function MenuScreenLayout(props: {
     <>
       <SpriteDefs />
       <Topbar title={props.title} back={props.back} />
-      <div class="notice">{ui.notice()}</div>
+      <div class="text-bad min-h-[18px] my-1.5">{ui.notice()}</div>
       {props.children}
     </>
   );

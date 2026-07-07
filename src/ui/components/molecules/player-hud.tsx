@@ -1,6 +1,8 @@
 import type { SectionId } from "../../../engine/classes";
 import { sectionIcon } from "../../icons";
 import { Icon } from "../atoms/icon";
+import chrome from "../chrome.module.css";
+import styles from "./player-hud.module.css";
 
 /**
  * PSO player HUD capsule (player-hud spec): hex character icon with the
@@ -21,40 +23,56 @@ export function PlayerHud(props: {
 }) {
   const pct = () => (props.maxHp > 0 ? (props.hp / props.maxHp) * 100 : 0);
   return (
-    <div class="player-hud">
-      <div class="hud-hex">
-        <div class="hud-hex-face">
-          <svg viewBox="0 0 16 16" aria-hidden="true">
+    <div
+      class={`player-hud ${chrome.surface} relative flex items-center ml-[26px] mb-3 pt-[9px] pr-[18px] pb-[11px] pl-9 min-w-[280px] rounded-[28px]`}
+    >
+      <div class="absolute -left-[26px] top-1/2 -translate-y-1/2 w-14 h-[50px]">
+        <div
+          class={`${styles.hexFace} w-full h-full flex items-center justify-center overflow-hidden text-[#bfeef8]`}
+        >
+          <svg
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            class="w-[30px] h-[30px] mt-2 [filter:drop-shadow(0_0_4px_var(--color-pso-glow))]"
+          >
             <circle cx="8" cy="5.4" r="3.1" fill="currentColor" />
             <path d="M2.5 15.5a5.5 5 0 0 1 11 0z" fill="currentColor" />
           </svg>
         </div>
-        <span class="hud-pb-badge">0</span>
+        <span class="absolute -top-1 -right-[3px] w-[17px] h-[17px] rounded-full bg-[#04141c] border border-pso-edge text-accent text-[10px] font-bold leading-[15px] text-center">
+          0
+        </span>
       </div>
-      <div class="hud-rows">
-        <div class="hud-bar-row">
-          <span class="hud-bar-label">HP</span>
-          <div class="hpbar">
+      <div class="flex-1 min-w-0 flex flex-col gap-[3px]">
+        <div class="flex items-center gap-2">
+          <span class="flex-none w-5 text-[10px] font-bold tracking-[1px] text-accent">HP</span>
+          <div class="hpbar flex-1 h-[10px]">
             <span class="stage-char-hp" style={{ width: `${pct()}%` }}></span>
           </div>
-          <span class="hud-bar-num stage-char-hp-text">
+          <span class="stage-char-hp-text flex-none w-16 text-right text-[11.5px] font-semibold [font-variant-numeric:tabular-nums] whitespace-nowrap">
             {props.hp}/{props.maxHp}
           </span>
         </div>
-        <div class="hud-bar-row">
-          <span class="hud-bar-label">TP</span>
-          <div class="hpbar tpbar">
+        <div class="flex items-center gap-2">
+          <span class="flex-none w-5 text-[10px] font-bold tracking-[1px] text-accent">TP</span>
+          <div class="hpbar tpbar flex-1 h-[10px]">
             <span style="width:0%"></span>
           </div>
-          <span class="hud-bar-num">0/0</span>
+          <span class="flex-none w-16 text-right text-[11.5px] font-semibold [font-variant-numeric:tabular-nums] whitespace-nowrap">
+            0/0
+          </span>
         </div>
-        <div class="hud-name-row">
+        <div class="flex items-center justify-end gap-1.5 mt-px">
           <Icon id={sectionIcon(props.sectionId)} />
-          <span class="hud-name">{props.name}</span>
+          <span class="text-gold text-[13.5px] font-bold tracking-[0.5px] overflow-hidden text-ellipsis whitespace-nowrap">
+            {props.name}
+          </span>
         </div>
       </div>
-      <span class="hud-lv-pill">
-        Lv <b>{props.level}</b>
+      <span
+        class={`${styles.lvPill} absolute left-4 -bottom-[11px] px-3 py-px rounded-[10px] text-[#bfeef8] text-[10px] tracking-[0.5px]`}
+      >
+        Lv <b class="text-xs text-[#eafcff] [text-shadow:0_0_6px_var(--color-pso-glow)]">{props.level}</b>
       </span>
     </div>
   );

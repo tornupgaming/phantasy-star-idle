@@ -5,6 +5,9 @@ import { CLASS_BY_ID, SECTION_IDS, type SectionId } from "../../../engine/classe
 import { sectionIdFromName } from "../../../engine/progression";
 import { useUi } from "../../context";
 import { CLASSES_CANONICAL } from "../../ui-shared";
+import chrome from "../chrome.module.css";
+
+const panel = `${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5`;
 
 export function CharacterCreateForm() {
   const ui = useUi();
@@ -28,31 +31,31 @@ export function CharacterCreateForm() {
   };
 
   return (
-    <div class="create-grid">
-      <div class="panel">
+    <div class="grid grid-cols-[minmax(260px,1fr)_minmax(320px,1.6fr)] gap-3.5 items-start max-[900px]:grid-cols-1">
+      <div class={panel}>
         <h2>Class</h2>
-        <div class="pso-menu">
+        <div class={`pso-menu ${chrome.menu}`}>
           <For each={CLASSES_CANONICAL}>
             {(c) => (
               <button
-                class="pso-menu-row"
+                class={`pso-menu-row ${chrome.menuRow}`}
                 classList={{ selected: c.id === ui.draft.classId() }}
                 data-action="pick-class"
                 data-id={c.id}
                 onClick={() => ui.draft.setClassId(c.id)}
               >
-                <span style="flex:1">{c.name}</span>
+                <span class="flex-1">{c.name}</span>
                 <span class="meta">{c.role}</span>
               </button>
             )}
           </For>
         </div>
       </div>
-      <div class="panel">
+      <div class={panel}>
         <h2>
-          {def().name} <span class="muted">{def().role}</span>
+          {def().name} <span class="text-muted">{def().role}</span>
         </h2>
-        <div class="stat-row" style="margin-bottom:12px">
+        <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink mb-3">
           <span>
             ATP <b>{def().base.atp}</b>
           </span>
@@ -70,26 +73,26 @@ export function CharacterCreateForm() {
           </span>
         </div>
         <h3>Name</h3>
-        <div class="row">
+        <div class="flex gap-2 items-center my-1.5 flex-wrap">
           <input
             id="new-name"
             placeholder="Name"
             value={ui.draft.name()}
-            style="flex:1"
+            class="flex-1"
             onInput={(e) => ui.draft.setName(e.currentTarget.value)}
           />
         </div>
-        <div class="muted" style="margin:6px 0">
+        <div class="text-muted my-1.5">
           Section ID: <b id="create-sid">{shownSid()}</b>
           <Show when={ui.draft.sid() === ""}>
             {" "}
-            <span class="muted">(derived from name)</span>
+            <span class="text-muted">(derived from name)</span>
           </Show>
         </div>
-        <details class="advanced">
-          <summary>Change section ID</summary>
-          <div class="row">
-            <label style="flex:1">
+        <details>
+          <summary class="cursor-pointer text-muted text-xs my-1.5">Change section ID</summary>
+          <div class="flex gap-2 items-center my-1.5 flex-wrap">
+            <label class="flex-1">
               Section ID
               <select id="new-sid" onChange={(e) => ui.draft.setSid(e.currentTarget.value as SectionId | "")}>
                 <option value="" selected={ui.draft.sid() === ""}>
@@ -106,8 +109,8 @@ export function CharacterCreateForm() {
             </label>
           </div>
         </details>
-        <div class="row" style="margin-top:14px">
-          <button class="primary" data-action="create-char" onClick={create}>
+        <div class="flex gap-2 items-center mt-3.5 mb-1.5 flex-wrap">
+          <button class={`primary ${chrome.btnPrimary}`} data-action="create-char" onClick={create}>
             Create
           </button>
         </div>

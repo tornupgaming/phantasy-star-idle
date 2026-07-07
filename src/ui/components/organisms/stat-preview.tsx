@@ -41,19 +41,19 @@ export function StatPreview(props: {
     return out;
   };
   return (
-    <table class="diff-table">
+    <table class="diff-table border-collapse min-w-[180px] [&_th]:text-right [&_th]:py-[3px] [&_th]:pr-2.5 [&_th]:font-semibold [&_th]:text-muted [&_td]:text-right [&_td]:py-[3px] [&_td]:pr-2.5 [&_td]:font-normal [&_td]:tabular-nums">
       <tbody>
         <tr>
           <th></th>
-          <th class="muted">now</th>
-          <th class="muted">after</th>
+          <th>now</th>
+          <th>after</th>
         </tr>
         <For each={rows()}>
           {([label, a, b]) => (
             <tr>
               <th>{label}</th>
               <td>{a}</td>
-              <td class={b > a ? "diff-up" : b < a ? "diff-down" : "diff-same"}>
+              <td class={b > a ? "text-good font-bold" : b < a ? "text-bad font-bold" : ""}>
                 {b} {b > a ? "▲" : b < a ? "▼" : ""}
               </td>
             </tr>

@@ -8,12 +8,15 @@ export function ReportBanner() {
   const ui = useUi();
   const r = () => ui.state.lastReport!;
   return (
-    <div class={`report ${r().outcome}`}>
-      <h2 class={`outcome-${r().outcome}`}>
+    <div
+      class="relative border bg-(image:--pso-surface-window) shadow-[0_0_14px_var(--color-pso-glow)] p-3.5 max-w-[640px] w-full"
+      classList={{ "border-accent": r().outcome !== "ejected", "border-bad": r().outcome === "ejected" }}
+    >
+      <h2 class={r().outcome === "complete" ? "text-good" : "text-bad"}>
         {r().outcome === "complete" ? "Run complete!" : "Ejected!"} — {r().characterName}, {r().areaName} (
         {r().difficultyLabel})
       </h2>
-      <div class="stat-row">
+      <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink">
         <span>
           Rooms{" "}
           <b>
@@ -34,14 +37,14 @@ export function ReportBanner() {
           Grinders <b>{r().grinders}</b>
         </span>
       </div>
-      <div style="margin-top:6px">
+      <div class="mt-1.5">
         Kept:{" "}
         <b>
           <Show when={r().items.length > 0} fallback="no gear kept">
             <For each={r().items}>
               {(item, idx) => (
                 <>
-                  <span class={itemNameClass(item)}>{itemDisplayName(item)}</span>
+                  <span class={itemNameClass(item) ? "text-good" : undefined}>{itemDisplayName(item)}</span>
                   {idx() < r().items.length - 1 ? ", " : ""}
                 </>
               )}
@@ -49,10 +52,10 @@ export function ReportBanner() {
           </Show>
         </b>
       </div>
-      <div class="muted">
+      <div class="text-muted">
         Consumables gained: {supplyLine(r().consumablesGained)} · used: {supplyLine(r().consumablesUsed)}
       </div>
-      <div class="row" style="margin-top:10px">
+      <div class="flex gap-2 items-center mt-2.5 mb-1.5 flex-wrap">
         <button data-action="dismiss-report" onClick={() => ui.setReportDismissed(true)}>
           Close
         </button>

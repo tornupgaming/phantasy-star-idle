@@ -8,6 +8,7 @@ import { WindowBox } from "../molecules/window-box";
 import { ItemRow } from "../molecules/item-row";
 import { EquippedLine, ItemDetailHead } from "../molecules/item-detail";
 import { MesetaAmount } from "../molecules/meseta-amount";
+import chrome from "../chrome.module.css";
 
 export function BankPane() {
   const ui = useUi();
@@ -20,8 +21,8 @@ export function BankPane() {
     <>
       <section class="hud-pane">
         <WindowBox title="Inventory/Bank" trailing={`${inv().length} items`}>
-          <div class="pso-menu shop-list">
-            <Show when={inv().length > 0} fallback={<div class="muted">{emptyMsg}</div>}>
+          <div class={`pso-menu ${chrome.menu} max-h-[62vh] overflow-auto max-[1100px]:max-h-[38vh] max-[900px]:max-h-[50vh]`}>
+            <Show when={inv().length > 0} fallback={<div class="text-muted">{emptyMsg}</div>}>
               <For each={inv()}>
                 {(i) => (
                   <ItemRow
@@ -38,16 +39,16 @@ export function BankPane() {
       </section>
       <aside class="hud-detail">
         <WindowBox title="Item Info">
-          <div class="shop-detail">
-            <Show when={sel()} fallback={<div class="muted">{emptyMsg}</div>}>
+          <div>
+            <Show when={sel()} fallback={<div class="text-muted">{emptyMsg}</div>}>
               {(item) => (
                 <>
                   <ItemDetailHead item={item()} />
                   <Show when={equippedInSlot(item())}>{(cur) => <EquippedLine current={cur()} />}</Show>
-                  <div class="row" style="margin-top:12px">
+                  <div class="flex gap-2 items-center mt-3 mb-1.5 flex-wrap">
                     <Show when={item().kind !== "tool"}>
                       <button
-                        class="primary"
+                        class={`primary ${chrome.btnPrimary}`}
                         data-action="equip"
                         data-id={item().id}
                         onClick={() => {

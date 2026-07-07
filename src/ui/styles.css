@@ -1,53 +1,55 @@
 /*
- * PSO Blue Burst-styled theme (pso-ui-overhaul → pso-hud-menus). The look is
- * recreated in pure CSS from the BB reference material — translucent teal
- * windows with a cyan edge and organic asymmetric-rounded silhouettes, orange
- * tab headers and selection bars, scanline fills — so it stays sharp at any
- * size; no raster chrome. The hub lays out as a HUD: floating corner-anchored
- * windows on a named-area grid over the animated scene layer. All themed
- * colors resolve from the token block below.
+ * PSO Blue Burst-styled theme (pso-ui-overhaul → pso-hud-menus), rebuilt on
+ * Tailwind v4. This file is the Tailwind entry: the design tokens live in the
+ * `@theme` block (exposed both as utilities — `text-ink`, `border-pso-edge`,
+ * `bg-psn-blue-900` — and as `--color-*` custom properties), element baseline
+ * skins live in `@layer base`, and composite gradient surfaces that are too
+ * complex for utilities are kept as `--psn-surface-*` custom properties
+ * consumed by colocated CSS modules.
+ *
+ * `scene.css` and `battle.css` hold the class hooks driven by the imperative
+ * canvas/rAF islands (backdrop.ts, stage.ts) — those class names are queried
+ * and toggled from vanilla-DOM code and must stay global.
  */
+/* Restrict class detection to src/ — the default project-wide scan picks up
+ * class-shaped strings in docs, tests, and .agents skill files. */
+@import "tailwindcss" source("../");
+@import "./scene.css" layer(components);
+@import "./battle.css" layer(components);
 
-:root {
+@theme {
+  --font-sans: "Nanum Gothic", "Gulim", "Segoe UI", system-ui, sans-serif;
+
   /* PSO BB palette */
-  --pso-window: rgba(6, 30, 40, 0.9);
-  --pso-window-2: rgba(10, 44, 56, 0.9);
-  --pso-edge: #46c8dc;
-  --pso-edge-dim: #1f6a7c;
-  --pso-glow: rgba(70, 200, 220, 0.35);
-  --pso-select: #f8a020;
-  --pso-select-ink: #201404;
-  --pso-hp: #38e448;
-  --pso-tp: #3878f8;
-  --bg: #050a14;
-  --ink: #e8f4f6;
-  --muted: #7fa4b0;
-  --accent: #5ce0f0;
-  --good: #57e08a;
-  --bad: #ff5864;
-  --gold: #ffd76a;
-  --line: var(--pso-edge-dim);
-  --panel: var(--pso-window);
-  --panel-2: var(--pso-window-2);
-  --chamfer-grade: 4px;
-  /* Nova shop card (shop-list-card spec): attribute/stat chip hues + card glass. */
-  --psn-list-item-bg: #181f2999;
-  --psn-list-item-bg-hi: #1c2f4099;
-  --attr-native: #58c048;
-  --attr-abeast: #ff8a3c;
-  --attr-machine: #58a8ff;
-  --attr-dark: #9a68e8;
-  --attr-hit: #f0b83c;
-  --stat-evp: #38b8a0;
-  --stat-slot: #8aa4b4;
-  --stat-avd: #7c93ff;
-  --card-hi: var(--psn-list-item-bg);
-  --card-lo: var(--psn-list-item-bg);
-}
+  --color-pso-window: rgba(6, 30, 40, 0.9);
+  --color-pso-window-2: rgba(10, 44, 56, 0.9);
+  --color-pso-edge: #46c8dc;
+  --color-pso-edge-dim: #1f6a7c;
+  --color-pso-glow: rgba(70, 200, 220, 0.35);
+  --color-pso-select: #f8a020;
+  --color-pso-select-ink: #201404;
+  --color-pso-hp: #38e448;
+  --color-pso-tp: #3878f8;
+  --color-bg: #050a14;
+  --color-ink: #e8f4f6;
+  --color-muted: #7fa4b0;
+  --color-accent: #5ce0f0;
+  --color-good: #57e08a;
+  --color-bad: #ff5864;
+  --color-gold: #ffd76a;
 
-/* Phantasy Star Nova Palette */
-:root {
-  --color-psn-amber-50:  #fffbeb;
+  /* Nova shop card (shop-list-card spec): attribute/stat chip hues. */
+  --color-attr-native: #58c048;
+  --color-attr-abeast: #ff8a3c;
+  --color-attr-machine: #58a8ff;
+  --color-attr-dark: #9a68e8;
+  --color-attr-hit: #f0b83c;
+  --color-stat-evp: #38b8a0;
+  --color-stat-slot: #8aa4b4;
+  --color-stat-avd: #7c93ff;
+
+  /* Phantasy Star Nova palette */
+  --color-psn-amber-50: #fffbeb;
   --color-psn-amber-100: #fef3c7;
   --color-psn-amber-200: #fde68a;
   --color-psn-amber-300: #fcd34d;
@@ -59,7 +61,7 @@
   --color-psn-amber-900: #78350f;
   --color-psn-amber-950: #451a03;
 
-  --color-psn-blue-50:  #ebf5ff;
+  --color-psn-blue-50: #ebf5ff;
   --color-psn-blue-100: #cfe8ff;
   --color-psn-blue-200: #9fd5ff;
   --color-psn-blue-300: #4ec0ff;
@@ -72,7 +74,12 @@
   --color-psn-blue-950: #001522;
 }
 
+/* Composite surfaces + non-color knobs, consumed by CSS modules. */
 :root {
+  --chamfer-grade: 4px;
+  --psn-list-item-bg: #181f2999;
+  --psn-list-item-bg-hi: #1c2f4099;
+
   --color-psn-blue-300-00: color-mix(in srgb, var(--color-psn-blue-300) 0%, transparent);
   --color-psn-blue-300-35: color-mix(in srgb, var(--color-psn-blue-300) 35%, transparent);
   --color-psn-blue-500-00: color-mix(in srgb, var(--color-psn-blue-500) 0%, transparent);
@@ -81,8 +88,8 @@
   --color-psn-blue-500-55: color-mix(in srgb, var(--color-psn-blue-500) 55%, transparent);
   --color-psn-blue-500-60: color-mix(in srgb, var(--color-psn-blue-500) 60%, transparent);
 
-  --psn-surface-strong: 
-    linear-gradient(90deg, var(--color-psn-blue-500-60) , var(--color-psn-blue-500-00) 70px,
+  --psn-surface-strong:
+    linear-gradient(90deg, var(--color-psn-blue-500-60), var(--color-psn-blue-500-00) 70px,
       var(--color-psn-blue-500-00) calc(100% - 70px), var(--color-psn-blue-500-60)),
     /* top gloss line */
     linear-gradient(180deg, var(--color-psn-blue-300-35), var(--color-psn-blue-300-00) 40%),
@@ -96,11 +103,13 @@
       var(--color-psn-blue-500-00) calc(100% - 64px), var(--color-psn-blue-500-10)),
     linear-gradient(180deg, var(--color-psn-blue-950) 0%, var(--color-psn-blue-900) 100%);
 
-  --psn-surface-raised:
-    var(--color-psn-blue-900);
+  --psn-surface-raised: var(--color-psn-blue-900);
+  --psn-surface-raised-selected: var(--psn-surface-strong);
 
-  --psn-surface-raised-selected:
-    var(--psn-surface-strong);
+  /* PSO window fill: scanlines over the translucent teal gradient. */
+  --pso-surface-window:
+    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, var(--color-pso-window-2), var(--color-pso-window));
 }
 
 /*
@@ -121,327 +130,7 @@
   font-display: swap;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background:
-    radial-gradient(1400px 900px at 75% -15%, #0c2436 0%, transparent 60%),
-    radial-gradient(1000px 700px at 10% 110%, #081a28 0%, transparent 55%),
-    var(--bg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: var(--ink);
-  font: 14px/1.5 "Nanum Gothic", "Gulim", "Segoe UI", system-ui, sans-serif;
-  overflow-x: hidden;
-}
-
-/* Gutters for the document-flow screens (select/create/run); the hub's fixed
- * scene + HUD layers escape this padding by design. */
-#app {
-  padding: 18px clamp(14px, 2.5vw, 40px) 60px;
-}
-
-h1,
-h2,
-h3 {
-  margin: 0 0 8px;
-  font-weight: 600;
-}
-h1 {
-  font-size: 22px;
-  letter-spacing: 1px;
-  color: var(--accent);
-  text-shadow: 0 0 12px var(--pso-glow);
-}
-h2 {
-  font-size: 16px;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-h3 {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.resources {
-  display: flex;
-  gap: 16px;
-  font-weight: 600;
-}
-.resources .meseta {
-  color: var(--gold);
-}
-.meseta-amount {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-}
-.meseta-icon {
-  width: 14px;
-  height: 14px;
-  object-fit: contain;
-  flex: 0 0 14px;
-  image-rendering: pixelated;
-}
-
-/* ---- Scene layer (hub-scene-backdrop) --------------------------------------
- * Persistent canvas glyph wall + animatable tint + motif silhouette. Mounted
- * once; hub re-renders never touch it. Tint crossfades via background-color
- * transition; the motif fades in per theme.
- */
-.scene-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: #04101a;
-  overflow: hidden;
-}
-.scene-layer.scene-hidden {
-  display: none;
-}
-.scene-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.scene-tint {
-  position: absolute;
-  inset: 0;
-  opacity: 0.4;
-  transition: background-color 0.6s ease;
-  background-color: #062a34;
-}
-.scene-tint.theme-guild {
-  background-color: #063028;
-}
-.scene-tint.theme-weapon-shop {
-  background-color: #301410;
-}
-.scene-tint.theme-armour-shop {
-  background-color: #101c34;
-}
-.scene-tint.theme-tool-shop {
-  background-color: #14300e;
-}
-.scene-tint.theme-equipment {
-  background-color: #1c1430;
-}
-.scene-tint.theme-bank {
-  background-color: #2c2408;
-}
-/* Floor plane + vignette over the glyph wall. */
-.scene-layer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, transparent 62%, rgba(2, 8, 14, 0.75) 100%),
-    radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(2, 8, 14, 0.55) 100%);
-}
-.scene-motif {
-  position: absolute;
-  right: 6vw;
-  top: 50%;
-  width: min(46vmin, 420px);
-  height: min(46vmin, 420px);
-  transform: translateY(-50%);
-  color: var(--pso-edge);
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  pointer-events: none;
-}
-.scene-motif.motif-in {
-  opacity: 0.08;
-}
-.scene-motif svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* ---- PSO window treatment (pso-hud-menus D3) --------------------------------
- * Organic asymmetric-rounded silhouette, translucent teal fill + scanlines,
- * cyan border with a soft glow. `.win` is the HUD variant that carries an
- * orange `.pso-tab` header overlapping its top edge.
- */
-.pso-window,
-.panel {
-  position: relative;
-  background:
-    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
-  border: 1px solid var(--pso-edge);
-  border-radius: 4px 18px 4px 12px;
-  box-shadow:
-    0 0 10px var(--pso-glow),
-    inset 0 0 22px rgba(20, 90, 110, 0.35);
-  padding: 14px;
-}
-
-/* Flat inner panel: no glow. */
-.pso-panel {
-  background: rgba(10, 40, 52, 0.6);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 3px;
-  padding: 10px 12px;
-}
-
-/* HUD window with tab header. */
-.win {
-  margin-top: 13px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-.win-body {
-  padding: 16px 12px 12px;
-  overflow: auto;
-  min-height: 0;
-}
-.pso-tab {
-  position: absolute;
-  top: -13px;
-  left: 12px;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  background: linear-gradient(180deg, #ffb640, var(--pso-select));
-  border: 1px solid #ffd080;
-  border-radius: 4px 12px 4px 4px;
-  padding: 3px 16px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(90, 50, 0, 0.8);
-  box-shadow: 0 0 10px rgba(248, 160, 32, 0.35);
-  white-space: nowrap;
-  z-index: 1;
-}
-.pso-tab .tab-meta {
-  font-weight: 600;
-  font-size: 11px;
-  color: #fff3d0;
-}
-
-.stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
-  color: var(--muted);
-}
-.stat-row b {
-  color: var(--ink);
-}
-
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 3px;
-  margin-bottom: 6px;
-  background: rgba(10, 40, 52, 0.6);
-}
-.item .name {
-  font-weight: 600;
-}
-.item .meta {
-  color: var(--muted);
-  font-size: 12px;
-}
-.rarity-uncommon .name {
-  color: var(--accent);
-}
-.rarity-rare .name {
-  color: var(--gold);
-}
-.weapon-attributes,
-.rarity-uncommon .name .weapon-attributes,
-.rarity-rare .name .weapon-attributes,
-.detail-name .weapon-attributes {
-  color: var(--good);
-}
-
-.list {
-  max-height: 260px;
-  overflow: auto;
-}
-
-/* ---- Item glyphs (item-iconography) ---------------------------------------- */
-.icon {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
-  vertical-align: -2px;
-}
-.detail-name .icon {
-  width: 16px;
-  height: 16px;
-  vertical-align: -3px;
-}
-
-/* ---- PSO menu rows: the orange selection bar, PSO density ------------------ */
-.pso-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  border-radius: 4px;
-}
-/* Keyboard-focused menu (the orange bar inside is the focus indicator). */
-.pso-menu.kbd-active {
-  outline: 1px solid var(--pso-edge-dim);
-  outline-offset: 3px;
-}
-.pso-menu-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
-  min-height: 28px; /* hit-area floor despite the compact visual density */
-  color: var(--ink);
-  background: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-  font-size: 13px;
-  width: 100%;
-}
-.pso-menu-row .meta {
-  color: var(--muted);
-  font-size: 12px;
-}
-.pso-menu-row .meta.num,
-.pso-menu-row .num {
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-.pso-menu-row .nav-num {
-  font-size: 10px;
-  color: var(--muted);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 2px;
-  padding: 0 4px;
-  line-height: 1.4;
-}
+/* Shared keyframes referenced by module/utility animations. */
 @keyframes sel-wipe {
   from {
     transform: scaleX(0.55);
@@ -451,501 +140,6 @@ h3 {
     transform: none;
     opacity: 1;
   }
-}
-.pso-menu-row:hover,
-.pso-menu-row.selected {
-  background: linear-gradient(180deg, #ffb640, var(--pso-select));
-  border-color: #ffd080;
-  color: var(--pso-select-ink);
-  text-shadow: none;
-}
-.pso-menu-row.selected {
-  animation: sel-wipe 90ms ease-out;
-  transform-origin: left center;
-}
-.pso-menu-row:hover .meta,
-.pso-menu-row.selected .meta,
-.pso-menu-row:hover .muted,
-.pso-menu-row.selected .muted,
-.pso-menu-row:hover .nav-num,
-.pso-menu-row.selected .nav-num {
-  color: #5a3c10;
-  border-color: #b07820;
-}
-@media (prefers-reduced-motion: reduce) {
-  .pso-menu-row.selected {
-    animation: none;
-  }
-}
-
-/* ---- Chips (guild counter: difficulty / attack pattern) -------------------- */
-.chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.chip {
-  background: rgba(6, 28, 38, 0.9);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 3px;
-  color: var(--ink);
-  padding: 5px 14px;
-  font: inherit;
-  font-size: 12.5px;
-  cursor: pointer;
-}
-.chip .chip-meta {
-  color: var(--muted);
-  font-size: 11px;
-}
-.chip:hover {
-  border-color: var(--pso-edge);
-  box-shadow: 0 0 8px var(--pso-glow);
-}
-.chip.hex {
-  border: none;
-  padding: 6px 20px;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
-  box-shadow: inset 0 0 0 1px var(--pso-edge-dim);
-}
-.chip.selected {
-  background: linear-gradient(180deg, #1c8aa4, #0e5468);
-  color: #eafcff;
-  border-color: var(--pso-edge);
-  text-shadow: 0 0 6px var(--pso-glow);
-}
-.chip.hex.selected {
-  box-shadow: inset 0 0 0 1px var(--pso-edge);
-}
-.chip.selected .chip-meta {
-  color: #bfeef8;
-}
-
-/* ---- Buttons -------------------------------------------------------------- */
-button,
-.pso-btn {
-  background: linear-gradient(180deg, rgba(24, 78, 96, 0.9), rgba(10, 44, 56, 0.9));
-  color: var(--ink);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 2px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font: inherit;
-}
-button:hover {
-  border-color: var(--pso-edge);
-  box-shadow: 0 0 8px var(--pso-glow);
-}
-/* Primary per-screen action: cyan-lit, hex-clipped ends. */
-button.primary {
-  background: linear-gradient(180deg, #1c8aa4, #0e5468);
-  border: 1px solid var(--pso-edge);
-  clip-path: polygon(
-    12px 0,
-    calc(100% - 12px) 0,
-    100% 50%,
-    calc(100% - 12px) 100%,
-    12px 100%,
-    0 50%
-  );
-  padding: 9px 26px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  color: #eafcff;
-  text-shadow: 0 0 6px var(--pso-glow);
-}
-button.primary:hover {
-  background: linear-gradient(180deg, #26a2be, #147089);
-}
-button.small {
-  padding: 3px 8px;
-  font-size: 12px;
-}
-button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-select,
-input[type="number"],
-input[type="text"],
-input:not([type]) {
-  background: rgba(6, 28, 38, 0.9);
-  color: var(--ink);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 2px;
-  padding: 6px 8px;
-  font: inherit;
-}
-select:focus,
-input:focus {
-  outline: none;
-  border-color: var(--pso-edge);
-  box-shadow: 0 0 8px var(--pso-glow);
-}
-
-.row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin: 6px 0;
-  flex-wrap: wrap;
-}
-
-/* ---- Bars: BB chunky green-on-bezel; width contract unchanged --------------- */
-.hpbar,
-.progress {
-  height: 12px;
-  border-radius: 2px;
-  background: #04141c;
-  overflow: hidden;
-  border: 1px solid var(--pso-edge-dim);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-.hpbar > span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(180deg, #8cf89c 0%, var(--pso-hp) 45%, #18a028 100%);
-}
-.progress > span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 60%, #2050b0 100%);
-}
-
-/* ---- Screen: character select --------------------------------------------- */
-.slot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
-}
-.slot-card {
-  position: relative;
-  padding: 16px;
-  min-height: 130px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-  transition: box-shadow 0.15s ease;
-}
-.slot-card:hover {
-  box-shadow:
-    0 0 16px var(--pso-glow),
-    0 0 0 1px var(--pso-edge),
-    inset 0 0 22px rgba(20, 90, 110, 0.35);
-}
-.slot-card .slot-name {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--accent);
-}
-.slot-card .slot-meta {
-  color: var(--muted);
-  font-size: 12px;
-}
-.slot-card .slot-actions {
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-}
-.slot-card.empty {
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  border-style: dashed;
-  font-style: italic;
-}
-
-/* ---- Screen: character create --------------------------------------------- */
-.create-grid {
-  display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(320px, 1.6fr);
-  gap: 14px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .create-grid {
-    grid-template-columns: 1fr;
-  }
-}
-details.advanced summary {
-  cursor: pointer;
-  color: var(--muted);
-  font-size: 12px;
-  margin: 6px 0;
-}
-
-/* ---- Screen: Pioneer 2 hub — HUD over the scene (pso-hud-menus) ------------ */
-
-.ui-layer.screen-hub {
-  padding: 0;
-}
-.hud {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  display: grid;
-  padding: 16px clamp(14px, 2vw, 32px);
-  gap: 18px 16px;
-  grid-template-columns: minmax(210px, 270px) minmax(340px, 1.4fr) minmax(280px, 1fr) minmax(0, 0.5fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    "status status status ."
-    "nav pane detail ."
-    "dlg dlg dlg dlg";
-  pointer-events: none;
-}
-.hud > * {
-  pointer-events: auto;
-  min-width: 0;
-  min-height: 0;
-}
-
-/* Capsule + XP/economy side panel, anchored top-left. */
-.hud-status {
-  grid-area: status;
-  justify-self: start;
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-}
-.hud-side-panel {
-  padding: 8px 16px;
-  border-radius: 6px 18px 6px 12px;
-  min-width: 250px;
-}
-.hud-side-panel .xp-bar {
-  margin: 5px 0 6px;
-}
-.side-economy {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.side-economy > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.side-economy .meseta {
-  color: var(--gold);
-}
-.hud-nav {
-  grid-area: nav;
-  align-self: start;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.hud-pane {
-  grid-area: pane;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  min-height: 0;
-  align-items: stretch;
-}
-.hud-pane .win {
-  flex: 0 1 auto;
-}
-.hud-detail {
-  grid-area: detail;
-  align-self: start;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.hud-detail .win,
-.hud-nav .win {
-  min-height: 0;
-}
-.hud-dialogue {
-  grid-area: dlg;
-  justify-self: center;
-  width: min(860px, 100%);
-}
-
-/* ---- PSO player HUD capsule (player-hud) -----------------------------------
- * One cyan-outlined capsule: hex character icon half-overlapping the left
- * edge (PB badge riding its top-right), HP/TP bar rows with right-aligned
- * numbers, Lv pill hanging off the bottom-left, yellow name + section glyph.
- * The stage drives .stage-char-hp/.stage-char-hp-text and flashes the root.
- */
-.player-hud {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-left: 26px; /* room for the hex overlapping the left edge */
-  margin-bottom: 12px; /* room for the Lv pill hanging below */
-  padding: 9px 18px 11px 36px;
-  min-width: 280px;
-  background:
-    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
-  border: 1px solid var(--pso-edge);
-  border-radius: 28px;
-  box-shadow:
-    0 0 10px var(--pso-glow),
-    inset 0 0 22px rgba(20, 90, 110, 0.35);
-}
-.hud-hex {
-  position: absolute;
-  left: -26px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 56px;
-  height: 50px;
-}
-.hud-hex-face {
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-  background: linear-gradient(180deg, #1c8aa4, #0e5468);
-  box-shadow: inset 0 0 0 1px var(--pso-edge);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  color: #bfeef8;
-}
-.hud-hex-face svg {
-  width: 30px;
-  height: 30px;
-  margin-top: 8px; /* bust crops at the hex bottom like a portrait */
-  filter: drop-shadow(0 0 4px var(--pso-glow));
-}
-/* Photon Blast badge: literal 0, no radial fill (authentic empty state). */
-.hud-pb-badge {
-  position: absolute;
-  top: -4px;
-  right: -3px;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: #04141c;
-  border: 1px solid var(--pso-edge);
-  color: var(--accent);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 15px;
-  text-align: center;
-}
-.hud-rows {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.hud-bar-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.hud-bar-label {
-  flex: 0 0 20px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--accent);
-}
-.hud-bar-row .hpbar {
-  flex: 1;
-  height: 10px;
-}
-.player-hud .hpbar > span {
-  transition: width 0.25s ease;
-}
-.player-hud .hpbar > span.low {
-  background: linear-gradient(180deg, var(--gold), var(--bad));
-}
-.hud-bar-row .tpbar > span {
-  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 60%, #2050b0 100%);
-}
-.hud-bar-num {
-  flex: 0 0 64px;
-  text-align: right;
-  font-size: 11.5px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.hud-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-top: 1px;
-}
-.hud-name {
-  color: var(--gold);
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-/* Lv pill hanging off the capsule's bottom-left. */
-.hud-lv-pill {
-  position: absolute;
-  left: 16px;
-  bottom: -11px;
-  padding: 1px 12px;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #1c8aa4, #0e5468);
-  border: 1px solid var(--pso-edge);
-  color: #bfeef8;
-  font-size: 10px;
-  letter-spacing: 0.5px;
-}
-.hud-lv-pill b {
-  font-size: 12px;
-  color: #eafcff;
-  text-shadow: 0 0 6px var(--pso-glow);
-}
-/* Stage hurt/heal flashes (battle-scene-view): ported from stage-player-box. */
-.player-hud.hurt {
-  animation: stage-hurt 0.35s ease-out;
-}
-.player-hud.healed {
-  animation: stage-healed 0.5s ease-out;
-}
-
-.small {
-  font-size: 11.5px;
-}
-.xp-bar {
-  height: 6px;
-  margin: 5px 0 3px;
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 2px;
-  background: #04141c;
-  overflow: hidden;
-}
-.xp-bar > span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(180deg, #7cc8f8 0%, var(--pso-tp) 70%, #2050b0 100%);
-}
-
-/* Dialogue window (shop-dialogue): bottom-anchored shopkeeper line. */
-.dialogue-window {
-  padding: 10px 40px 10px 18px;
-  min-height: 44px;
-  cursor: pointer;
-  border-radius: 14px 20px 14px 14px;
-  background:
-    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.04) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, rgba(6, 22, 32, 0.94), rgba(3, 14, 22, 0.94));
-}
-.dlg-text {
-  font-size: 13.5px;
-  line-height: 1.55;
-  min-height: 21px;
 }
 @keyframes dlg-blink {
   0%,
@@ -957,470 +151,86 @@ details.advanced summary {
     opacity: 0;
   }
 }
-.dialogue-window::after {
-  content: "▼";
-  position: absolute;
-  right: 14px;
-  bottom: 8px;
-  font-size: 10px;
-  color: var(--accent);
-  animation: dlg-blink 1.1s steps(1) infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .dialogue-window::after {
-    animation: none;
-  }
-}
 
-/* Item detail voice + equipped treatment. */
-.detail-flavor {
-  font-style: italic;
-  color: #bcd8e0;
-  font-size: 12.5px;
-  margin: 2px 0 6px;
-}
-.equipped-line {
-  color: var(--pso-hp);
-  font-size: 12.5px;
-  margin-bottom: 6px;
-}
-.equipped-mark {
-  display: inline-block;
-  background: var(--pso-hp);
-  color: #04220a;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.4;
-  padding: 0 4px;
-  border-radius: 2px;
-}
+@layer base {
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1400px 900px at 75% -15%, #0c2436 0%, transparent 60%),
+      radial-gradient(1000px 700px at 10% 110%, #081a28 0%, transparent 55%),
+      var(--color-bg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font: 14px/1.5 var(--font-sans);
+    overflow-x: hidden;
+  }
 
-/* Stat preview diff table (now → after with change markers). */
-.diff-table {
-  border-collapse: collapse;
-  min-width: 180px;
-}
-.diff-table th,
-.diff-table td {
-  text-align: right;
-  padding: 3px 10px 3px 0;
-  font-weight: 400;
-  font-variant-numeric: tabular-nums;
-}
-.diff-table th {
-  color: var(--muted);
-  font-weight: 600;
-}
-.diff-table .diff-up {
-  color: var(--good);
-  font-weight: 700;
-}
-.diff-table .diff-down {
-  color: var(--bad);
-  font-weight: 700;
-}
+  /* Gutters for the document-flow screens (select/create/run); the hub's fixed
+   * scene + HUD layers escape this padding by design (see hub-page). */
+  #app {
+    padding: 18px clamp(14px, 2.5vw, 40px) 60px;
+  }
 
-.shop-list {
-  max-height: 62vh;
-  overflow: auto;
-}
-.shop-detail .detail-name,
-.detail-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 2px;
-}
+  h1,
+  h2,
+  h3 {
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--color-accent);
+    text-shadow: 0 0 12px var(--color-pso-glow);
+  }
+  h2 {
+    font-size: 16px;
+    color: var(--color-accent);
+    letter-spacing: 0.5px;
+  }
+  h3 {
+    font-size: 12px;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
 
-/* HUD collapse: detail drops under the pane, then a stacked scrollable column. */
-@media (max-width: 1100px) {
-  .hud {
-    grid-template-columns: minmax(190px, 240px) 1fr;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    grid-template-areas:
-      "status status"
-      "nav pane"
-      "nav detail"
-      "dlg dlg";
-    overflow-y: auto;
+  /* PSO baseline skin for interactive elements; variants (primary/small) are
+   * utilities/module classes at the call sites. */
+  button {
+    background: linear-gradient(180deg, rgba(24, 78, 96, 0.9), rgba(10, 44, 56, 0.9));
+    color: var(--color-ink);
+    border: 1px solid var(--color-pso-edge-dim);
+    border-radius: 2px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font: inherit;
   }
-  .hud-status {
-    flex-wrap: wrap;
+  button:hover {
+    border-color: var(--color-pso-edge);
+    box-shadow: 0 0 8px var(--color-pso-glow);
   }
-  .hud-detail {
-    max-height: none;
+  button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
-  .shop-list {
-    max-height: 38vh;
-  }
-}
-@media (max-width: 900px) {
-  .hud {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    gap: 20px 0;
-  }
-  .hud-status {
-    justify-self: auto;
-  }
-  .hud > * {
-    flex: 0 0 auto;
-  }
-  .pso-menu-row {
-    min-height: 34px;
-    padding: 7px 10px;
-  }
-  .shop-list {
-    max-height: 50vh;
-  }
-}
 
-/* ---- Post-run report dialog (D2) ------------------------------------------ */
-.dialog-scrim {
-  position: fixed;
-  inset: 0;
-  background: rgba(2, 8, 14, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 30;
-  padding: 20px;
-}
-.dialog-scrim .report {
-  max-width: 640px;
-  width: 100%;
-  margin: 0;
-}
-
-/* ---- Rooms / progress ------------------------------------------------------ */
-.rooms {
-  display: flex;
-  gap: 6px;
-  margin: 10px 0;
-  flex-wrap: wrap;
-}
-.room-cell {
-  flex: 1;
-  min-width: 60px;
-  text-align: center;
-  padding: 8px 4px;
-  border-radius: 2px;
-  border: 1px solid var(--pso-edge-dim);
-  background: rgba(10, 40, 52, 0.6);
-  color: var(--muted);
-  font-size: 12px;
-}
-.room-cell.cleared {
-  border-color: var(--good);
-  color: var(--good);
-}
-.room-cell.current {
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent) inset;
-}
-
-.log {
-  height: 340px;
-  overflow: auto;
-  background: rgba(3, 14, 20, 0.85);
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 2px;
-  padding: 8px 10px;
-  font: 12.5px/1.6 ui-monospace, "Cascadia Code", monospace;
-}
-.log .l-attack {
-  color: var(--ink);
-}
-.log .l-miss {
-  color: var(--muted);
-}
-.log .l-crit {
-  color: var(--gold);
-}
-.log .l-kill {
-  color: var(--good);
-}
-.log .l-loot {
-  color: var(--accent);
-}
-.log .l-heal {
-  color: #7fe0c0;
-}
-.log .l-eject {
-  color: var(--bad);
-  font-weight: 700;
-}
-.log .l-complete {
-  color: var(--good);
-  font-weight: 700;
-}
-.log .l-room {
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* ---- Battle stage (battle-scene-view D4): PSIV-homage first-person view ---- */
-
-.stage {
-  padding: 0;
-  overflow: hidden;
-}
-
-.stage-ticker {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--pso-edge-dim);
-  background: rgba(3, 14, 20, 0.85);
-  font: 13px/1.5 ui-monospace, "Cascadia Code", monospace;
-  min-height: 40px;
-}
-.stage-ticker.l-miss {
-  color: var(--muted);
-}
-.stage-ticker.l-crit {
-  color: var(--gold);
-}
-.stage-ticker.l-kill {
-  color: var(--good);
-}
-.stage-ticker.l-loot {
-  color: var(--accent);
-}
-.stage-ticker.l-heal,
-.stage-ticker.l-revive {
-  color: #7fe0c0;
-}
-.stage-ticker.l-eject {
-  color: var(--bad);
-  font-weight: 700;
-}
-.stage-ticker.l-complete {
-  color: var(--good);
-  font-weight: 700;
-}
-
-/* The enemy field: a floor plane receding to a horizon, enemies in a row. */
-.stage-field {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 28px;
-  min-height: 220px;
-  padding: 26px 20px 34px;
-  background:
-    linear-gradient(180deg, #04101e 0%, #0a2030 55%, transparent 55%),
-    repeating-linear-gradient(180deg, #12384a 0 2px, #0a2430 2px 26px);
-}
-
-.stage-empty {
-  align-self: center;
-  font-style: italic;
-}
-
-.stage-enemy {
-  position: relative;
-  width: 96px;
-  text-align: center;
-  transition: opacity 0.6s ease;
-}
-.stage-enemy.dead {
-  opacity: 0.15;
-}
-/* Sprite frame; enemies without art (see enemy-art.ts) keep the bare box. */
-.stage-enemy-box {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 6px;
-  border-radius: 3px;
-  border: 2px solid var(--accent);
-  background: linear-gradient(160deg, #143c50, #0a2838);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-}
-.stage-enemy-sprite {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  padding: 4px;
-  box-sizing: border-box;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-.stage-enemy-name {
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.stage-enemy .hpbar {
-  height: 8px;
-}
-.stage-enemy .hpbar > span {
-  background: linear-gradient(90deg, var(--bad), #ff9d6b);
-  transition: width 0.25s ease;
-}
-.stage-enemy-hp {
-  font-size: 11px;
-}
-
-@keyframes stage-hit {
-  0% {
-    filter: brightness(3);
-    transform: translateX(0);
+  select,
+  input[type="number"],
+  input[type="text"],
+  input:not([type]) {
+    background: rgba(6, 28, 38, 0.9);
+    color: var(--color-ink);
+    border: 1px solid var(--color-pso-edge-dim);
+    border-radius: 2px;
+    padding: 6px 8px;
+    font: inherit;
   }
-  25% {
-    transform: translateX(-4px);
+  select:focus,
+  input:focus {
+    outline: none;
+    border-color: var(--color-pso-edge);
+    box-shadow: 0 0 8px var(--color-pso-glow);
   }
-  50% {
-    transform: translateX(4px);
-  }
-  100% {
-    filter: none;
-    transform: translateX(0);
-  }
-}
-.stage-enemy.hit .stage-enemy-box {
-  animation: stage-hit 0.28s ease-out;
-}
-
-/* Run topbar: the player HUD capsule anchored top-left (same anchor as the
- * hub), run title to the right. The economy readout is gone with the money
- * pod — earnings show in the settle report. */
-.run-topbar {
-  align-items: flex-start;
-}
-
-/* Bottom telemetry strip: room label + supplies (run data, not player identity). */
-.stage-bottom {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 14px;
-  border-top: 1px solid var(--pso-edge-dim);
-  background: rgba(10, 40, 52, 0.6);
-}
-/* Flash keyframes for the capsule's hurt/heal effects (battle-scene-view). */
-@keyframes stage-hurt {
-  0% {
-    box-shadow: 0 0 0 3px var(--bad);
-  }
-  100% {
-    box-shadow: none;
-  }
-}
-@keyframes stage-healed {
-  0% {
-    box-shadow: 0 0 0 3px var(--good);
-  }
-  100% {
-    box-shadow: none;
-  }
-}
-.stage-side {
-  font-size: 12px;
-}
-
-/* Floating combat text. */
-@keyframes stage-float {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -34px);
-  }
-}
-.float-dmg,
-.float-miss,
-.float-sidestep {
-  position: absolute;
-  left: 50%;
-  top: 4px;
-  transform: translate(-50%, 0);
-  animation: stage-float 1.15s ease-out forwards;
-  display: flex;
-  font-weight: 700;
-  pointer-events: none;
-  text-shadow: 0 1px 3px #000;
-  filter: drop-shadow(0 1px 1px #000);
-}
-/* PSO bitmap glyphs (atlas regions; tints baked into the PNG rows). */
-.float-glyph {
-  display: inline-block;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-}
-/* color/font-size below only affect the plain-text fallback. */
-.float-dmg {
-  color: #fff;
-  font-size: 24px;
-}
-.float-dmg.crit {
-  color: var(--gold);
-  font-size: 30px;
-}
-.float-miss {
-  color: var(--bad);
-  font-size: 18px;
-}
-/* Sidestep (weapon-range-avoidance D3): the player moving, not the enemy
- * missing — cool cyan tint keeps it visually distinct from the red MISS glyph. */
-.float-sidestep {
-  color: #6fe3ff;
-  font-size: 18px;
-}
-
-.log.log-compact {
-  height: 160px;
-}
-
-.stage-loot-tally {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  min-height: 28px;
-  align-items: center;
-  font-size: 12.5px;
-}
-.loot-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border: 1px solid var(--pso-edge-dim);
-  border-radius: 999px;
-  background: rgba(3, 14, 20, 0.72);
-  color: var(--accent);
-}
-
-.report {
-  position: relative;
-  border: 1px solid var(--accent);
-  background:
-    repeating-linear-gradient(180deg, rgba(120, 220, 235, 0.045) 0 1px, transparent 1px 3px),
-    linear-gradient(180deg, var(--pso-window-2), var(--pso-window));
-  box-shadow: 0 0 14px var(--pso-glow);
-  padding: 14px;
-  margin-bottom: 16px;
-}
-.report.ejected {
-  border-color: var(--bad);
-}
-.outcome-complete {
-  color: var(--good);
-}
-.outcome-ejected {
-  color: var(--bad);
-}
-.notice {
-  color: var(--bad);
-  min-height: 18px;
-  margin: 6px 0;
-}
-.muted {
-  color: var(--muted);
 }

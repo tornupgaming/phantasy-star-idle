@@ -1,0 +1,190 @@
+/*
+ * Shared PSO chrome (pso-hud-menus): the complex gradient/clip-path surfaces
+ * that are reused across components and don't reduce to Tailwind utilities.
+ * Layout, spacing, and typography stay as utilities at the call sites — this
+ * module carries only the "paint": scanline window fills, the orange
+ * selection bar, hex clip silhouettes.
+ */
+
+/* PSO window treatment (D3): translucent teal fill + scanlines, cyan border
+ * with a soft glow. Callers set the silhouette themselves — the default
+ * asymmetric-rounded window is `rounded-[4px_18px_4px_12px]`; the side panel
+ * and dialogue window use their own radii. (Kept out of the module because
+ * unlayered module rules beat utility classes on the same property.) */
+.surface {
+  position: relative;
+  background: var(--pso-surface-window);
+  border: 1px solid var(--color-pso-edge);
+  box-shadow:
+    0 0 10px var(--color-pso-glow),
+    inset 0 0 22px rgba(20, 90, 110, 0.35);
+}
+/* Dashed-edge variant (empty roster slot). A module class rather than the
+ * `border-dashed` utility because .surface's unlayered border shorthand
+ * would override the layered utility. */
+.surfaceDashed {
+  border-style: dashed;
+}
+
+/* Orange tab header overlapping a window's top edge (WindowBox). */
+.tab {
+  position: absolute;
+  top: -13px;
+  left: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: linear-gradient(180deg, #ffb640, var(--color-pso-select));
+  border: 1px solid #ffd080;
+  border-radius: 4px 12px 4px 4px;
+  padding: 3px 16px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(90, 50, 0, 0.8);
+  box-shadow: 0 0 10px rgba(248, 160, 32, 0.35);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* ---- PSO menu rows: the orange selection bar, PSO density ------------------
+ * Rows keep bare hook classnames on children (`meta`, `num`, `nav-num`,
+ * `muted`) so the hover/selected bar can recolor them — the cascade is the
+ * contract here, not per-child utilities. `.selected` / `.kbd-active` are
+ * toggled as plain classes by keyboard-nav code.
+ */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 4px;
+}
+/* Keyboard-focused menu (the orange bar inside is the focus indicator). */
+.menu:global(.kbd-active) {
+  outline: 1px solid var(--color-pso-edge-dim);
+  outline-offset: 3px;
+}
+.menuRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  min-height: 28px; /* hit-area floor despite the compact visual density */
+  color: var(--color-ink);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  width: 100%;
+}
+.menuRow :global(.meta) {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.menuRow :global(.meta.num),
+.menuRow :global(.num) {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.menuRow :global(.nav-num) {
+  font-size: 10px;
+  color: var(--color-muted);
+  border: 1px solid var(--color-pso-edge-dim);
+  border-radius: 2px;
+  padding: 0 4px;
+  line-height: 1.4;
+}
+.menuRow:hover,
+.menuRow:global(.selected) {
+  background: linear-gradient(180deg, #ffb640, var(--color-pso-select));
+  border-color: #ffd080;
+  color: var(--color-pso-select-ink);
+  text-shadow: none;
+}
+.menuRow:global(.selected) {
+  animation: sel-wipe 90ms ease-out;
+  transform-origin: left center;
+}
+.menuRow:hover :global(.meta),
+.menuRow:global(.selected) :global(.meta),
+.menuRow:hover :global(.muted),
+.menuRow:global(.selected) :global(.muted),
+.menuRow:hover :global(.nav-num),
+.menuRow:global(.selected) :global(.nav-num) {
+  color: #5a3c10;
+  border-color: #b07820;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menuRow:global(.selected) {
+    animation: none;
+  }
+}
+@media (max-width: 900px) {
+  .menuRow {
+    min-height: 34px;
+    padding: 7px 10px;
+  }
+}
+
+/* ---- Chips (guild counter: difficulty / attack pattern) -------------------- */
+.chip {
+  background: rgba(6, 28, 38, 0.9);
+  border: 1px solid var(--color-pso-edge-dim);
+  border-radius: 3px;
+  color: var(--color-ink);
+  padding: 5px 14px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.chip :global(.chip-meta) {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+.chip:hover {
+  border-color: var(--color-pso-edge);
+  box-shadow: 0 0 8px var(--color-pso-glow);
+}
+.chipHex {
+  border: none;
+  padding: 6px 20px;
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+  box-shadow: inset 0 0 0 1px var(--color-pso-edge-dim);
+}
+.chipSelected {
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  color: #eafcff;
+  border-color: var(--color-pso-edge);
+  text-shadow: 0 0 6px var(--color-pso-glow);
+}
+.chipHex.chipSelected {
+  box-shadow: inset 0 0 0 1px var(--color-pso-edge);
+}
+.chipSelected :global(.chip-meta) {
+  color: #bfeef8;
+}
+
+/* Primary per-screen action: cyan-lit, hex-clipped ends. */
+.btnPrimary {
+  background: linear-gradient(180deg, #1c8aa4, #0e5468);
+  border: 1px solid var(--color-pso-edge);
+  clip-path: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 50%,
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 50%
+  );
+  padding: 9px 26px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #eafcff;
+  text-shadow: 0 0 6px var(--color-pso-glow);
+}
+.btnPrimary:hover {
+  background: linear-gradient(180deg, #26a2be, #147089);
+}

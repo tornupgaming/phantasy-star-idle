@@ -7,19 +7,24 @@ import { MesetaAmount } from "../molecules/meseta-amount";
 export function Topbar(props: { title: string; back?: { label: string; screen: Screen } }) {
   const ui = useUi();
   return (
-    <div class="topbar">
+    <div class="flex justify-between items-center gap-3 mb-4">
       <h1>
         <Show when={props.back}>
           {(back) => (
-            <button class="small" data-action="goto" data-screen={back().screen} onClick={() => ui.goto(back().screen)}>
+            <button
+              class="px-2 py-[3px] text-xs"
+              data-action="goto"
+              data-screen={back().screen}
+              onClick={() => ui.goto(back().screen)}
+            >
               ◀ {back().label}
             </button>
           )}
         </Show>{" "}
         ✦ {props.title}
       </h1>
-      <div class="resources">
-        <span class="meseta"><MesetaAmount value={ui.state.economy.meseta} /></span>
+      <div class="flex gap-4 font-semibold">
+        <span class="text-gold"><MesetaAmount value={ui.state.economy.meseta} /></span>
         <span>{ui.state.economy.grinders} grinders</span>
       </div>
     </div>

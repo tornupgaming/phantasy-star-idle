@@ -11,6 +11,7 @@ import { useUi } from "../../context";
 import { PATTERN_PRESETS, patternMeta, patternName, supplyLine } from "../../ui-shared";
 import { MesetaIcon } from "../atoms/meseta-icon";
 import { WindowBox } from "../molecules/window-box";
+import chrome from "../chrome.module.css";
 
 export function GuildPane() {
   const ui = useUi();
@@ -22,29 +23,29 @@ export function GuildPane() {
       <section class="hud-pane">
         <WindowBox title="Hunter's Guild" trailing="Quest Counter">
           <h3>Area</h3>
-          <div class="pso-menu">
+          <div class={`pso-menu ${chrome.menu}`}>
             <For each={AREA_LIST}>
               {(a) => (
                 <button
-                  class="pso-menu-row"
+                  class={`pso-menu-row ${chrome.menuRow}`}
                   classList={{ selected: a.id === ui.areaSel() }}
                   data-action="area"
                   data-id={a.id}
                   onClick={() => ui.setAreaSel(a.id)}
                 >
-                  <span style="flex:1">{a.name}</span>
+                  <span class="flex-1">{a.name}</span>
                   <span class="meta">rec. ATP {a.recommendedAtp}</span>
                 </button>
               )}
             </For>
           </div>
-          <h3 style="margin-top:10px">Difficulty</h3>
-          <div class="chip-row">
+          <h3 class="mt-2.5">Difficulty</h3>
+          <div class="flex flex-wrap gap-2">
             <For each={Object.keys(DIFFICULTIES) as DifficultyId[]}>
               {(d) => (
                 <button
-                  class="chip hex"
-                  classList={{ selected: d === ui.diffSel() }}
+                  class={`${chrome.chip} ${chrome.chipHex}`}
+                  classList={{ [chrome.chipSelected]: d === ui.diffSel() }}
                   data-action="diff"
                   data-id={d}
                   onClick={() => ui.setDiffSel(d)}
@@ -54,13 +55,13 @@ export function GuildPane() {
               )}
             </For>
           </div>
-          <h3 style="margin-top:10px">Attack pattern</h3>
-          <div class="chip-row">
+          <h3 class="mt-2.5">Attack pattern</h3>
+          <div class="flex flex-wrap gap-2">
             <For each={Object.keys(PATTERN_PRESETS)}>
               {(name) => (
                 <button
-                  class="chip"
-                  classList={{ selected: name === patternName(ui.selectedEntry().pattern) }}
+                  class={chrome.chip}
+                  classList={{ [chrome.chipSelected]: name === patternName(ui.selectedEntry().pattern) }}
                   data-action="pattern"
                   data-id={name}
                   onClick={() => ui.act(() => ui.game.setPattern(PATTERN_PRESETS[name]))}
@@ -71,9 +72,8 @@ export function GuildPane() {
             </For>
           </div>
           <button
-            class="primary"
+            class={`primary ${chrome.btnPrimary} w-full mt-3.5`}
             data-action="send"
-            style="width:100%;margin-top:14px"
             onClick={() => ui.act(() => ui.game.sendRun(ui.areaSel(), ui.diffSel()))}
           >
             ▶ Accept Quest
@@ -83,7 +83,7 @@ export function GuildPane() {
       <aside class="hud-detail">
         <WindowBox title="Counter Settings">
           <h3>Loot filter</h3>
-          <div class="row">
+          <div class="flex gap-2 items-center my-1.5 flex-wrap">
             <label>
               Auto-sell below{" "}
               <input
@@ -92,12 +92,12 @@ export function GuildPane() {
                 type="number"
                 min="0"
                 value={ui.selectedEntry().filter.autoSellBelow}
-                style="width:90px"
+                class="w-[90px]"
               />{" "}
               <MesetaIcon />
             </label>
           </div>
-          <div class="row">
+          <div class="flex gap-2 items-center my-1.5 flex-wrap">
             <label>
               <input
                 id="filter-keep-rare"
@@ -108,7 +108,7 @@ export function GuildPane() {
               keep rares
             </label>
             <button
-              class="small"
+              class="px-2 py-[3px] text-xs"
               data-action="apply-filter"
               onClick={() =>
                 ui.act(
@@ -124,8 +124,8 @@ export function GuildPane() {
               Apply
             </button>
           </div>
-          <h3 style="margin-top:12px">Supply</h3>
-          <div class="muted">{supplyLine(ui.state.supply)}</div>
+          <h3 class="mt-3">Supply</h3>
+          <div class="text-muted">{supplyLine(ui.state.supply)}</div>
         </WindowBox>
       </aside>
     </>

@@ -30,8 +30,10 @@ needs `useUi()`, it cannot be an atom or molecule.
 - `molecules/` — small compositions of atoms, still props-only
   (`MesetaAmount`, `WindowBox`, `Panel`, `PlayerHud`, `ItemRow`,
   `ShopList`/`ShopCard`/`StatChip`, `ItemDetailHead`/`EquippedLine`).
-  Component-scoped styles are colocated CSS modules (`panel.module.css`,
-  `shop-card.module.css`); everything else uses the global `styles.css`.
+  Styling is Tailwind v4 utilities inline in the JSX; complex gradients,
+  clip-paths, and multi-shadow treatments live in colocated CSS modules
+  (`panel.module.css`, `shop-card.module.css`, shared PSO chrome in
+  `components/chrome.module.css`). See "Styling" below.
 - `organisms/` — self-contained UI sections that may read UI context via
   `useUi()` and dispatch engine actions through `ui.act(...)`: the hub panes
   (`guild-pane`, `gear-shop-pane`, `tool-shop-pane`, `bank-pane`,
@@ -58,6 +60,36 @@ The vanilla-DOM islands (`BattleStage`, `Backdrop`) are deliberately not
 reactive: Solid mounts a static shell and the island repaints via class-name
 hooks (`stage-*`). Don't convert them to reactive rendering, and don't render
 reactively into their DOM.
+
+## Styling (Tailwind v4)
+
+`src/ui/styles.css` is the Tailwind entry: design tokens in `@theme` (usable
+as utilities — `text-muted`, `border-pso-edge`, `bg-psn-blue-900` — and as
+`--color-*` vars in modules), element baseline skins (body, h1–h3, button,
+input/select) in `@layer base`, and the composite `--psn-surface-*` /
+`--pso-surface-window` gradient vars. Rules:
+
+- Layout/spacing/typography/simple colors → utilities inline in JSX; complex
+  gradients/clip-paths/multi-shadow chrome → CSS modules (shared chrome in
+  `components/chrome.module.css`: `surface`, `tab`, `menu`/`menuRow`,
+  `chip*`, `btnPrimary`).
+- CSS-module rules are unlayered and beat utilities on the same property —
+  keep modules to properties never overridden by utilities (e.g.
+  `chrome.surface` carries no border-radius; callers add `rounded-[…]`).
+- Classes driven by the imperative islands stay global plain CSS: `battle.css`
+  (`stage-*`, `float-*`, bar family `hpbar`/`progress`/`xp-bar`, `log`/`l-*`,
+  `room-cell`, `loot-chip`, `muted`, `outcome-*`), `scene.css` (`scene-*`),
+  and `templates/hub-layout.css` (the `.hud` named-area grid + collapse
+  breakpoints). Never Tailwind-ify those class names — stage.ts/backdrop.ts
+  build them in strings, and tests query them.
+- Behavioral hook classes (`pso-menu`, `pso-menu-row`, `selected`,
+  `kbd-active`, `player-hud`, `stage-char-hp*`, `win`, `hud-*`, `meseta-*`,
+  `dialog-scrim`, `dlg-text`, `rarity-*`, `name`, `meta`, `nav-num`,
+  `chip-meta`) must stay as literal classes even when they carry no styles —
+  keyboard nav, stage.ts, CSS-module `:global()` rules, and the UI smoke
+  tests select on them.
+- Class detection is restricted to `src/` via `source("../")` on the
+  Tailwind import.
 
 ## Authentic PSO data reference
 

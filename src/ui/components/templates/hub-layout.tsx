@@ -8,6 +8,7 @@
 
 import type { JSX } from "solid-js";
 import { SpriteDefs } from "../atoms/sprite-defs";
+import "./hub-layout.css";
 
 export function HubLayout(props: {
   ref?: (el: HTMLDivElement) => void;
