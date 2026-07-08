@@ -14,6 +14,7 @@
     "extract:frame-data": "node scripts/extract-frame-data.mjs",
     "extract:item-table": "node scripts/extract-item-table.mjs",
     "extract:map-spawns": "node scripts/extract-map-spawns.mjs",
+    "extract:room-geometry": "node scripts/extract-room-geometry.mjs",
     "extract:common-table": "node scripts/extract-common-table.mjs",
     "extract:shop-tables": "node scripts/extract-shop-tables.mjs"
   },

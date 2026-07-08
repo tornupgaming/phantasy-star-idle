@@ -41,6 +41,16 @@ describe("battle stage (run screen)", () => {
     // The capsule renders the HP label separately; the hook holds `cur/max`.
     expect(root.querySelector(".stage-char-hp-text")!.textContent).toMatch(/^\d+\/\d+$/);
 
+    // Minimap (battle-minimap spec): every geometry room renders from the
+    // first frame, exactly one room is current, and each cell is positioned.
+    const mapCells = root.querySelectorAll(".stage-minimap > .minimap-room");
+    expect(mapCells.length).toBeGreaterThan(0);
+    expect(root.querySelectorAll(".stage-minimap > .minimap-room.current").length).toBe(1);
+    for (const cell of mapCells) {
+      expect((cell as HTMLElement).style.left).toMatch(/px$/);
+      expect((cell as HTMLElement).style.top).toMatch(/px$/);
+    }
+
     // A reload mid-run rebuilds the identical scene from the event prefix
     // (the island mounts straight into the run regime).
     const root2 = document.createElement("div");
@@ -53,6 +63,10 @@ describe("battle stage (run screen)", () => {
     expect(root2.querySelectorAll(".stage-enemy").length).toBe(
       root.querySelectorAll(".stage-enemy").length,
     );
+    // The refolded minimap reproduces the same room states (reload equivalence).
+    const mapSig = (r: HTMLElement) =>
+      [...r.querySelectorAll(".stage-minimap > .minimap-room")].map((c) => c.className).join("|");
+    expect(mapSig(root2)).toBe(mapSig(root));
 
     // Fast-forward past the end; the 1 Hz poll settles and the sync flips the
     // regime switch — the island is disposed and the hub shows the report.

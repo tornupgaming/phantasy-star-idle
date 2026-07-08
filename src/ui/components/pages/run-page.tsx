@@ -46,10 +46,7 @@ export function RunPage() {
         <h2>
           {prog.areaName} — {prog.difficultyLabel}
         </h2>
-        <div class="flex gap-1.5 my-2.5 flex-wrap stage-rooms"></div>
-        <div class="progress">
-          <span class="stage-progress"></span>
-        </div>
+        <div class="stage-minimap my-2.5"></div>
         <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink mt-2">
           <span>
             Progress <b class="stage-pct">—</b>

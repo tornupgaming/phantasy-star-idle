@@ -134,6 +134,10 @@ export interface RunProgress {
   totalRooms: number;
   /** The generated stage's per-room plan (settlement report only; truncated on defeat — an outcome oracle, so the stage UI must not read it). */
   roomPlan: { enemies: number; boxes: number }[];
+  /** Rolled layout's room-geometry key (absent for boss arenas). Plan-level — safe pre-settle. */
+  layoutKey?: string;
+  /** Authentic room id per planned room, full-length (never truncated — safe pre-settle). */
+  authRoomPlan: (number | null)[];
 }
 
 export type ActionResult = { ok: true } | { ok: false; reason: string };
@@ -631,6 +635,8 @@ export class Game {
       revealedEvents: revealUpTo(result, gameTime),
       totalRooms: result.totalRooms,
       roomPlan: result.roomPlan,
+      layoutKey: result.layoutKey,
+      authRoomPlan: result.authRoomPlan,
     };
   }
 

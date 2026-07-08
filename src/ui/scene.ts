@@ -125,23 +125,6 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
   }
 }
 
-/**
- * Room-based progress bar fill in [0, 1]: (roomsCleared + roomKills /
- * roomEnemies) / totalRooms, from revealed events only — outcome-blind by
- * construction. `totalRooms` comes from RunProgress so the bar works before
- * the first room event (the scene's own copy is 0 until then). Spawns grow
- * the current room's denominator, so the fill can dip slightly within a room,
- * but it never regresses past a cleared-room boundary.
- */
-export function progressFill(scene: Scene, totalRooms: number): number {
-  if (totalRooms <= 0 || scene.roomIndex < 0) return 0;
-  if (scene.phase === "complete") return 1;
-  const kills = scene.enemies.filter((e) => e.dead).length;
-  // An empty or fully-cleared current room counts as done (0/0 → 1).
-  const roomFraction = scene.enemies.length > 0 ? kills / scene.enemies.length : 1;
-  return Math.min(1, Math.max(0, (scene.roomIndex + roomFraction) / totalRooms));
-}
-
 /** The scene after all `events` — deterministic fold from a fresh scene. */
 export function sceneAt(events: RunEvent[], charMaxHp: number, supply: Supply): Scene {
   const scene = createScene(charMaxHp, supply);

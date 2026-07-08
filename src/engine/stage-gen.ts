@@ -17,6 +17,7 @@
 import type { AreaDef, RoomDef } from "./areas";
 import type { Rng } from "./rng";
 import { getFloorSpawns, rareTypeFor } from "./data/map-spawns";
+import { layoutKeyForFile } from "./data/room-geometry";
 import { enemyDefForStatsType } from "./content";
 
 /** Cap on simultaneous enemies per generated room (idle combat is all-at-once). */
@@ -56,17 +57,28 @@ export interface Stage {
   rooms: RoomDef[];
   /** Source layout files, one per floor rolled (provenance/debugging). */
   files: string[];
+  /**
+   * Room-geometry layout key of the main floor's rolled variation (the
+   * pre-authored map the run plays on), for the minimap. Absent when the
+   * floor has no extracted geometry (boss arenas). Derived — no RNG draw.
+   */
+  layoutKey?: string;
 }
 
 export function generateStage(area: AreaDef, rng: Rng): Stage {
   const rooms: RoomDef[] = [];
   const files: string[] = [];
+  let stageLayoutKey: string | undefined;
 
   const floors = area.bossFloor === undefined ? [area.floor] : [area.floor, area.bossFloor];
   for (const floorNumber of floors) {
     const floor = getFloorSpawns(area.episode, floorNumber);
     const variation = rng.pick(floor.offline);
     files.push(variation.file);
+    // Minimap provenance (room-geometry-data spec): which pre-authored map
+    // this variation plays on. Pure lookup — consumes no RNG.
+    const floorLayoutKey = layoutKeyForFile(area.episode, floorNumber, variation.file) ?? undefined;
+    if (floorNumber === area.floor) stageLayoutKey = floorLayoutKey;
 
     for (const wave of variation.waves) {
       const ids: string[] = [];
@@ -103,7 +115,13 @@ export function generateStage(area: AreaDef, rng: Rng): Stage {
       for (let i = 0; i < ids.length; i += MAX_ROOM_ENEMIES) {
         const enemies = ids.slice(i, i + MAX_ROOM_ENEMIES);
         const roomBroods = broods?.filter((b) => enemies.includes(b.sourceEnemyId));
-        rooms.push({ enemies, broods: roomBroods?.length ? roomBroods : undefined, boxes: 0 });
+        rooms.push({
+          enemies,
+          broods: roomBroods?.length ? roomBroods : undefined,
+          boxes: 0,
+          // Split rooms share their source wave's authentic room id.
+          authRoom: floorLayoutKey !== undefined ? wave.room : undefined,
+        });
       }
     }
   }
@@ -113,7 +131,7 @@ export function generateStage(area: AreaDef, rng: Rng): Stage {
   }
   rooms[rooms.length - 1].boxes = FINAL_ROOM_BOXES;
 
-  return { rooms, files };
+  return { rooms, files, ...(stageLayoutKey !== undefined ? { layoutKey: stageLayoutKey } : {}) };
 }
 
 /**

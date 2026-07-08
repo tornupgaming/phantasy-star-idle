@@ -29,6 +29,13 @@ export interface RoomDef {
   broods?: RoomBroodDef[];
   /** Number of item boxes in the room. */
   boxes: number;
+  /**
+   * Authentic room id this generated room was derived from (SpawnWave.room);
+   * split rooms share their wave's id. Derived provenance for the minimap —
+   * never simulated with, never persisted. Absent when the floor has no
+   * extracted geometry (boss arenas).
+   */
+  authRoom?: number;
 }
 
 /** Destination-list group; boss arenas join their authentic zone. */

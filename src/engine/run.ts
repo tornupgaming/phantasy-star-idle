@@ -203,6 +203,14 @@ export interface RunResult {
   totalRooms: number;
   /** The generated stage's per-room plan (enemy/box counts, for the room strip UI). */
   roomPlan: { enemies: number; boxes: number }[];
+  /**
+   * Minimap provenance (room-geometry-data spec), both fixed at stage
+   * generation before the battle simulates — always the full plan, never
+   * truncated on defeat, so the stage UI may read them (no outcome leak).
+   */
+  layoutKey?: string;
+  /** Authentic room id per planned room (null where no geometry exists). */
+  authRoomPlan: (number | null)[];
 }
 
 export function simulateRun(input: RunInput): RunResult {
@@ -646,6 +654,8 @@ export function simulateRun(input: RunInput): RunResult {
     roomsCleared,
     totalRooms: stage.rooms.length,
     roomPlan,
+    layoutKey: stage.layoutKey,
+    authRoomPlan: stage.rooms.map((r) => r.authRoom ?? null),
   };
 }
 

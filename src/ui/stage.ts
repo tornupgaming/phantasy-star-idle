@@ -16,7 +16,10 @@ import type { Game } from "../engine/game";
 import type { RunEvent } from "../engine/run";
 import { effectiveStats } from "../engine/character";
 import { CONSUMABLES_LIST } from "../engine/consumables";
-import { createScene, applyEvent, progressFill, type Scene } from "./scene";
+import { getArea } from "../engine/content";
+import { layoutRooms, type GeometryRoom } from "../engine/data/room-geometry";
+import { createScene, applyEvent, type Scene } from "./scene";
+import { minimapCells } from "./minimap";
 import { enemyArtUrl } from "./enemy-art";
 import damageFontUrl from "./assets/damage-font.png";
 import damageFont from "./assets/damage-font.json";
@@ -67,6 +70,10 @@ export class BattleStage {
   private raf = 0;
   private running = false;
   private logAtBottom = true;
+  // Minimap plan, fixed for the whole run at mount (plan-level, outcome-blind):
+  // the rolled layout's room geometry and each planned room's authentic room id.
+  private geometry: GeometryRoom[] | null = null;
+  private authRoomPlan: (number | null)[] = [];
 
   constructor(
     private root: HTMLElement,
@@ -74,6 +81,12 @@ export class BattleStage {
   ) {
     const input = game.state.activeRun!.input;
     this.scene = createScene(effectiveStats(input.character).hp, input.supply);
+    const prog = game.runProgress();
+    if (prog?.layoutKey) {
+      const area = getArea(input.areaId);
+      this.geometry = layoutRooms(area.episode, area.floor, prog.layoutKey);
+      this.authRoomPlan = prog.authRoomPlan;
+    }
   }
 
   private q<T extends HTMLElement>(sel: string): T {
@@ -124,9 +137,6 @@ export class BattleStage {
       this.played = revealed.length;
     }
 
-    // Room-based, outcome-blind fill: a doomed run's bar just stops partway.
-    const fill = progressFill(this.scene, prog.totalRooms);
-    this.q(".stage-progress").style.width = `${fill * 100}%`;
     this.q(".stage-pct").textContent =
       `Room ${Math.max(0, this.scene.roomIndex + 1)}/${prog.totalRooms}`;
     this.updateLootTally();
@@ -144,7 +154,7 @@ export class BattleStage {
     switch (e.kind) {
       case "room":
         this.rebuildField();
-        this.updateRooms();
+        this.updateMinimap();
         this.updatePlayer();
         break;
       case "spawn":
@@ -193,7 +203,7 @@ export class BattleStage {
         break;
       case "complete":
       case "eject":
-        this.updateRooms();
+        this.updateMinimap();
         this.updateStatus();
         break;
     }
@@ -203,7 +213,7 @@ export class BattleStage {
 
   private repaintAll(): void {
     this.rebuildField();
-    this.updateRooms();
+    this.updateMinimap();
     this.updatePlayer();
     this.updateStatus();
     // Re-mark dead enemies and kill counter after a silent fold.
@@ -270,25 +280,42 @@ export class BattleStage {
     this.q(".stage-supply").textContent = parts.length ? parts.join(" · ") : "no consumables left";
   }
 
-  private updateRooms(): void {
-    // Always the full planned grid; cells reveal from folded room events only.
-    // RunProgress.roomPlan is truncated on defeat (an outcome oracle) — never read it here.
-    const totalRooms = this.game.runProgress()?.totalRooms ?? this.scene.totalRooms;
+  private updateMinimap(): void {
+    // Spatial floor map (battle-minimap spec): every geometry room renders
+    // from the first frame; states come from the folded scene only (the
+    // plan-level inputs were fixed at mount — no outcome oracle to read).
+    const host = this.q(".stage-minimap");
     const s = this.scene;
     const done = s.phase === "complete" || s.phase === "ejected";
-    const cells: string[] = [];
-    for (let i = 0; i < totalRooms; i++) {
-      const room = s.rooms[i];
-      const cls =
-        i < s.roomIndex || (done && s.phase === "complete")
-          ? "cleared"
-          : i === s.roomIndex && !done
-            ? "current"
-            : "";
-      const detail = room ? `${room.enemies}👾 ${room.boxes}📦` : "?";
-      cells.push(`<div class="room-cell ${cls}">R${i + 1}<br><span class="muted">${detail}</span></div>`);
+    if (!this.geometry) {
+      // Boss arenas have no extracted geometry — the numeric readout carries.
+      host.innerHTML = "";
+      if (done) this.updateStatus();
+      return;
     }
-    this.q(".stage-rooms").innerHTML = cells.join("");
+
+    // Aspect-fit the floor's x/z extents into the available box (z up).
+    const PAD = 12;
+    const MAX_H = 150;
+    const xs = this.geometry.map((r) => r.x);
+    const zs = this.geometry.map((r) => r.z);
+    const minX = Math.min(...xs);
+    const maxZ = Math.max(...zs);
+    const dx = Math.max(1, Math.max(...xs) - minX);
+    const dz = Math.max(1, maxZ - Math.min(...zs));
+    const hostW = Math.max(120, host.clientWidth || 600);
+    const scale = Math.min((hostW - PAD * 2) / dx, (MAX_H - PAD * 2) / dz);
+    host.style.height = `${Math.ceil(dz * scale + PAD * 2)}px`;
+    const xPad = (hostW - dx * scale) / 2; // center a narrow floor in the box
+
+    const cells = minimapCells(this.geometry, this.authRoomPlan, s);
+    host.innerHTML = cells
+      .map((c) => {
+        const left = (c.x - minX) * scale + xPad;
+        const top = (maxZ - c.z) * scale + PAD;
+        return `<div class="minimap-room ${c.state}" style="left:${left.toFixed(1)}px;top:${top.toFixed(1)}px"></div>`;
+      })
+      .join("");
     if (done) this.updateStatus();
   }
 
