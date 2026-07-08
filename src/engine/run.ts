@@ -78,6 +78,17 @@ const MONEST_INITIAL_BROOD_MAX = 2;
 const MONEST_INITIAL_BEFORE_MIN = 1;
 const MONEST_INITIAL_BEFORE_MAX = 1;
 
+/**
+ * Pan Arms splits into its halves after completing this many attacks —
+ * authentic trigger ("after attacking twice"); hit, miss, and sidestepped
+ * attacks all count (PSO counts attack animations, not landed hits). The
+ * split is not a kill: no XP, no drop, no kill event for the fused form.
+ */
+const PAN_ARMS_SPLIT_AFTER_ATTACKS = 2;
+const PAN_ARMS_ID = "pan-arms";
+/** The halves spawn at full HP and both engage immediately (see CONTEXT.md). */
+const PAN_ARMS_HALF_IDS = ["hidoom", "migium"] as const;
+
 interface ActiveBrood {
   sourceIndex: number;
   childEnemyId: string;
@@ -103,6 +114,7 @@ export type RunOutcome = "complete" | "ejected";
 export type RunEventKind =
   | "room"
   | "spawn"
+  | "split"
   | "attack"
   | "sidestep"
   | "kill"
@@ -131,6 +143,13 @@ export interface SpawnEventData {
   id: string;
   name: string;
   maxHp: number;
+}
+
+export interface SplitEventData {
+  /** The fused enemy's roster index; it leaves the field without a kill. */
+  enemyIndex: number;
+  /** The halves pushed onto the roster (new indices), in spawn order. */
+  halves: SpawnEventData[];
 }
 
 export interface AttackEventData {
@@ -174,6 +193,7 @@ export interface RunEvent {
   // Kind-specific payloads (present on the matching kind only).
   room?: RoomEventData;
   spawn?: SpawnEventData;
+  split?: SplitEventData;
   attack?: AttackEventData;
   sidestep?: SidestepEventData;
   kill?: KillEventData;
@@ -268,7 +288,7 @@ export function simulateRun(input: RunInput): RunResult {
   const log = (
     kind: RunEventKind,
     text: string,
-    data?: Pick<RunEvent, "room" | "spawn" | "attack" | "sidestep" | "kill" | "hp" | "loot">,
+    data?: Pick<RunEvent, "room" | "spawn" | "split" | "attack" | "sidestep" | "kill" | "hp" | "loot">,
   ) => events.push({ t, kind, text, ...data });
 
   const collectItem = (item: Item, source: string, sourceKind: "enemy" | "box") => {
@@ -461,6 +481,10 @@ export function simulateRun(input: RunInput): RunResult {
     const enemyNext = enemies.map((e) => t + enemyInterval(e.def.enemyType));
     charAttackIndex = 0;
 
+    // Attacks each enemy has completed (hit, miss, or sidestepped) — the Pan
+    // Arms split trigger counts these.
+    const attacksMade = enemies.map(() => 0);
+
     // Trickle aggro: the first ENGAGED_ENEMIES are active; the rest activate
     // (clock started from the current time) as engaged enemies fall.
     const engaged = enemies.map((_, i) => i < ENGAGED_ENEMIES);
@@ -473,6 +497,29 @@ export function simulateRun(input: RunInput): RunResult {
         engaged[i] = true;
         enemyNext[i] = t + enemyInterval(enemies[i].def.enemyType);
       }
+    };
+
+    // Pan Arms split: the fused form leaves the field (no kill — no XP, no
+    // drop) and its halves join the roster at full HP, both engaged at once (a
+    // bounded exception to trickle aggro; engageNext stays quiet until the
+    // engaged count falls back below the cap).
+    const splitPanArms = (index: number) => {
+      const fused = enemies[index];
+      fused.hp = 0;
+      const halves: SpawnEventData[] = [];
+      for (const id of PAN_ARMS_HALF_IDS) {
+        const half = instantiateEnemy(getEnemyDef(id), input.difficultyId);
+        const enemyIndex = enemies.length;
+        enemies.push(half);
+        roomEnemyIds.push(id);
+        enemyNext.push(t + enemyInterval(half.def.enemyType));
+        engaged.push(true);
+        attacksMade.push(0);
+        halves.push({ enemyIndex, id, name: half.name, maxHp: half.maxHp });
+      }
+      log("split", `${fused.name} splits into ${halves.map((h) => h.name).join(" and ")}!`, {
+        split: { enemyIndex: index, halves },
+      });
     };
 
     let steps = 0;
@@ -510,6 +557,7 @@ export function simulateRun(input: RunInput): RunResult {
         roomEnemyIds.push(brood.childEnemyId);
         enemyNext.push(t + enemyInterval(enemy.def.enemyType));
         engaged.push(false);
+        attacksMade.push(0);
         brood.spawned++;
         brood.nextSpawn += MONEST_BROOD_SPAWN_MS;
         engageNext();
@@ -592,38 +640,42 @@ export function simulateRun(input: RunInput): RunResult {
           log("sidestep", `${e.name} lunges — you sidestep.`, {
             sidestep: { actor },
           });
-          enemyNext[actor] += enemyInterval(e.def.enemyType);
-          continue;
-        }
-        const out = resolveAttack(e.combatant, charCombatant, "normal", 0, rng);
-        if (!out.hit) {
-          log("attack", `${e.name} attacks — miss.`, {
-            attack: { actor, targetIndex: null, hit: false, crit: false, damage: 0, hpAfter: charHp },
-          });
         } else {
-          charHp -= out.damage;
-          const crit = out.crit ? " CRIT" : "";
-          log(
-            "attack",
-            `${e.name} attacks —${crit} ${out.damage} dmg (your HP ${Math.max(0, charHp)}/${maxHp}).`,
-            {
-              attack: {
-                actor,
-                targetIndex: null,
-                hit: true,
-                crit: out.crit,
-                damage: out.damage,
-                hpAfter: Math.max(0, charHp),
+          const out = resolveAttack(e.combatant, charCombatant, "normal", 0, rng);
+          if (!out.hit) {
+            log("attack", `${e.name} attacks — miss.`, {
+              attack: { actor, targetIndex: null, hit: false, crit: false, damage: 0, hpAfter: charHp },
+            });
+          } else {
+            charHp -= out.damage;
+            const crit = out.crit ? " CRIT" : "";
+            log(
+              "attack",
+              `${e.name} attacks —${crit} ${out.damage} dmg (your HP ${Math.max(0, charHp)}/${maxHp}).`,
+              {
+                attack: {
+                  actor,
+                  targetIndex: null,
+                  hit: true,
+                  crit: out.crit,
+                  damage: out.damage,
+                  hpAfter: Math.max(0, charHp),
+                },
               },
-            },
-          );
-          if (!onCharacterDamaged()) {
-            outcome = "ejected";
-            log("eject", `${input.character.name} fell with no revive left — ejected, keeping all loot.`);
-            break roomLoop;
+            );
+            if (!onCharacterDamaged()) {
+              outcome = "ejected";
+              log("eject", `${input.character.name} fell with no revive left — ejected, keeping all loot.`);
+              break roomLoop;
+            }
           }
         }
         enemyNext[actor] += enemyInterval(e.def.enemyType);
+        // Every completed attack counts toward the split trigger, landed or not.
+        attacksMade[actor]++;
+        if (e.def.id === PAN_ARMS_ID && attacksMade[actor] === PAN_ARMS_SPLIT_AFTER_ATTACKS) {
+          splitPanArms(actor);
+        }
       }
     }
 

@@ -109,6 +109,9 @@
 .stage-ticker.l-revive {
   color: #7fe0c0;
 }
+.stage-ticker.l-split {
+  color: var(--color-gold);
+}
 .stage-ticker.l-eject {
   color: var(--color-bad);
   font-weight: 700;
@@ -147,6 +150,9 @@
 }
 .log .l-heal {
   color: #7fe0c0;
+}
+.log .l-split {
+  color: var(--color-gold);
 }
 .log .l-eject {
   color: var(--color-bad);

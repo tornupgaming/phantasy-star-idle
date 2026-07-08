@@ -18,6 +18,8 @@ export interface SceneEnemy {
   hp: number;
   maxHp: number;
   dead: boolean;
+  /** Left the field by splitting (Pan Arms) — render nothing, not a corpse. */
+  split?: boolean;
 }
 
 /** What a revealed room's grid cell shows; grows with spawns as they appear. */
@@ -84,6 +86,28 @@ export function applyEvent(scene: Scene, e: RunEvent): void {
         scene.phase = "fighting";
         const room = scene.rooms[scene.roomIndex];
         if (room) room.enemies += 1; // revealed roster grows with the spawn
+      }
+      break;
+    case "split":
+      if (e.split) {
+        const fused = scene.enemies[e.split.enemyIndex];
+        if (fused) {
+          fused.dead = true;
+          fused.split = true;
+          fused.hp = 0;
+        }
+        for (const h of e.split.halves) {
+          scene.enemies[h.enemyIndex] = {
+            id: h.id,
+            name: h.name,
+            hp: h.maxHp,
+            maxHp: h.maxHp,
+            dead: false,
+          };
+        }
+        const room = scene.rooms[scene.roomIndex];
+        // Net change to the revealed roster: the fused form out, halves in.
+        if (room) room.enemies += e.split.halves.length - 1;
       }
       break;
     case "attack":

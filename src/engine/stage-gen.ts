@@ -49,6 +49,15 @@ export const SKIPPED_SPAWN_TYPES: ReadonlySet<string> = new Set([
   "PIG_RAY",
 ]);
 
+/**
+ * Room-capacity slots an enemy occupies. Pan Arms counts as 2: the fused
+ * form splits mid-fight into two halves (Hidoom + Migium), so its peak
+ * concurrent presence is 2 even though it spawns as one enemy.
+ */
+function slotCost(enemyDefId: string): number {
+  return enemyDefId === "pan-arms" ? 2 : 1;
+}
+
 /** A room gets one box every BOX_EVERY rooms; the final room gets a 2-box cache. */
 const BOX_EVERY = 3;
 const FINAL_ROOM_BOXES = 2;
@@ -96,8 +105,15 @@ export function generateStage(area: AreaDef, rng: Rng): Stage {
         });
       }
 
+      // Authentic map data pre-allocates a Pan Arms' two halves (HIDOOM,
+      // MIGIUM) alongside every PAN_ARMS entry; the halves only exist after
+      // the mid-fight split (run.ts), so generation collapses each trio into
+      // the single fused enemy.
+      const panArmsInWave = (wave.enemies.PAN_ARMS ?? 0) > 0;
+
       for (const [statsType, count] of Object.entries(wave.enemies)) {
         if (mothmantsAreBrood && statsType === "MOTHMANT") continue;
+        if (panArmsInWave && (statsType === "HIDOOM" || statsType === "MIGIUM")) continue;
         if (SKIPPED_SPAWN_TYPES.has(statsType)) continue;
         const def = enemyDefForStatsType(statsType);
         if (!def) {
@@ -112,8 +128,24 @@ export function generateStage(area: AreaDef, rng: Rng): Stage {
           ids.push(isRare ? rareDef.id : def.id);
         }
       }
-      for (let i = 0; i < ids.length; i += MAX_ROOM_ENEMIES) {
-        const enemies = ids.slice(i, i + MAX_ROOM_ENEMIES);
+      // Chunk the wave into rooms of at most MAX_ROOM_ENEMIES slots. A Pan
+      // Arms costs 2 slots — its peak concurrent presence once it splits —
+      // so the cap keeps meaning "at most this many enemies alive at once".
+      const chunks: string[][] = [];
+      let chunk: string[] = [];
+      let load = 0;
+      for (const id of ids) {
+        const cost = slotCost(id);
+        if (load + cost > MAX_ROOM_ENEMIES && chunk.length > 0) {
+          chunks.push(chunk);
+          chunk = [];
+          load = 0;
+        }
+        chunk.push(id);
+        load += cost;
+      }
+      if (chunk.length > 0) chunks.push(chunk);
+      for (const enemies of chunks) {
         const roomBroods = broods?.filter((b) => enemies.includes(b.sourceEnemyId));
         rooms.push({
           enemies,

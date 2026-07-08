@@ -160,6 +160,13 @@ export class BattleStage {
       case "spawn":
         this.appendSpawnedEnemy(e.spawn?.enemyIndex ?? -1);
         break;
+      case "split": {
+        // The fused Pan Arms leaves the field (no corpse); its halves appear.
+        const el = this.enemyEl(e.split?.enemyIndex ?? -1);
+        if (el) el.remove();
+        for (const h of e.split?.halves ?? []) this.appendSpawnedEnemy(h.enemyIndex);
+        break;
+      }
       case "attack": {
         const a = e.attack;
         if (!a) break;
@@ -228,7 +235,9 @@ export class BattleStage {
       }</div>`;
       return;
     }
-    field.innerHTML = this.scene.enemies.map((en, i) => this.enemyHtml(en, i)).join("");
+    field.innerHTML = this.scene.enemies
+      .map((en, i) => (en.split ? "" : this.enemyHtml(en, i)))
+      .join("");
   }
 
   private enemyHtml(en: Scene["enemies"][number], i: number): string {
