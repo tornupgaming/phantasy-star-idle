@@ -23,6 +23,7 @@ import { generateStage } from "./stage-gen";
 import { instantiateEnemy, isDead, type EnemyInstance } from "./enemies";
 import { engageDelayMs, nextComboDelay, enemyInterval } from "./pacing";
 import { weaponAvoidancePct } from "./data/avoidance";
+import { XP_RATE } from "./progression";
 import { rigForClass } from "./classes";
 import { attackSpeedBoost } from "./character";
 import { weaponKindOf } from "./items";
@@ -554,8 +555,9 @@ export function simulateRun(input: RunInput): RunResult {
               },
             );
             if (isDead(target)) {
-              // Authentic per-difficulty award from the stat row — no multiplier.
-              const xp = target.stats.exp;
+              // Authentic per-difficulty stat-row EXP scaled by the global
+              // idle-pacing rate (enemy-stat-data spec).
+              const xp = Math.floor(target.stats.exp * XP_RATE);
               xpGained += xp;
               log("kill", `${target.name} defeated. (+${xp} XP)`, {
                 kill: { enemyIndex: targetIndex, xp },

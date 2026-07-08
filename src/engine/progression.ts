@@ -75,6 +75,14 @@ export function statsAtLevel(classId: string, level: number): Stats {
   });
 }
 
+/**
+ * Global idle-pacing knob: kill XP is the authentic dataset EXP scaled by
+ * this rate (floored to an integer). The stat rows themselves stay authentic;
+ * this is the XP analogue of the difficulty meseta multiplier — PSO's kill
+ * XP is tuned for hands-on sessions and levels too slowly at idle cadence.
+ */
+export const XP_RATE = 2;
+
 /** Cumulative XP required to be the given level (level 1 → 0). */
 export function xpForLevel(classId: string, level: number): number {
   const def = classById(classId);

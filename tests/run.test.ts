@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { emptyEquipment, equip, type Character } from "../src/engine/character";
-import { sectionIdFromName } from "../src/engine/progression";
-import { GEAR, startingCharacter } from "../src/engine/content";
+import { XP_RATE, sectionIdFromName } from "../src/engine/progression";
+import { GEAR, getEnemyDef, startingCharacter } from "../src/engine/content";
+import { instantiateEnemy } from "../src/engine/enemies";
 import { DEFAULT_FILTER } from "../src/engine/loot";
 import { simulateRun, revealUpTo, isRunFinished, type RunInput } from "../src/engine/run";
 import type { Weapon, Frame, Barrier } from "../src/engine/items";
@@ -56,6 +57,27 @@ describe("room progression", () => {
     expect(rooms).toBe(result.totalRooms);
   });
 
+  it("kill XP is the dataset EXP scaled by the global XP rate", () => {
+    const result = simulateRun(baseInput());
+    // Reconstruct each kill's enemy from the room/spawn roster and check its
+    // award against the authentic stat row × XP_RATE.
+    let roster: string[] = [];
+    let checked = 0;
+    for (const e of result.events) {
+      if (e.kind === "room" && e.room) roster = e.room.enemies.map((en) => en.id);
+      if (e.kind === "spawn" && e.spawn) roster[e.spawn.enemyIndex] = e.spawn.id;
+      if (e.kind === "kill" && e.kill) {
+        const inst = instantiateEnemy(getEnemyDef(roster[e.kill.enemyIndex]), "normal");
+        expect(e.kill.xp).toBe(Math.floor(inst.stats.exp * XP_RATE));
+        checked++;
+      }
+    }
+    expect(checked).toBeGreaterThan(0);
+    expect(result.xpGained).toBe(
+      result.events.filter((e) => e.kill).reduce((n, e) => n + e.kill!.xp, 0),
+    );
+  });
+
   it("boxes open only after a room's enemies are cleared", () => {
     const result = simulateRun(baseInput());
     // For each box event, the most recent room's kills all precede it (no living enemy).
@@ -102,7 +124,8 @@ describe("Monest brood spawns", () => {
     const roomSlice = result.events.slice(roomStart, nextRoom < 0 ? undefined : nextRoom);
     const spawnedIndices = new Set(roomSlice.filter((e) => e.kind === "spawn").map((e) => e.spawn!.enemyIndex));
     const spawnedKill = roomSlice.find((e) => e.kind === "kill" && spawnedIndices.has(e.kill!.enemyIndex));
-    expect(spawnedKill?.kill!.xp).toBe(1);
+    // Mothmant's authentic Normal EXP is 1, scaled by the global XP rate.
+    expect(spawnedKill?.kill!.xp).toBe(Math.floor(1 * XP_RATE));
     expect(result.xpGained).toBeGreaterThan(0);
   });
 });
