@@ -358,6 +358,16 @@ export class BattleStage {
   private float(host: HTMLElement, text: string, cls: string): void {
     const span = document.createElement("span");
     span.className = cls;
+    // Multi-hit swings land several floats on one host within the animation's
+    // lifetime; fan them out (alternating sides, stepping down) or they pile
+    // up illegibly at the shared anchor. The rise animation owns `transform`,
+    // so the stagger goes through left/top instead.
+    const active = host.querySelectorAll(".float-dmg, .float-miss, .float-sidestep").length;
+    if (active > 0) {
+      const dx = (active % 2 ? -1 : 1) * Math.min(Math.ceil(active / 2) * 16, 48);
+      span.style.left = `calc(50% + ${dx}px)`;
+      span.style.top = `${4 + Math.min(active, 4) * 10}px`;
+    }
     if (damageFontReady) {
       const tint: FloatTint = cls.includes("miss") ? "red" : cls.includes("crit") ? "gold" : "white";
       const scale = cls.includes("crit") ? 3 : 2;
