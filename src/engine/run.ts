@@ -26,6 +26,7 @@ import { weaponAvoidancePct } from "./data/avoidance";
 import { rigForClass } from "./classes";
 import { attackSpeedBoost } from "./character";
 import { weaponKindOf } from "./items";
+import { attackProfileForWeaponKind } from "./data/attack-profiles";
 import type { Item } from "./items";
 import { sellPrice } from "./pricing";
 import { filterItem, type LootFilter } from "./loot";
@@ -228,6 +229,9 @@ export function simulateRun(input: RunInput): RunResult {
   // weapons fall back through their coarse archetype; barehanded = fists.
   const weapon = input.character.equipment.weapon;
   const weaponKind = weaponKindOf(weapon);
+  // Attack profile (weapon-attack-profiles spec): hits per combo step and
+  // sweep width, fixed for the run by the dispatched weapon's kind.
+  const attackProfile = attackProfileForWeaponKind(weaponKind);
   const rig = rigForClass(input.character.classId);
   // Movement layer (weapon-avoidance spec): chance to sidestep each incoming
   // attack, fixed for the run by the dispatched weapon's kind.
@@ -507,54 +511,69 @@ export function simulateRun(input: RunInput): RunResult {
       }
 
       if (actor === "char") {
-        const targetIndex = enemies.findIndex((e) => !isDead(e));
-        if (targetIndex < 0) break;
-        const target = enemies[targetIndex];
+        const primaryIndex = enemies.findIndex((e) => !isDead(e));
+        if (primaryIndex < 0) break;
         const type = pattern.typeAt(charAttackIndex);
         const step = pattern.comboStepAt(charAttackIndex);
-        const out = resolveAttack(charCombatant, target.combatant, type, step, rng);
-        let killed = false;
-        if (!out.hit) {
-          log("attack", `${input.character.name} ${type}-attacks ${target.name} — miss.`, {
-            attack: { actor: "char", targetIndex, hit: false, crit: false, damage: 0, hpAfter: target.hp },
-          });
-          charAttackIndex++; // pattern/combo still advances on a miss
-        } else {
-          target.hp -= out.damage;
-          const crit = out.crit ? " CRIT" : "";
-          log(
-            "attack",
-            `${input.character.name} ${type}-attacks ${target.name} —${crit} ${out.damage} dmg (HP ${Math.max(0, target.hp)}/${target.maxHp}).`,
-            {
-              attack: {
-                actor: "char",
-                targetIndex,
-                hit: true,
-                crit: out.crit,
-                damage: out.damage,
-                hpAfter: Math.max(0, target.hp),
+        // Weapon attack profile fan-out: the swing strikes the first
+        // maxTargets living enemies in roster order (the engaged enemy leads;
+        // queued targets are closing in and within sweep reach), performing
+        // this step's hit count against each. The target list is fixed at
+        // swing start — no mid-swing retargeting.
+        const hits = attackProfile.hitsPerStep[step];
+        const targetIndexes: number[] = [];
+        for (let i = 0; i < enemies.length && targetIndexes.length < attackProfile.maxTargets; i++) {
+          if (!isDead(enemies[i])) targetIndexes.push(i);
+        }
+        let primaryKilled = false;
+        for (const targetIndex of targetIndexes) {
+          const target = enemies[targetIndex];
+          for (let h = 0; h < hits; h++) {
+            if (isDead(target)) break; // no overkill hits on a corpse
+            const out = resolveAttack(charCombatant, target.combatant, type, step, rng);
+            if (!out.hit) {
+              log("attack", `${input.character.name} ${type}-attacks ${target.name} — miss.`, {
+                attack: { actor: "char", targetIndex, hit: false, crit: false, damage: 0, hpAfter: target.hp },
+              });
+              continue;
+            }
+            target.hp -= out.damage;
+            const crit = out.crit ? " CRIT" : "";
+            log(
+              "attack",
+              `${input.character.name} ${type}-attacks ${target.name} —${crit} ${out.damage} dmg (HP ${Math.max(0, target.hp)}/${target.maxHp}).`,
+              {
+                attack: {
+                  actor: "char",
+                  targetIndex,
+                  hit: true,
+                  crit: out.crit,
+                  damage: out.damage,
+                  hpAfter: Math.max(0, target.hp),
+                },
               },
-            },
-          );
-          if (isDead(target)) {
-            killed = true;
-            // Authentic per-difficulty award from the stat row — no multiplier.
-            const xp = target.stats.exp;
-            xpGained += xp;
-            log("kill", `${target.name} defeated. (+${xp} XP)`, {
-              kill: { enemyIndex: targetIndex, xp },
-            });
-            applyEnemyDrop(target.def.statsType, target.def.enemyType === "boss" ? bossAreaNorm : baseAreaNorm, target.name);
-            engageNext(); // a queued enemy closes in to replace the fallen one
-            charAttackIndex = 0; // combo resets on a new target
-          } else {
-            charAttackIndex++;
+            );
+            if (isDead(target)) {
+              // Authentic per-difficulty award from the stat row — no multiplier.
+              const xp = target.stats.exp;
+              xpGained += xp;
+              log("kill", `${target.name} defeated. (+${xp} XP)`, {
+                kill: { enemyIndex: targetIndex, xp },
+              });
+              applyEnemyDrop(target.def.statsType, target.def.enemyType === "boss" ? bossAreaNorm : baseAreaNorm, target.name);
+              engageNext(); // a queued enemy closes in to replace the fallen one
+              if (targetIndex === primaryIndex) primaryKilled = true;
+            }
           }
         }
+        // The combo advances once per swing; it resets only when the primary
+        // target fell (the character repositions to a new engaged enemy —
+        // sweep kills of closing-in targets don't interrupt the burst).
+        charAttackIndex = primaryKilled ? 0 : charAttackIndex + 1;
         // Burst rhythm: chained steps bill their Combo duration; a finished
-        // burst or a kill bills the Full duration (the animation's recovery
-        // tail) plus the repositioning pause to the next enemy.
-        charNext += nextComboDelay(rig, weaponKind, type, step, killed, speedBoost);
+        // burst or a primary kill bills the Full duration (the animation's
+        // recovery tail) plus the repositioning pause to the next enemy.
+        charNext += nextComboDelay(rig, weaponKind, type, step, primaryKilled, speedBoost);
       } else {
         const e = enemies[actor];
         // Sidestep pre-roll (weapon-avoidance spec): the virtual player's
