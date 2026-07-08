@@ -11,7 +11,16 @@ import { instantiateEnemy } from "../src/engine/enemies";
 import { areaRoster } from "../src/engine/stage-gen";
 
 // No art has been ingested for these yet — they render as the placeholder box.
-const KNOWN_MISSING = new Set(["dragon", "al-rappy", "nar-lily", "hidoom", "migium"]);
+const KNOWN_MISSING = new Set([
+  "dragon",
+  "de-rol-le",
+  "vol-opt",
+  "dark-falz",
+  "al-rappy",
+  "nar-lily",
+  "hidoom",
+  "migium",
+]);
 
 describe("enemy art", () => {
   it("covers every area roster entry on all four difficulties", () => {

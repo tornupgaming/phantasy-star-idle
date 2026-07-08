@@ -31,16 +31,27 @@ export interface RoomDef {
   boxes: number;
 }
 
+/** Destination-list group; boss arenas join their authentic zone. */
+export type ZoneId = "Forest" | "Caves" | "Mines" | "Ruins";
+
 export interface AreaDef {
   id: string;
   name: string;
+  /** Zone group heading in the destination list. */
+  zone: ZoneId;
   /** Suggested character power level, shown in the prep view. */
   recommendedAtp: number;
   /** Episode + floor whose authentic spawn layouts this area rolls. */
   episode: Episode;
   floor: number;
-  /** Optional boss floor appended after the main floor (e.g. the Dragon). */
+  /**
+   * Optional boss floor appended after the main floor. Legacy-only: kept for
+   * the hidden `mines` compatibility def (Mine 1 + Dragon) so persisted runs
+   * replay identically; catalog boss arenas are standalone areas instead.
+   */
   bossFloor?: number;
+  /** Boss arena: the floor's layout yields a single boss enemy. */
+  boss?: true;
 }
 
 export type DifficultyId = "normal" | "hard" | "vhard" | "ultimate";
@@ -58,6 +69,9 @@ export const AREA_NORM_BY_FLOOR: Record<number, number> = {
   9: 8, // Ruins 2
   10: 9, // Ruins 3 / final boss rule
   11: 2, // Dragon boss floor → Cave 1
+  12: 5, // De Rol Le boss floor → Mine 1
+  13: 7, // Vol Opt boss floor → Ruins 1
+  14: 9, // Dark Falz (final boss) → Ruins 3
 };
 
 export function areaNormForFloor(floor: number): number {

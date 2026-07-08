@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { getArea } from "../src/engine/content";
-import { generateStage } from "../src/engine/stage-gen";
+import { AREA_LIST, getArea, getEnemyDef } from "../src/engine/content";
+import { SKIPPED_SPAWN_TYPES, generateStage } from "../src/engine/stage-gen";
 import { createRng } from "../src/engine/rng";
 
 function forestStage(seed = 42) {
@@ -41,5 +41,37 @@ describe("stage generation", () => {
 
   it("remains deterministic for a fixed seed", () => {
     expect(forestStage(7)).toEqual(forestStage(7));
+  });
+
+  it("generates every catalog area without error, with no skip-listed types", () => {
+    for (const area of AREA_LIST) {
+      for (let seed = 1; seed <= 10; seed++) {
+        const stage = generateStage(area, createRng("stage-gen-coverage", seed));
+        expect(stage.rooms.length, area.id).toBeGreaterThan(0);
+        for (const room of stage.rooms) {
+          for (const id of room.enemies) {
+            expect(SKIPPED_SPAWN_TYPES.has(getEnemyDef(id).statsType), `${area.id}: ${id}`).toBe(
+              false,
+            );
+          }
+        }
+      }
+    }
+  });
+
+  it("boss arenas generate a single room with exactly the boss enemy", () => {
+    const expected: Record<string, string> = {
+      dragon: "dragon",
+      "de-rol-le": "de-rol-le",
+      "vol-opt": "vol-opt",
+      "dark-falz": "dark-falz",
+    };
+    for (const [areaId, bossId] of Object.entries(expected)) {
+      for (let seed = 1; seed <= 5; seed++) {
+        const stage = generateStage(getArea(areaId), createRng("boss-stage", seed));
+        const enemies = stage.rooms.flatMap((r) => r.enemies);
+        expect(enemies, areaId).toEqual([bossId]);
+      }
+    }
   });
 });

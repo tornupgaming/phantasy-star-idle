@@ -274,6 +274,50 @@ describe("keyboard menu navigation (ui-navigation)", () => {
     expect(game.state.activeRun).not.toBeNull();
     expect(root.textContent).toContain("Run in progress");
   });
+
+  it("destination menu is zone-grouped, skips headings, and gates episodes", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    mount(root, game);
+    click(root, '[data-action="select-char"]'); // lands on the guild pane
+
+    // Zone-grouped destination list in the detail panel: 14 areas, 4 headings.
+    const menu = root.querySelector(".hud-detail .pso-menu")!;
+    const rows = menu.querySelectorAll<HTMLElement>(".pso-menu-row");
+    expect(rows).toHaveLength(14);
+    expect([...menu.querySelectorAll("h3")].map((h) => h.textContent)).toEqual([
+      "Forest",
+      "Caves",
+      "Mines",
+      "Ruins",
+    ]);
+    expect(rows[0].dataset.id).toBe("forest-1");
+    expect(rows[0].classList.contains("selected")).toBe(true);
+
+    // Arrow traversal walks rows only — from Forest 2 it lands on the Dragon
+    // boss row, straight past the Caves heading on the next press.
+    key("ArrowRight"); // nav window → destination menu
+    key("ArrowDown");
+    expect(menu.querySelector(".selected")!.getAttribute("data-id")).toBe("forest-2");
+    key("ArrowDown");
+    expect(menu.querySelector(".selected")!.getAttribute("data-id")).toBe("dragon");
+    key("ArrowDown");
+    expect(menu.querySelector(".selected")!.getAttribute("data-id")).toBe("cave-1");
+
+    // Boss rows are marked; Ep2/Ep4 chips are visible but disabled.
+    expect(menu.querySelector('[data-id="dragon"]')!.textContent).toContain("BOSS");
+    expect(root.querySelector<HTMLButtonElement>('[data-action="episode"][data-id="1"]')!.disabled).toBe(false);
+    expect(root.querySelector<HTMLButtonElement>('[data-action="episode"][data-id="2"]')!.disabled).toBe(true);
+    expect(root.querySelector<HTMLButtonElement>('[data-action="episode"][data-id="4"]')!.disabled).toBe(true);
+
+    // Dispatching a newly selectable area works end-to-end.
+    key("ArrowUp");
+    key("ArrowUp"); // cave-1 → dragon → forest-2
+    expect(menu.querySelector(".selected")!.getAttribute("data-id")).toBe("forest-2");
+    key("Enter"); // Accept Quest with Forest 2 selected
+    expect(game.state.activeRun?.input.areaId).toBe("forest-2");
+  });
 });
 
 /** The 6.2 manual-pass script, automated: v2 save → migration → full hub walk. */

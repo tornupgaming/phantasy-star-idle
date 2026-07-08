@@ -1,17 +1,27 @@
 /**
- * Hunter's Guild quest counter (pso-hud-menus): area/difficulty/pattern
- * selection + Accept Quest, with the loot-filter Counter Settings detail
- * window. Menu idioms only — no form controls in the menu column.
+ * Hunter's Guild quest counter (pso-hud-menus): episode/difficulty/pattern
+ * selection + Accept Quest and the loot-filter Counter Settings window in the
+ * central panel; the zone-grouped destination list in the detail panel. Menu
+ * idioms only — no form controls in the menu column.
  */
 
 import { For } from "solid-js";
 import { AREA_LIST } from "../../../engine/content";
-import { DIFFICULTIES, type DifficultyId } from "../../../engine/areas";
+import { DIFFICULTIES, type DifficultyId, type ZoneId } from "../../../engine/areas";
 import { useUi } from "../../context";
 import { PATTERN_PRESETS, patternMeta, patternName, supplyLine } from "../../ui-shared";
 import { MesetaIcon } from "../atoms/meseta-icon";
 import { WindowBox } from "../molecules/window-box";
 import chrome from "../chrome.module.css";
+
+const ZONES: ZoneId[] = ["Forest", "Caves", "Mines", "Ruins"];
+
+/** Episode picker: Ep1 is live; Ep2/Ep4 await their data extraction. */
+const EPISODES = [
+  { id: "1", label: "Episode 1", enabled: true },
+  { id: "2", label: "Episode 2", enabled: false },
+  { id: "4", label: "Episode 4", enabled: false },
+];
 
 export function GuildPane() {
   const ui = useUi();
@@ -22,19 +32,18 @@ export function GuildPane() {
     <>
       <section class="hud-pane">
         <WindowBox title="Hunter's Guild" trailing="Quest Counter">
-          <h3>Area</h3>
-          <div class={`pso-menu ${chrome.menu}`}>
-            <For each={AREA_LIST}>
-              {(a) => (
+          <h3>Episode</h3>
+          <div class="flex flex-wrap gap-2">
+            <For each={EPISODES}>
+              {(ep) => (
                 <button
-                  class={`pso-menu-row ${chrome.menuRow}`}
-                  classList={{ selected: a.id === ui.areaSel() }}
-                  data-action="area"
-                  data-id={a.id}
-                  onClick={() => ui.setAreaSel(a.id)}
+                  class={`${chrome.chip} ${chrome.chipHex}`}
+                  classList={{ [chrome.chipSelected]: ep.enabled }}
+                  data-action="episode"
+                  data-id={ep.id}
+                  disabled={!ep.enabled}
                 >
-                  <span class="flex-1">{a.name}</span>
-                  <span class="meta">rec. ATP {a.recommendedAtp}</span>
+                  {ep.label}
                 </button>
               )}
             </For>
@@ -79,8 +88,6 @@ export function GuildPane() {
             ▶ Accept Quest
           </button>
         </WindowBox>
-      </section>
-      <aside class="hud-detail">
         <WindowBox title="Counter Settings">
           <h3>Loot filter</h3>
           <div class="flex gap-2 items-center my-1.5 flex-wrap">
@@ -126,6 +133,35 @@ export function GuildPane() {
           </div>
           <h3 class="mt-3">Supply</h3>
           <div class="text-muted">{supplyLine(ui.state.supply)}</div>
+        </WindowBox>
+      </section>
+      <aside class="hud-detail">
+        <WindowBox title="Destination" trailing="Ragol">
+          <div class={`pso-menu ${chrome.menu}`}>
+            <For each={ZONES}>
+              {(zone) => (
+                <>
+                  <h3 class="mt-1.5 first:mt-0">{zone}</h3>
+                  <For each={AREA_LIST.filter((a) => a.zone === zone)}>
+                    {(a) => (
+                      <button
+                        class={`pso-menu-row ${chrome.menuRow}`}
+                        classList={{ selected: a.id === ui.areaSel() }}
+                        data-action="area"
+                        data-id={a.id}
+                        onClick={() => ui.setAreaSel(a.id)}
+                      >
+                        <span class="flex-1">{a.name}</span>
+                        <span class="meta">
+                          {a.boss ? "BOSS · " : ""}rec. ATP {a.recommendedAtp}
+                        </span>
+                      </button>
+                    )}
+                  </For>
+                </>
+              )}
+            </For>
+          </div>
         </WindowBox>
       </aside>
     </>

@@ -25,6 +25,29 @@ export const MAX_ROOM_ENEMIES = 6;
 /** Per-spawn rare-variant chance (vanilla BB server default: 1/512). */
 export const RARE_ENEMY_RATE = 1 / 512;
 
+/**
+ * Stat-less gadget/part spawn types dropped during generation (area-catalog
+ * spec): Dubwitch revivers, Ruins bee emitters and the Dark Gunner control
+ * unit, and the multi-part boss anatomy (De Rol Le segments/mines, Vol Opt
+ * gadget phases, Darvant waves) — boss arenas fight the single boss enemy.
+ * Types not listed here still fail loudly when unrostered.
+ */
+export const SKIPPED_SPAWN_TYPES: ReadonlySet<string> = new Set([
+  "DUBWITCH",
+  "BEE_L",
+  "BEE_R",
+  "DARK_GUNNER_CONTROL",
+  "DARVANT",
+  "DE_ROL_LE_BODY",
+  "DE_ROL_LE_MINE",
+  "VOL_OPT_1",
+  "VOL_OPT_AMP",
+  "VOL_OPT_CORE",
+  "VOL_OPT_MONITOR",
+  "VOL_OPT_PILLAR",
+  "PIG_RAY",
+]);
+
 /** A room gets one box every BOX_EVERY rooms; the final room gets a 2-box cache. */
 const BOX_EVERY = 3;
 const FINAL_ROOM_BOXES = 2;
@@ -63,6 +86,7 @@ export function generateStage(area: AreaDef, rng: Rng): Stage {
 
       for (const [statsType, count] of Object.entries(wave.enemies)) {
         if (mothmantsAreBrood && statsType === "MOTHMANT") continue;
+        if (SKIPPED_SPAWN_TYPES.has(statsType)) continue;
         const def = enemyDefForStatsType(statsType);
         if (!def) {
           throw new Error(
@@ -106,6 +130,7 @@ export function areaRoster(area: AreaDef): string[] {
     for (const variation of floor.offline) {
       for (const wave of variation.waves) {
         for (const statsType of Object.keys(wave.enemies)) {
+          if (SKIPPED_SPAWN_TYPES.has(statsType)) continue;
           const def = enemyDefForStatsType(statsType);
           if (!def) {
             throw new Error(

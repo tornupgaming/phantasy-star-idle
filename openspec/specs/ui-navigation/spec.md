@@ -55,7 +55,7 @@ The character create screen SHALL follow PSO Blue Burst order: the player SHALL 
 - **THEN** the new character SHALL be created and selected, and the Pioneer 2 hub SHALL be shown
 
 ### Requirement: Pioneer 2 hub
-The Pioneer 2 hub SHALL be a HUD shell over the scene layer: the persistent player HUD capsule and XP/economy side panel along the top, a persistent floating "Pioneer 2" navigation window listing the entries Hunters Guild, Weapon Shop, Armour Shop, Tool Shop, Equipment, Inventory/Bank, and Change Character, a pane region rendering the active pane's window(s), and a dialogue window along the bottom. Activating a navigation entry SHALL switch the pane region to that pane without leaving the hub, with the active entry visually highlighted; Change Character SHALL instead exit to the character select screen. The Hunters Guild pane SHALL present the quest counter — area, difficulty, attack pattern, loot filter, supply summary, and an accept-quest action that dispatches the run — using PSO menu idioms rather than raw form controls: the area as a highlightable menu list (name plus recommended ATP), difficulty and attack pattern as selectable chip rows, and the loot filter and supply summary in a subordinate settings window. Native select elements SHALL NOT appear on the guild pane.
+The Pioneer 2 hub SHALL be a HUD shell over the scene layer: the persistent player HUD capsule and XP/economy side panel along the top, a persistent floating "Pioneer 2" navigation window listing the entries Hunters Guild, Weapon Shop, Armour Shop, Tool Shop, Equipment, Inventory/Bank, and Change Character, a pane region rendering the active pane's window(s), and a dialogue window along the bottom. Activating a navigation entry SHALL switch the pane region to that pane without leaving the hub, with the active entry visually highlighted; Change Character SHALL instead exit to the character select screen. The Hunters Guild pane SHALL present the quest counter across its two panels using PSO menu idioms rather than raw form controls. The central panel SHALL hold episode, difficulty, and attack pattern as selectable chip rows (episode offering Episode 1 with Episodes 2 and 4 visible but disabled), the accept-quest action that dispatches the run, and the loot filter and supply summary in a subordinate settings window. The detail (right) panel SHALL hold the destination list: a highlightable menu of the selectable areas (name plus recommended ATP) grouped under non-interactive zone headings (Forest, Caves, Mines, Ruins), with boss arenas visually distinguished. Native select elements SHALL NOT appear on the guild pane.
 
 #### Scenario: Switch panes from the navigation window
 - **WHEN** the player activates a navigation entry other than Change Character
@@ -71,7 +71,15 @@ The Pioneer 2 hub SHALL be a HUD shell over the scene layer: the persistent play
 
 #### Scenario: Guild counter uses menu idioms
 - **WHEN** the Hunters Guild pane is shown
-- **THEN** the area SHALL be chosen from a menu list and difficulty and attack pattern from chip rows, with no native select elements present
+- **THEN** the destination SHALL be chosen from the grouped menu list in the detail panel and episode, difficulty, and attack pattern from chip rows in the central panel, with no native select elements present
+
+#### Scenario: Destination list is zone-grouped
+- **WHEN** the Hunters Guild pane is shown
+- **THEN** the detail panel SHALL list every selectable area under its zone heading in catalog display order, with the selected area highlighted and keyboard traversal skipping the headings
+
+#### Scenario: Disabled episodes are not selectable
+- **WHEN** the player attempts to activate the Episode 2 or Episode 4 chip
+- **THEN** the selected episode SHALL remain Episode 1 and the destination list SHALL be unchanged
 
 ### Requirement: Shop and bank sub-screens
 The Weapon Shop, Armour Shop, Tool Shop, and Inventory/Bank SHALL each be a hub pane in a shared list-plus-detail shape: an item list with a highlight bar and a detail area describing the highlighted entry. The Weapon Shop pane SHALL list the character's weapon stock and the Armour Shop pane the character's armour stock (frames, barriers, and units), each with buy actions and, for equippable offers, a stat preview of equipping the offer. The Tool Shop pane SHALL list consumables and grinders with buy actions. The Inventory/Bank pane SHALL list the shared inventory with equip and sell actions.
