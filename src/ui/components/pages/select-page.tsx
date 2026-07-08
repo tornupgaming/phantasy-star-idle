@@ -7,6 +7,13 @@ export function SelectPage() {
   return (
     <MenuScreenLayout title="Phantasy Star Idle — Select Character">
       <CharacterRoster />
+
+      <div class="mt-8">
+        <div>
+          <label>Button List</label>
+          <button>normal</button>
+        </div>
+      </div>
     </MenuScreenLayout>
   );
 }

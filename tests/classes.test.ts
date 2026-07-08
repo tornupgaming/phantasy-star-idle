@@ -1,5 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { CLASSES, CLASS_BY_ID, LEVEL_CAP, SECTION_IDS } from "../src/engine/classes";
+import {
+  CLASSES,
+  CLASS_ATA_CONST_TENTHS,
+  CLASS_BY_ID,
+  LEVEL_CAP,
+  ROLE_ATP_BONUS,
+  ROLE_HP_MULT_HUNDREDTHS,
+  SECTION_IDS,
+} from "../src/engine/classes";
 import {
   statsAtLevel,
   levelForXp,
@@ -19,27 +27,27 @@ describe("ported BB class table (classes.ts)", () => {
     ]);
   });
 
-  it("pins HUmar level 1 stats to the BB table base values", () => {
+  it("pins HUmar level 1 stats to the authentic BB client values", () => {
     expect(statsAtLevel("humar", 1)).toEqual({
-      atp: 35, dfp: 17, ata: 30, evp: 45, lck: 10, mst: 29, hp: 20,
+      atp: 45, dfp: 17, ata: 68, evp: 45, lck: 10, mst: 29, hp: 40, tp: 29,
     });
   });
 
-  it("pins FOnewearl level 1 stats to the BB table base values", () => {
+  it("pins FOnewearl level 1 stats to the authentic BB client values", () => {
     expect(statsAtLevel("fonewearl", 1)).toEqual({
-      atp: 10, dfp: 13, ata: 10, evp: 53, lck: 10, mst: 58, hp: 19,
+      atp: 13, dfp: 13, ata: 61, evp: 53, lck: 10, mst: 58, hp: 27, tp: 87,
     });
   });
 
-  it("pins HUmar level 200 stats (ATA clamped by the tenths cap to 135)", () => {
+  it("pins HUmar level 200 stats to the authentic BB client values", () => {
     expect(statsAtLevel("humar", 200)).toEqual({
-      atp: 933, dfp: 422, ata: 135, evp: 682, lck: 10, mst: 594, hp: 511,
+      atp: 943, dfp: 422, ata: 174, evp: 682, lck: 10, mst: 594, hp: 1420, tp: 793,
     });
   });
 
-  it("pins RAcast level 200 stats (highest-ATA ranger curve)", () => {
+  it("pins RAcast level 200 stats (android: TP stays 0)", () => {
     expect(statsAtLevel("racast", 200)).toEqual({
-      atp: 854, dfp: 505, ata: 153, evp: 626, lck: 10, mst: 0, hp: 863,
+      atp: 859, dfp: 505, ata: 199, evp: 626, lck: 10, mst: 0, hp: 1964, tp: 0,
     });
   });
 
@@ -60,16 +68,19 @@ describe("ported BB class table (classes.ts)", () => {
     }
   });
 
-  it("stats never exceed class caps at any level", () => {
+  it("stats never exceed the transformed class caps at any level", () => {
     for (const c of CLASSES) {
+      const atpCap = c.max.atp + ROLE_ATP_BONUS[c.role];
+      const ataCap = Math.floor((c.max.ataTenths + CLASS_ATA_CONST_TENTHS[c.id]) / 10);
+      const hpCap = Math.floor((ROLE_HP_MULT_HUNDREDTHS[c.role] * (c.max.hp + 199)) / 100);
       for (const lv of [50, 100, 150, 200]) {
         const s = statsAtLevel(c.id, lv);
-        expect(s.atp).toBeLessThanOrEqual(c.max.atp);
+        expect(s.atp).toBeLessThanOrEqual(atpCap);
         expect(s.dfp).toBeLessThanOrEqual(c.max.dfp);
-        expect(s.ata * 10).toBeLessThanOrEqual(c.max.ataTenths);
+        expect(s.ata).toBeLessThanOrEqual(ataCap);
         expect(s.evp).toBeLessThanOrEqual(c.max.evp);
         expect(s.mst).toBeLessThanOrEqual(c.max.mst);
-        expect(s.hp).toBeLessThanOrEqual(c.max.hp);
+        expect(s.hp).toBeLessThanOrEqual(hpCap);
       }
     }
   });

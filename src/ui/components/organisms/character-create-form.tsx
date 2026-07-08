@@ -2,7 +2,7 @@
 
 import { For, Show } from "solid-js";
 import { CLASS_BY_ID, SECTION_IDS, type SectionId } from "../../../engine/classes";
-import { sectionIdFromName } from "../../../engine/progression";
+import { sectionIdFromName, statsAtLevel } from "../../../engine/progression";
 import { useUi } from "../../context";
 import { CLASSES_CANONICAL } from "../../ui-shared";
 import chrome from "../chrome.module.css";
@@ -12,6 +12,7 @@ const panel = `${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5`;
 export function CharacterCreateForm() {
   const ui = useUi();
   const def = () => CLASS_BY_ID[ui.draft.classId()];
+  const baseStats = () => statsAtLevel(ui.draft.classId(), 1);
   const shownSid = () => ui.draft.sid() || sectionIdFromName(ui.draft.name());
 
   const create = () => {
@@ -57,19 +58,19 @@ export function CharacterCreateForm() {
         </h2>
         <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink mb-3">
           <span>
-            ATP <b>{def().base.atp}</b>
+            ATP <b>{baseStats().atp}</b>
           </span>
           <span>
-            DFP <b>{def().base.dfp}</b>
+            DFP <b>{baseStats().dfp}</b>
           </span>
           <span>
-            ATA <b>{def().base.ata}</b>
+            ATA <b>{baseStats().ata}</b>
           </span>
           <span>
-            EVP <b>{def().base.evp}</b>
+            EVP <b>{baseStats().evp}</b>
           </span>
           <span>
-            HP <b>{def().base.hp}</b>
+            HP <b>{baseStats().hp}</b>
           </span>
         </div>
         <h3>Name</h3>

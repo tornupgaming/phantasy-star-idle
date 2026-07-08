@@ -14,9 +14,10 @@ export interface Stats {
   lck: number; // Luck (feeds crit rate)
   mst: number; // Mind/technique stat (reserved; techniques deferred)
   hp: number; // Max HP
+  tp: number; // Max TP (derived from MST/level/role; technique casting deferred)
 }
 
-export const ZERO_STATS: Stats = { atp: 0, dfp: 0, ata: 0, evp: 0, lck: 0, mst: 0, hp: 0 };
+export const ZERO_STATS: Stats = { atp: 0, dfp: 0, ata: 0, evp: 0, lck: 0, mst: 0, hp: 0, tp: 0 };
 
 export function makeStats(partial: Partial<Stats>): Stats {
   return { ...ZERO_STATS, ...partial };
@@ -31,6 +32,7 @@ export function addStats(a: Stats, b: Partial<Stats>): Stats {
     lck: a.lck + (b.lck ?? 0),
     mst: a.mst + (b.mst ?? 0),
     hp: a.hp + (b.hp ?? 0),
+    tp: a.tp + (b.tp ?? 0),
   };
 }
 

@@ -1,9 +1,6 @@
-# character-progression Specification
+# character-progression — delta for apply-bb-stat-transform
 
-## Purpose
-Define per-character progression: class-and-level-derived base stats from the ported PSO Blue Burst tables with the authentic BB client stat transform applied, experience accumulation, and leveling from run XP. (TBD: refine as the capability evolves.)
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Class-derived base stats
 Each character's base stats SHALL be derived from its class and level by applying the authentic PSO Blue Burst client stat transform to the ported level table: the raw table accumulation (class base stats plus the sum of per-level growth deltas up to the character's level, clamped to the class's raw stat caps) followed by the client transform:
@@ -27,6 +24,8 @@ Derived stats SHALL be deterministic — the same class and level always produce
 - **WHEN** accumulated growth would push a stat above the class's maximum for that stat
 - **THEN** the derived stat SHALL be clamped such that the effective cap matches the authentic BB displayed maximum (e.g., HUmar ATP cap 1397, ATA cap 200)
 
+## ADDED Requirements
+
 ### Requirement: Derived TP stat
 Each character SHALL have a derived TP stat: `MST + level − 1` for hunters and rangers, `floor((MST + level − 1) × 1.5)` for forces, and 0 for android classes. TP SHALL be derived (never persisted) and deterministic for a given class and level.
 
@@ -37,33 +36,3 @@ Each character SHALL have a derived TP stat: `MST + level − 1` for hunters and
 #### Scenario: Android TP is zero
 - **WHEN** TP is derived for an android class (HUcast, HUcaseal, RAcast, RAcaseal) at any level
 - **THEN** TP SHALL be 0
-
-### Requirement: Experience and leveling
-Characters SHALL accumulate experience points from runs. A character's level SHALL be determined by its total XP against the ported per-class XP thresholds, up to level 200. Level and XP SHALL persist per character.
-
-#### Scenario: Level up on crossing a threshold
-- **WHEN** a character's total XP reaches the threshold for the next level
-- **THEN** the character's level SHALL increase and its derived base stats SHALL reflect the new level
-
-#### Scenario: Level cap
-- **WHEN** a character is at level 200
-- **THEN** additional XP SHALL NOT increase its level
-
-### Requirement: XP awarded from runs
-Enemies killed during a run SHALL award XP to the dispatched character. XP SHALL be applied when the run resolves, and level changes SHALL NOT alter the character's stats mid-run (the run uses its dispatch-time snapshot throughout). The run report SHALL include XP gained and any levels gained.
-
-#### Scenario: XP applied at run resolution
-- **WHEN** a run ends (complete or ejected)
-- **THEN** the XP from all enemies killed during the run SHALL be added to the dispatched character, applying any level-ups at that point
-
-#### Scenario: Mid-run stats are frozen
-- **WHEN** XP earned during a run would cross a level threshold
-- **THEN** the in-run combat stats SHALL continue to use the dispatch-time snapshot; the level-up takes effect only after resolution
-
-#### Scenario: XP in run report
-- **WHEN** a run report is presented
-- **THEN** it SHALL include the XP gained and the character's resulting level
-
-#### Scenario: XP is deterministic per seed
-- **WHEN** the same run (same character snapshot, area, seed) is re-simulated
-- **THEN** the XP gained SHALL be identical

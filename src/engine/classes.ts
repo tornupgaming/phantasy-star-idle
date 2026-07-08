@@ -4,10 +4,16 @@
  * GENERATED from newserv's system/tables/level-table-v4.json — do not hand-edit
  * stat values; see docs/newserv-reference.md. Unit conventions preserved from
  * the original table:
- * - Level 1 stats are `base` verbatim; reaching level L adds `deltas.*[L-2]`.
- * - ATA: `base.ata` is in display units; deltas and the max are in TENTHS of a
- *   display point (BB grows ATA fractionally per level). Derived ATA =
- *   floor(min(base.ata*10 + accumulated tenths, max.ataTenths) / 10).
+ * - The table holds RAW PlyLevelTbl values; the BB client applies a further
+ *   per-class transform before stats are displayed or used (role ATP bonus,
+ *   HP multiplier, per-class ATA constant, derived TP). The authored transform
+ *   constants live below (ROLE_ATP_BONUS / ROLE_HP_MULT_HUNDREDTHS /
+ *   CLASS_ATA_CONST_TENTHS); progression.statsAtLevel applies them.
+ * - Raw values: level 1 is `base` verbatim; reaching level L adds
+ *   `deltas.*[L-2]`.
+ * - ATA: `base.ata`, the deltas, and `max.ataTenths` are ALL in TENTHS of a
+ *   display point (HUmar base 30 = 3.0 display; the client's class constant,
+ *   e.g. 650, brings level 1 to the familiar 68.0).
  * - `xpThresholds[L-1]` is the cumulative XP required to be level L
  *   (thresholds[0] = 0); level cap is 200.
  * - LCK never grows from leveling (authentic BB behavior).
@@ -310,3 +316,48 @@ export const CLASSES: ClassDef[] = [
 export const CLASS_BY_ID: Record<string, ClassDef> = Object.fromEntries(
   CLASSES.map((c) => [c.id, c]),
 );
+
+/**
+ * AUTHORED (not generated): the BB client-side stat transform, absent from
+ * newserv because only the client ever applies it. Derived from Ephinea wiki
+ * growth tables (all 12 classes, every published level) and corroborated by
+ * https://www.pioneer2.net/community/threads/default-player-level-tables.445/
+ * See tests/fixtures/ephinea-class-stats.json for the verification dataset.
+ */
+
+/** Flat ATP added to raw table values (bases and caps alike). */
+export const ROLE_ATP_BONUS: Record<ClassRole, number> = {
+  hunter: 10,
+  ranger: 5,
+  force: 3,
+};
+
+/**
+ * HP multiplier in hundredths (hunter ×2.00, ranger ×1.85, force ×1.45).
+ * Effective HP = floor(mult × (rawHP + level − 1) / 100); integer math only.
+ */
+export const ROLE_HP_MULT_HUNDREDTHS: Record<ClassRole, number> = {
+  hunter: 200,
+  ranger: 185,
+  force: 145,
+};
+
+/**
+ * Per-class ATA constant in tenths, added to the raw tenths total (base,
+ * accumulated deltas, and cap alike): HUmar 650 + base 30 → 68.0 at level 1,
+ * cap 650 + 1355 → 200 display.
+ */
+export const CLASS_ATA_CONST_TENTHS: Record<string, number> = {
+  humar: 650,
+  hunewearl: 610,
+  hucast: 610,
+  hucaseal: 680,
+  ramar: 760,
+  ramarl: 680,
+  racast: 710,
+  racaseal: 730,
+  fomar: 620,
+  fomarl: 620,
+  fonewm: 600,
+  fonewearl: 600,
+};
