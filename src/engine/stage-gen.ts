@@ -17,7 +17,7 @@
 import type { AreaDef, RoomDef } from "./areas";
 import type { Rng } from "./rng";
 import { getFloorSpawns, rareTypeFor } from "./data/map-spawns";
-import { layoutKeyForFile } from "./data/room-geometry";
+import { layoutKeyForFile } from "./data/room-layouts";
 import { enemyDefForStatsType } from "./content";
 
 /** Cap on simultaneous enemies per generated room (idle combat is all-at-once). */

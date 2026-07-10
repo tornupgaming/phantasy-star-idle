@@ -6,7 +6,7 @@
  * is forced back to the hub's Guild pane with the quest report showing.
  */
 
-import { Match, Show, Switch, createEffect, on } from "solid-js";
+import { Match, Show, Suspense, Switch, createEffect, lazy, on } from "solid-js";
 import { render } from "solid-js/web";
 import type { Game } from "../engine/game";
 import { createGameStore, type GameStore } from "./store";
@@ -15,7 +15,10 @@ import { BackdropIsland } from "./components/organisms/backdrop-island";
 import { SelectPage } from "./components/pages/select-page";
 import { CreatePage } from "./components/pages/create-page";
 import { HubPage } from "./components/pages/hub-page";
-import { RunPage } from "./components/pages/run-page";
+
+const RunPage = lazy(() =>
+  import("./components/pages/run-page").then(({ RunPage }) => ({ default: RunPage })),
+);
 
 function MenuRegime() {
   const ui = useUi();
@@ -57,7 +60,9 @@ export function App(props: { game: Game; gs: GameStore }) {
   return (
     <UiProvider value={ui}>
       <Show when={ui.state.activeRun} fallback={<MenuRegime />}>
-        <RunPage />
+        <Suspense fallback={<div class="run-screen">Loading run…</div>}>
+          <RunPage />
+        </Suspense>
       </Show>
     </UiProvider>
   );

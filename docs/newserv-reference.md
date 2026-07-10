@@ -102,6 +102,12 @@ The rare-variant mapping (Hildebear → Hildeblue …) lives in the typed loader
 regeneration is enforced by `tests/map-spawns.test.ts`. Objects/boxes
 (`o.dat`) and wave events (`.evt`) are not extracted yet.
 
+Room layout extraction is intentionally split: `room-layouts.json` contains
+only the compact offline filename → layout-key provenance needed by synchronous
+stage generation, while `room-geometry.json` contains the full x/z coordinates
+used by the deferred battle minimap. Regenerate both with
+`pnpm extract:room-geometry` (`scripts/extract-room-geometry.mjs`).
+
 ## Items
 
 - **Item parameters** (weapon ATP ranges, armor DFP/EVP, stars, class/equip

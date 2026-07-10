@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
 import { mountApp } from "../src/ui/app";
@@ -21,6 +21,7 @@ describe("battle stage (run screen)", () => {
     root.querySelector<HTMLElement>('[data-action="select-char"]')!.click();
     root.querySelector<HTMLElement>('[data-action="send"]')!.click();
     expect(game.state.activeRun).not.toBeNull();
+    await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
     expect(root.textContent).toContain("Run in progress");
     expect(root.querySelector(".stage-field")).not.toBeNull();
     const shell = root.querySelector(".stage-field")!;

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach, vi } from "vitest";
 import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
 import { priceForItem } from "../src/engine/pricing";
@@ -24,7 +24,7 @@ afterEach(() => {
 });
 
 describe("UI smoke (manual-pass stand-in)", () => {
-  it("select → create → hub → shops/bank → accept quest", () => {
+  it("select → create → hub → shops/bank → accept quest", async () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
     const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
@@ -114,6 +114,7 @@ describe("UI smoke (manual-pass stand-in)", () => {
       "ultimate",
     ]);
     click(root, '[data-action="send"]');
+    await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
     expect(root.textContent).toContain("Run in progress");
   });
 
@@ -236,7 +237,7 @@ describe("UI smoke (manual-pass stand-in)", () => {
 describe("keyboard menu navigation (ui-navigation)", () => {
   const key = (k: string) => document.dispatchEvent(new KeyboardEvent("keydown", { key: k, bubbles: true }));
 
-  it("digits jump panes, arrows move focus and rows, Enter confirms", () => {
+  it("digits jump panes, arrows move focus and rows, Enter confirms", async () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
     const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
@@ -272,6 +273,7 @@ describe("keyboard menu navigation (ui-navigation)", () => {
     key("Enter"); // completes the greeting reveal first
     key("Enter"); // confirms ▶ Accept Quest
     expect(game.state.activeRun).not.toBeNull();
+    await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
     expect(root.textContent).toContain("Run in progress");
   });
 
@@ -394,6 +396,7 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     // Accept a quest, fast-forward past the end, settle: the report dialog
     // appears over the Guild pane and dismisses in place.
     click(root, '[data-action="send"]');
+    await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
     expect(root.textContent).toContain("Run in progress");
     now += game.runProgress()!.endTime + 60_000;
     expect(game.poll()).toBe(true);

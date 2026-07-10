@@ -1,6 +1,8 @@
 /**
  * Extracts authentic PSO room geometry for Episode 1 free-play floors from a
- * local newserv clone into src/engine/data/room-geometry.json.
+ * local newserv clone into two generated datasets:
+ *   room-layouts.json — small filename -> layout metadata used by simulation
+ *   room-geometry.json — full room coordinates used only by the run UI
  *
  * Sources (read-only, extraction time only):
  *   <newserv>/system/maps/room-layout-index.json — per (area, layout variant)
@@ -37,7 +39,8 @@ const NEWSERV_ROOT =
 const MAPS_DIR = join(NEWSERV_ROOT, "system", "maps");
 const DATA_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "engine", "data");
 const SPAWNS_PATH = join(DATA_DIR, "map-spawns.json");
-const OUT_PATH = join(DATA_DIR, "room-geometry.json");
+const LAYOUTS_OUT_PATH = join(DATA_DIR, "room-layouts.json");
+const GEOMETRY_OUT_PATH = join(DATA_DIR, "room-geometry.json");
 
 function fail(msg) {
   console.error(`extract-room-geometry: ${msg}`);
@@ -212,7 +215,16 @@ if (Object.keys(cave1.layouts).length !== 3) {
   fail(`Cave 1 has ${Object.keys(cave1.layouts).length} layouts, expected 3`);
 }
 
-writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
+const layoutMetadata = {
+  1: out[1].map(({ layouts: _layouts, ...floor }) => floor),
+};
+const geometry = {
+  1: out[1].map(({ fileToLayout: _fileToLayout, ...floor }) => floor),
+};
+writeFileSync(LAYOUTS_OUT_PATH, JSON.stringify(layoutMetadata, null, 2) + "\n");
+writeFileSync(GEOMETRY_OUT_PATH, JSON.stringify(geometry, null, 2) + "\n");
 const floorCount = out[1].length;
 const layoutCount = out[1].reduce((n, f) => n + Object.keys(f.layouts).length, 0);
-console.log(`extract-room-geometry: wrote ${floorCount} floors, ${layoutCount} layouts to ${OUT_PATH}`);
+console.log(
+  `extract-room-geometry: wrote ${floorCount} floors, ${layoutCount} layouts to ${LAYOUTS_OUT_PATH} and ${GEOMETRY_OUT_PATH}`,
+);

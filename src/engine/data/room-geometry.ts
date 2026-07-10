@@ -15,7 +15,12 @@
  */
 
 import rawDataset from "./room-geometry.json";
+import { getFloorLayouts } from "./room-layouts";
 import type { Episode } from "./enemy-stats";
+
+// Kept as a public re-export for callers that previously obtained provenance
+// through this full-geometry module. Simulation imports room-layouts directly.
+export { layoutKeyForFile } from "./room-layouts";
 
 export interface GeometryRoom {
   /** Authentic room id (matches SpawnWave.room). */
@@ -35,15 +40,13 @@ export interface FloorGeometry {
   layouts: Record<string, GeometryRoom[]>;
 }
 
-const DATASET = rawDataset as unknown as Partial<Record<Episode, FloorGeometry[]>>;
+type CoordinateFloor = Omit<FloorGeometry, "fileToLayout">;
+const DATASET = rawDataset as unknown as Partial<Record<Episode, CoordinateFloor[]>>;
 
 export function getFloorGeometry(episode: Episode, floor: number): FloorGeometry | null {
-  return DATASET[episode]?.find((f) => f.floor === floor) ?? null;
-}
-
-/** Layout key a spawn variation file plays on, or null (boss floors, Ep2/4). */
-export function layoutKeyForFile(episode: Episode, floor: number, file: string): string | null {
-  return getFloorGeometry(episode, floor)?.fileToLayout[file] ?? null;
+  const coordinates = DATASET[episode]?.find((f) => f.floor === floor);
+  const provenance = getFloorLayouts(episode, floor);
+  return coordinates && provenance ? { ...coordinates, fileToLayout: provenance.fileToLayout } : null;
 }
 
 /** Room positions of a rolled layout, or null when no geometry exists. */

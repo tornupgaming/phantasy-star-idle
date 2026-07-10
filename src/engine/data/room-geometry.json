@@ -4,11 +4,6 @@
       "floor": 1,
       "area": 1,
       "name": "Forest 1",
-      "fileToLayout": {
-        "map_forest01_00_offe.dat": "01-00",
-        "map_forest01_02_offe.dat": "01-00",
-        "map_forest01_04_offe.dat": "01-00"
-      },
       "layouts": {
         "01-00": [
           {
@@ -98,11 +93,6 @@
       "floor": 2,
       "area": 2,
       "name": "Forest 2",
-      "fileToLayout": {
-        "map_forest02_00_offe.dat": "02-00",
-        "map_forest02_03_offe.dat": "02-00",
-        "map_forest02_04_offe.dat": "02-00"
-      },
       "layouts": {
         "02-00": [
           {
@@ -192,11 +182,6 @@
       "floor": 3,
       "area": 3,
       "name": "Cave 1",
-      "fileToLayout": {
-        "map_cave01_00_00_offe.dat": "03-00",
-        "map_cave01_01_00_offe.dat": "03-01",
-        "map_cave01_02_00_offe.dat": "03-02"
-      },
       "layouts": {
         "03-00": [
           {
@@ -740,11 +725,6 @@
       "floor": 4,
       "area": 4,
       "name": "Cave 2",
-      "fileToLayout": {
-        "map_cave02_00_00_offe.dat": "04-00",
-        "map_cave02_01_00_offe.dat": "04-01",
-        "map_cave02_02_00_offe.dat": "04-02"
-      },
       "layouts": {
         "04-00": [
           {
@@ -1318,11 +1298,6 @@
       "floor": 5,
       "area": 5,
       "name": "Cave 3",
-      "fileToLayout": {
-        "map_cave03_00_00_offe.dat": "05-00",
-        "map_cave03_01_00_offe.dat": "05-01",
-        "map_cave03_02_00_offe.dat": "05-02"
-      },
       "layouts": {
         "05-00": [
           {
@@ -1906,14 +1881,6 @@
       "floor": 6,
       "area": 6,
       "name": "Mine 1",
-      "fileToLayout": {
-        "map_machine01_00_00e.dat": "06-00",
-        "map_machine01_00_01e.dat": "06-00",
-        "map_machine01_01_00e.dat": "06-01",
-        "map_machine01_01_01e.dat": "06-01",
-        "map_machine01_02_00e.dat": "06-02",
-        "map_machine01_02_01e.dat": "06-02"
-      },
       "layouts": {
         "06-00": [
           {
@@ -2357,14 +2324,6 @@
       "floor": 7,
       "area": 7,
       "name": "Mine 2",
-      "fileToLayout": {
-        "map_machine02_00_00e.dat": "07-00",
-        "map_machine02_00_01e.dat": "07-00",
-        "map_machine02_01_00e.dat": "07-01",
-        "map_machine02_01_01e.dat": "07-01",
-        "map_machine02_02_00e.dat": "07-02",
-        "map_machine02_02_01e.dat": "07-02"
-      },
       "layouts": {
         "07-00": [
           {
@@ -2773,14 +2732,6 @@
       "floor": 8,
       "area": 8,
       "name": "Ruins 1",
-      "fileToLayout": {
-        "map_ancient01_00_00e.dat": "08-00",
-        "map_ancient01_00_01e.dat": "08-00",
-        "map_ancient01_01_00e.dat": "08-01",
-        "map_ancient01_01_01e.dat": "08-01",
-        "map_ancient01_02_00e.dat": "08-02",
-        "map_ancient01_02_01e.dat": "08-02"
-      },
       "layouts": {
         "08-00": [
           {
@@ -4089,14 +4040,6 @@
       "floor": 9,
       "area": 9,
       "name": "Ruins 2",
-      "fileToLayout": {
-        "map_ancient02_00_00e.dat": "09-00",
-        "map_ancient02_00_01e.dat": "09-00",
-        "map_ancient02_01_00e.dat": "09-01",
-        "map_ancient02_01_01e.dat": "09-01",
-        "map_ancient02_02_00e.dat": "09-02",
-        "map_ancient02_02_01e.dat": "09-02"
-      },
       "layouts": {
         "09-00": [
           {
@@ -5720,14 +5663,6 @@
       "floor": 10,
       "area": 10,
       "name": "Ruins 3",
-      "fileToLayout": {
-        "map_ancient03_00_00e.dat": "0A-00",
-        "map_ancient03_00_01e.dat": "0A-00",
-        "map_ancient03_01_00e.dat": "0A-01",
-        "map_ancient03_01_01e.dat": "0A-01",
-        "map_ancient03_02_00e.dat": "0A-02",
-        "map_ancient03_02_01e.dat": "0A-02"
-      },
       "layouts": {
         "0A-00": [
           {
