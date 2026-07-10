@@ -13,6 +13,7 @@ export default defineConfig({
     globals: true,
     environment: "node", // UI tests opt into jsdom via @vitest-environment
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    setupFiles: ["tests/setup.ts"],
     server: { deps: { inline: [/solid-js/] } },
   },
 });

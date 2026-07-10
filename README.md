@@ -17,12 +17,15 @@ tests).
 ## Commands
 
 ```bash
-npm install        # first-time setup (approve esbuild's install script if prompted)
-npm run dev        # start the dev server (open the printed URL)
-npm run build      # typecheck + production build to dist/
-npm test           # run the Vitest suite (formulas, replay determinism, e2e loop)
-npm run typecheck  # tsc --noEmit
+corepack enable    # once, if pnpm is not already available
+pnpm install       # install the exact dependency graph from pnpm-lock.yaml
+pnpm dev           # start the dev server (open the printed URL)
+pnpm check         # typecheck, test, and create a production build
+pnpm test          # run the Vitest suite (formulas, replay determinism, e2e loop)
 ```
+
+Node.js 22.12 or newer is required. Use pnpm exclusively; `packageManager`
+pins the expected pnpm release for Corepack and CI.
 
 ## Architecture
 
@@ -41,7 +44,8 @@ npm run typecheck  # tsc --noEmit
   UI signals + actions, engine→store sync. `ui/stage.ts` and `ui/backdrop.ts`
   are imperative canvas islands. `main.ts` boots the game clock and mounts.
 
-Design decisions and formulas are documented in
-`openspec/changes/establish-core-gameplay-loop/` (proposal, design, specs).
+Archived design decisions and feature specifications live under
+`openspec/changes/archive/`. Domain terminology and agent workflow guidance
+live in `CONTEXT.md` and `AGENTS.md`.
 
 No trademarked names or assets are used — only the mechanical model.
