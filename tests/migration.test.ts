@@ -239,8 +239,11 @@ describe("v3 → v4 save migration (authentic-drop-generation)", () => {
 
   it("player-owned legacy items survive untouched (inventory and equipped)", () => {
     const state = migrateSave(3, v3Save().state)!;
-    expect(state.economy.inventory[0]).toEqual(legacyPlaceholderWeapon("inv-w"));
-    expect(state.roster[0].character.equipment.weapon).toEqual(legacyPlaceholderWeapon("equipped-w"));
+    expect(state.economy.inventory[0]).toEqual({ ...legacyPlaceholderWeapon("inv-w"), locked: false });
+    expect(state.roster[0].character.equipment.weapon).toEqual({
+      ...legacyPlaceholderWeapon("equipped-w"),
+      locked: false,
+    });
     expect(state.economy.meseta).toBe(777);
     expect(state.supply.dimate).toBe(3);
   });
@@ -289,6 +292,20 @@ describe("v5 → v6 save migration (report dismissal)", () => {
     const state = migrateSave(5, v5State)!;
     expect(state.lastReport).toEqual(report);
     expect(state.lastReportDismissed).toBe(false);
+  });
+});
+
+describe("v6 → v7 save migration (item locks)", () => {
+  it("marks legacy inventory and equipped items as unlocked", () => {
+    const game = Game.loadOrNew(memoryStorage(), () => 1000);
+    const inventoryItem = { ...legacyPlaceholderWeapon("inventory-unlocked") };
+    game.state.economy.inventory.push(inventoryItem as never);
+    const v6State = structuredClone(game.state);
+
+    const state = migrateSave(6, v6State)!;
+
+    expect(state.economy.inventory.find((item) => item.id === inventoryItem.id)?.locked).toBe(false);
+    expect(state.roster[0].character.equipment.weapon?.locked).toBe(false);
   });
 });
 

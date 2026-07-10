@@ -30,7 +30,7 @@ import type { Stats } from "./stats";
 import type { Item, Weapon, Frame, Barrier, Unit } from "./items";
 import { isWeapon, isFrame, isBarrier, isUnit } from "./items";
 import type { EconomyState, LootFilter } from "./loot";
-import { sellFromInventory, DEFAULT_FILTER } from "./loot";
+import { sellAllUnlockedFromInventory, sellFromInventory, DEFAULT_FILTER } from "./loot";
 import type { Supply, ConsumableId } from "./consumables";
 import { addToSupply, cloneSupply } from "./consumables";
 import {
@@ -215,10 +215,12 @@ function autoEquipStarter(state: GameState): void {
  * Player-owned legacy items (inventory + equipped) are self-contained and
  * survive as-is. v5 → v6 (report-dismissal): add a persisted boolean that
  * starts false so an old saved report may be acknowledged once, then stays
- * dismissed across reloads.
+ * dismissed across reloads. v6 → v7 (item-locking): all player-owned
+ * inventory and equipped items gain an explicit unlocked default.
  */
 export function migrateSave(version: number, old: unknown): GameState | null {
   let state: GameState | null = null;
+  if (version === 6) return migrateV6(old);
   if (version === 5) state = migrateV5(old);
   else if (version === 4) state = migrateV4(old);
   else if (version === 3) state = migrateV3(old);
@@ -227,7 +229,24 @@ export function migrateSave(version: number, old: unknown): GameState | null {
     const v2 = migrateV1(old);
     state = v2 ? migrateV2(v2) : null;
   }
-  return state ? migrateV5(state) : null;
+  const v6 = state ? migrateV5(state) : null;
+  return v6 ? migrateV6(v6) : null;
+}
+
+/** v6 → v7: normalize missing item locks across every ownership location. */
+function migrateV6(old: unknown): GameState | null {
+  if (old == null || typeof old !== "object") return null;
+  const state = old as GameState;
+  if (!Array.isArray(state.roster) || state.roster.length === 0) return null;
+  const owned = [...state.economy.inventory];
+  for (const entry of state.roster) {
+    const equipment = entry.character.equipment;
+    for (const item of [equipment.weapon, equipment.frame, equipment.barrier, ...equipment.units]) {
+      if (item) owned.push(item);
+    }
+  }
+  for (const item of owned) item.locked = item.locked === true;
+  return state;
 }
 
 /** v5 → v6: add the persisted report-dismissal acknowledgement flag. */
@@ -519,9 +538,23 @@ export class Game {
   }
 
   sellInventoryItem(itemId: string): ActionResult {
-    if (!sellFromInventory(this.state.economy, itemId)) {
-      return { ok: false, reason: "item not in inventory" };
-    }
+    const result = sellFromInventory(this.state.economy, itemId);
+    if (result === "locked") return { ok: false, reason: "item is locked" };
+    if (result === "missing") return { ok: false, reason: "item not in inventory" };
+    this.save();
+    return { ok: true };
+  }
+
+  setInventoryItemLocked(itemId: string, locked: boolean): ActionResult {
+    const item = this.inv().find((owned) => owned.id === itemId);
+    if (!item) return { ok: false, reason: "item not in inventory" };
+    item.locked = locked;
+    this.save();
+    return { ok: true };
+  }
+
+  sellAllInventoryItems(): ActionResult {
+    sellAllUnlockedFromInventory(this.state.economy);
     this.save();
     return { ok: true };
   }

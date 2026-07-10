@@ -16,3 +16,11 @@
   full HP; damage dealt to the fused form does not carry over.
 - **Fused form** — Pan Arms before splitting. If killed before its second
   attack, the halves never appear and the fused form's own EXP/drop apply.
+
+## Inventory
+
+- **Locked item** — A player-owned item protected from individual and bulk
+  selling. Its lock follows the item when equipped, although equipped items are
+  already outside the sellable inventory and the Bank toggles locks on inventory items.
+- **Sell all** — A Bank action that sells every unlocked inventory item at its
+  normal sell price. Locked inventory and equipment on every character remain owned.

@@ -3,7 +3,7 @@ import { memoryStorage } from "../src/engine/save";
 import { Game, OFFLINE_CAP_MS } from "../src/engine/game";
 import { sectionIdFromName } from "../src/engine/progression";
 import { GEAR } from "../src/engine/content";
-import type { Weapon } from "../src/engine/items";
+import type { Item, Weapon } from "../src/engine/items";
 
 /** A controllable clock for deterministic time-travel in tests. */
 function fakeClock(start = 1_000_000) {
@@ -112,6 +112,44 @@ describe("persistence + resume (task 7.4)", () => {
 });
 
 describe("meta-layer operations", () => {
+  it("locks an owned item and refuses to sell it", () => {
+    const storage = memoryStorage();
+    const clock = fakeClock();
+    const game = Game.loadOrNew(storage, clock.now);
+    const item = { ...GEAR.greatBlade, id: "keep-me" } as Item;
+    game.state.economy.inventory.push(item);
+
+    expect(game.setInventoryItemLocked(item.id, true)).toEqual({ ok: true });
+    expect(game.sellInventoryItem(item.id)).toEqual({ ok: false, reason: "item is locked" });
+    expect(game.state.economy.inventory.find((owned) => owned.id === item.id)?.locked).toBe(true);
+
+    const reloaded = Game.loadOrNew(storage, clock.now);
+    expect(reloaded.state.economy.inventory.find((owned) => owned.id === item.id)?.locked).toBe(true);
+  });
+
+  it("sell all sells unlocked inventory while preserving locked and equipped items", () => {
+    const clock = fakeClock();
+    const game = Game.loadOrNew(memoryStorage(), clock.now);
+    const equipped = game.selectedCharacter().equipment.weapon!;
+    const locked = { ...GEAR.greatBlade, id: "locked", locked: true } as Item;
+    const saleA = { ...GEAR.handBlade, id: "sale-a" } as Item;
+    const saleB = { ...GEAR.powerUnit, id: "sale-b" } as Item;
+    const otherCharacterWeapon = { ...GEAR.handBlade, id: "other-equipped" } as Item;
+    game.state.economy.inventory.push(locked, saleA, saleB, otherCharacterWeapon);
+    expect(game.createCharacter("Rico", "ramarl")).toEqual({ ok: true });
+    const otherCharacterId = game.state.roster[1].character.id;
+    expect(game.selectCharacter(otherCharacterId)).toEqual({ ok: true });
+    expect(game.equipFromInventory(otherCharacterWeapon.id)).toEqual({ ok: true });
+    expect(game.selectCharacter(game.state.roster[0].character.id)).toEqual({ ok: true });
+    const mesetaBefore = game.state.economy.meseta;
+
+    expect(game.sellAllInventoryItems()).toEqual({ ok: true });
+    expect(game.state.economy.inventory.map((item) => item.id)).toEqual(["locked"]);
+    expect(game.state.economy.meseta).toBe(mesetaBefore + saleA.sellValue + saleB.sellValue);
+    expect(game.selectedCharacter().equipment.weapon).toBe(equipped);
+    expect(game.state.roster[1].character.equipment.weapon?.id).toBe(otherCharacterWeapon.id);
+  });
+
   it("blocks gear changes during a run", () => {
     const clock = fakeClock();
     const game = Game.loadOrNew(memoryStorage(), clock.now);

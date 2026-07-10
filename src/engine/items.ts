@@ -137,6 +137,8 @@ interface ItemBase {
   rarity: Rarity;
   /** Base sell value in meseta; feeds the loot filter and shop. */
   sellValue: number;
+  /** Player protection against manual selling. Absent on legacy items means unlocked. */
+  locked?: boolean;
   /** Equip gating (absent on curated gear, which equips unconditionally). */
   requirements?: EquipRequirements;
   /** Authentic PSO 3-byte item code (TTGGII), present on generated/authentic items. */

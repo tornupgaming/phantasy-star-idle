@@ -16,6 +16,7 @@ export function BankPane() {
   const equippedInSlot = useEquippedInSlot();
   const inv = () => ui.state.economy.inventory;
   const sortedInv = () => itemsByCode(inv());
+  const hasSellable = () => inv().some((item) => item.locked !== true);
   const sel = () => inv().find((i) => i.id === ui.detailId()) ?? sortedInv()[0] ?? null;
   const emptyMsg = "Inventory empty — send a run to find gear.";
 
@@ -23,13 +24,24 @@ export function BankPane() {
     <>
       <section class="hud-pane">
         <WindowBox title="Inventory/Bank" trailing={`${inv().length} items`}>
+          <div class="flex justify-end mb-2">
+            <button
+              data-action="sell-all"
+              disabled={!hasSellable()}
+              onClick={() => {
+                if (ui.act(() => ui.game.sellAllInventoryItems(), "sold")) ui.setDetailId(null);
+              }}
+            >
+              Sell All Unlocked
+            </button>
+          </div>
           <div class={`pso-menu ${chrome.menu} max-h-[62vh] overflow-auto max-[1100px]:max-h-[38vh] max-[900px]:max-h-[50vh]`}>
             <Show when={inv().length > 0} fallback={<div class="text-muted">{emptyMsg}</div>}>
               <For each={sortedInv()}>
                 {(i) => (
                   <ItemRow
                     item={i}
-                    trailing={<MesetaAmount value={sellPrice(i)} />}
+                    trailing={i.locked === true ? "Locked" : <MesetaAmount value={sellPrice(i)} />}
                     selected={i.id === ui.detailId()}
                     onSelect={() => ui.setDetailId(i.id)}
                   />
@@ -62,17 +74,29 @@ export function BankPane() {
                       </button>
                     </Show>
                     <button
-                      data-action="sell"
+                      data-action="lock"
                       data-id={item().id}
                       onClick={() => {
                         const id = item().id;
-                        if (ui.act(() => ui.game.sellInventoryItem(id), "sold")) {
-                          if (ui.detailId() === id) ui.setDetailId(null);
-                        }
+                        ui.act(() => ui.game.setInventoryItemLocked(id, item().locked !== true));
                       }}
                     >
-                      Sell (<MesetaAmount value={sellPrice(item())} />)
+                      {item().locked === true ? "Unlock" : "Lock"}
                     </button>
+                    <Show when={item().locked !== true}>
+                      <button
+                        data-action="sell"
+                        data-id={item().id}
+                        onClick={() => {
+                          const id = item().id;
+                          if (ui.act(() => ui.game.sellInventoryItem(id), "sold")) {
+                            if (ui.detailId() === id) ui.setDetailId(null);
+                          }
+                        }}
+                      >
+                        Sell (<MesetaAmount value={sellPrice(item())} />)
+                      </button>
+                    </Show>
                   </div>
                 </>
               )}

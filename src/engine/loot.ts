@@ -47,10 +47,28 @@ export interface EconomyState {
   grinders: number;
 }
 
-export function sellFromInventory(state: EconomyState, itemId: string): boolean {
+export type InventorySaleResult = "sold" | "missing" | "locked";
+
+export function sellFromInventory(state: EconomyState, itemId: string): InventorySaleResult {
   const idx = state.inventory.findIndex((i) => i.id === itemId);
-  if (idx < 0) return false;
+  if (idx < 0) return "missing";
+  if (state.inventory[idx].locked === true) return "locked";
   const [item] = state.inventory.splice(idx, 1);
   state.meseta += sellPrice(item);
-  return true;
+  return "sold";
+}
+
+/** Sell every unlocked inventory item in one economy mutation. */
+export function sellAllUnlockedFromInventory(state: EconomyState): number {
+  const kept: Item[] = [];
+  let sold = 0;
+  for (const item of state.inventory) {
+    if (item.locked === true) kept.push(item);
+    else {
+      state.meseta += sellPrice(item);
+      sold += 1;
+    }
+  }
+  state.inventory = kept;
+  return sold;
 }

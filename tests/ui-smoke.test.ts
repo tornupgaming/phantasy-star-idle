@@ -81,6 +81,32 @@ describe("UI smoke (manual-pass stand-in)", () => {
     expect(entry.shop.armour.offers.map((i) => i.id)).toEqual(armourOrder);
   });
 
+  it("locks bank items and sell all preserves locked and equipped gear", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    const equipped = game.selectedCharacter().equipment.weapon!;
+    const keep = { ...GEAR.greatBlade, id: "keep" } as Item;
+    const sell = { ...GEAR.powerUnit, id: "sell" } as Item;
+    game.state.economy.inventory = [keep, sell];
+    const mesetaBefore = game.state.economy.meseta;
+
+    mount(root, game);
+    click(root, '[data-action="select-char"]');
+    click(root, '[data-action="pane"][data-pane="bank"]');
+    click(root, '[data-action="detail"][data-id="keep"]');
+    click(root, '[data-action="lock"][data-id="keep"]');
+
+    expect(game.state.economy.inventory.find((item) => item.id === "keep")?.locked).toBe(true);
+    expect(root.querySelector('[data-action="sell"][data-id="keep"]')).toBeNull();
+
+    click(root, '[data-action="sell-all"]');
+    expect(game.state.economy.inventory.map((item) => item.id)).toEqual(["keep"]);
+    expect(game.state.economy.meseta).toBe(mesetaBefore + sell.sellValue);
+    expect(game.selectedCharacter().equipment.weapon).toBe(equipped);
+    expect(root.textContent).toContain("Locked");
+  });
+
   it("select → create → hub → shops/bank → accept quest", async () => {
     const root = document.createElement("div");
     document.body.appendChild(root);

@@ -66,13 +66,13 @@ describe("inventory selling", () => {
       grinders: 0,
       inventory: [{ ...GEAR.greatBlade, id: "s1" } as Item],
     };
-    expect(sellFromInventory(econ, "s1")).toBe(true);
+    expect(sellFromInventory(econ, "s1")).toBe("sold");
     expect(econ.inventory).toHaveLength(0);
     expect(econ.meseta).toBe(GEAR.greatBlade.sellValue);
   });
 
   it("rejects selling a missing item", () => {
     const econ: EconomyState = { meseta: 0, grinders: 0, inventory: [] };
-    expect(sellFromInventory(econ, "nope")).toBe(false);
+    expect(sellFromInventory(econ, "nope")).toBe("missing");
   });
 });

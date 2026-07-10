@@ -33,7 +33,7 @@ export function memoryStorage(initial?: Record<string, string>): StoragePort {
 }
 
 export const SAVE_KEY = "psi.save";
-export const SAVE_VERSION = 6; // v6: persist whether the post-run report was dismissed
+export const SAVE_VERSION = 7; // v7: persist player-controlled item locks
 
 export interface SaveEnvelope<T> {
   version: number;
