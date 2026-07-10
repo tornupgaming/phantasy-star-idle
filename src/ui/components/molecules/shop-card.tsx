@@ -7,7 +7,7 @@
  * contract: the card is a `<button role="option">` with `aria-selected`.
  */
 
-import { Show, type JSX } from "solid-js";
+import { createSignal, Show, type JSX } from "solid-js";
 
 import type { IconId } from "../../icons";
 import { Icon } from "../atoms/icon";
@@ -32,6 +32,8 @@ export function ShopCard(props: {
   onSelect: () => void;
   dataId: string;
   icon: IconId;
+  /** Optional bundled raster art; falls back to `icon` when absent or failed. */
+  imageUrl?: string;
   /** Global rarity class (`rarity-common` …) so theme name coloring applies. */
   rarityClass?: string;
   name: JSX.Element;
@@ -39,6 +41,7 @@ export function ShopCard(props: {
   price: number;
   req?: { text: string; met: boolean } | null;
 }) {
+  const [imageFailed, setImageFailed] = createSignal(false);
   return (
     <button
       class={props.rarityClass ? `${styles.card} ${props.rarityClass}` : styles.card}
@@ -50,7 +53,16 @@ export function ShopCard(props: {
     >
       <span class={styles.slotTab}>{props.index + 1}</span>
       <span class={styles.iconWell}>
-        <Icon id={props.icon} />
+        <Show when={props.imageUrl && !imageFailed()} fallback={<Icon id={props.icon} />}>
+          <img
+            class={styles.iconImage}
+            src={props.imageUrl}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
+        </Show>
       </span>
       <span class={styles.body}>
         <span class={styles.nameRow}>{props.name}</span>

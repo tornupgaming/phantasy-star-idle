@@ -274,7 +274,25 @@ describe("v4 → v5 save migration (authentic-shop-inventory)", () => {
   });
 });
 
-describe("v5 round-trip: generated variance and tool items persist intact", () => {
+describe("v5 → v6 save migration (report dismissal)", () => {
+  it("adds the persisted report-dismissal flag without dropping lastReport", () => {
+    const old = migrateSave(4, v3Save().state)!;
+    const report = {
+      characterName: "Ash", areaName: "Forest", difficultyLabel: "Normal",
+      outcome: "complete" as const, roomsCleared: 3, totalRooms: 3, meseta: 10,
+      items: [], consumablesGained: {}, consumablesUsed: {}, grinders: 0,
+      xpGained: 20, levelsGained: 0, level: 7,
+    };
+    const v5State = { ...old, lastReport: report };
+    delete (v5State as { lastReportDismissed?: boolean }).lastReportDismissed;
+
+    const state = migrateSave(5, v5State)!;
+    expect(state.lastReport).toEqual(report);
+    expect(state.lastReportDismissed).toBe(false);
+  });
+});
+
+describe("current save round-trip: generated variance, tool items, and reports persist intact", () => {
   it("bonuses/special/slots/stars and inert tools survive save → load", () => {
     const storage = memoryStorage();
     const game = Game.loadOrNew(storage, () => 1000);

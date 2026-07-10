@@ -404,9 +404,13 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     expect(root.querySelector(".dialog-scrim")).toBeNull();
     expect(root.textContent).toContain("Hunter's Guild");
 
-    // Change Character exits to the select screen.
+    // Change Character exits to the select screen; selecting the same
+    // character again must not resurrect a dismissed report.
     click(root, '[data-action="goto"][data-screen="select"]');
     expect(root.textContent).toContain("Select Character");
+    click(root, '[data-action="select-char"]');
+    expect(root.textContent).toContain("Hunter's Guild");
+    expect(root.querySelector(".dialog-scrim")).toBeNull();
     app.dispose();
   });
 });

@@ -38,7 +38,8 @@ describe("run creation (task 7.1)", () => {
 describe("game clock + settle (tasks 7.4, 9.3)", () => {
   it("settles a run after enough game time elapses and produces a report", () => {
     const clock = fakeClock();
-    const game = Game.loadOrNew(memoryStorage(), clock.now);
+    const storage = memoryStorage();
+    const game = Game.loadOrNew(storage, clock.now);
     const mesetaBefore = game.state.economy.meseta;
     game.sendRun("forest", "normal");
 
@@ -47,8 +48,16 @@ describe("game clock + settle (tasks 7.4, 9.3)", () => {
     expect(game.poll()).toBe(true); // settles now
     expect(game.state.activeRun).toBeNull();
     expect(game.state.lastReport).not.toBeNull();
+    expect(game.state.lastReportDismissed).toBe(false); // fresh reports should open once
     expect(game.state.lastReport!.outcome).toBe("complete");
     expect(game.state.economy.meseta).toBeGreaterThanOrEqual(mesetaBefore);
+
+    game.dismissLastReport();
+    expect(game.state.lastReport).not.toBeNull(); // keep the report data for history
+    expect(game.state.lastReportDismissed).toBe(true);
+    const reloaded = Game.loadOrNew(storage, clock.now);
+    expect(reloaded.state.lastReport).toEqual(game.state.lastReport);
+    expect(reloaded.state.lastReportDismissed).toBe(true);
   });
 
   it("totalRooms is the full planned count even when the run ends in defeat early", () => {

@@ -116,6 +116,8 @@ export interface GameState {
   runCounter: number;
   activeRun: ActiveRun | null; // single global run slot across the roster
   lastReport: RunReport | null;
+  /** Persisted UI acknowledgement for lastReport; fresh reports start false. */
+  lastReportDismissed: boolean;
 }
 
 export interface RunProgress {
@@ -173,6 +175,7 @@ function newGameState(): GameState {
     runCounter: 0,
     activeRun: null,
     lastReport: null,
+    lastReportDismissed: false,
   };
   autoEquipStarter(state);
   return state;
@@ -210,17 +213,30 @@ function autoEquipStarter(state: GameState): void {
  * to stamp — but v3 shop stocks hold copies of the removed placeholder GEAR
  * templates, so stocks are regenerated from the authentic templates.
  * Player-owned legacy items (inventory + equipped) are self-contained and
- * survive as-is.
+ * survive as-is. v5 → v6 (report-dismissal): add a persisted boolean that
+ * starts false so an old saved report may be acknowledged once, then stays
+ * dismissed across reloads.
  */
 export function migrateSave(version: number, old: unknown): GameState | null {
-  if (version === 4) return migrateV4(old);
-  if (version === 3) return migrateV3(old);
-  if (version === 2) return migrateV2(old); // its fresh stocks already use the authentic templates
-  if (version === 1) {
+  let state: GameState | null = null;
+  if (version === 5) state = migrateV5(old);
+  else if (version === 4) state = migrateV4(old);
+  else if (version === 3) state = migrateV3(old);
+  else if (version === 2) state = migrateV2(old); // its fresh stocks already use the authentic templates
+  else if (version === 1) {
     const v2 = migrateV1(old);
-    return v2 ? migrateV2(v2) : null;
+    state = v2 ? migrateV2(v2) : null;
   }
-  return null;
+  return state ? migrateV5(state) : null;
+}
+
+/** v5 → v6: add the persisted report-dismissal acknowledgement flag. */
+function migrateV5(old: unknown): GameState | null {
+  if (old == null || typeof old !== "object") return null;
+  const state = old as GameState;
+  if (!Array.isArray(state.roster) || state.roster.length === 0) return null;
+  state.lastReportDismissed = (state as { lastReportDismissed?: unknown }).lastReportDismissed === true;
+  return state;
 }
 
 /**
@@ -308,6 +324,7 @@ function migrateV1(old: unknown): GameState | null {
     runCounter: legacy.runCounter ?? 0,
     activeRun: null,
     lastReport: null,
+    lastReportDismissed: false,
   };
 }
 
@@ -688,9 +705,17 @@ export class Game {
       levelsGained,
       level: dispatched.level,
     };
+    this.state.lastReportDismissed = false;
     this.state.activeRun = null;
     this.cachedResult = null;
     this.cachedRunId = null;
+    this.save();
+  }
+
+  /** Acknowledge the current post-run report while preserving it for history. */
+  dismissLastReport(): void {
+    if (!this.state.lastReport || this.state.lastReportDismissed) return;
+    this.state.lastReportDismissed = true;
     this.save();
   }
 

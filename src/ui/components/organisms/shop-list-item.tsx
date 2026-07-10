@@ -11,6 +11,7 @@ import { weaponAvoidancePct } from "../../../engine/data/avoidance";
 import { armorStatCeiling } from "../../../engine/data/item-table";
 import { weaponKindOf, type Item, type Weapon } from "../../../engine/items";
 import { iconForKind } from "../../icons";
+import { itemIconUrl } from "../../item-icons";
 import { useUi } from "../../context";
 import { ShopCard, StatChip } from "../molecules/shop-card";
 import styles from "../molecules/shop-card.module.css";
@@ -88,6 +89,7 @@ export function ShopListItem(props: {
       onSelect={props.onSelect}
       dataId={props.item.id}
       icon={iconForKind(props.item.kind)}
+      imageUrl={itemIconUrl(props.item)}
       rarityClass={`rarity-${props.item.rarity}`}
       name={
         <>

@@ -312,7 +312,9 @@ export class BattleStage {
     const maxZ = Math.max(...zs);
     const dx = Math.max(1, Math.max(...xs) - minX);
     const dz = Math.max(1, maxZ - Math.min(...zs));
-    const hostW = Math.max(120, host.clientWidth || 600);
+    // :empty hides the host until the first paint, so clientWidth can read 0;
+    // fall back to the overlay width set in battle.css.
+    const hostW = Math.max(120, host.clientWidth || 176);
     const scale = Math.min((hostW - PAD * 2) / dx, (MAX_H - PAD * 2) / dz);
     host.style.height = `${Math.ceil(dz * scale + PAD * 2)}px`;
     const xPad = (hostW - dx * scale) / 2; // center a narrow floor in the box

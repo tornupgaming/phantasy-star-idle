@@ -33,7 +33,7 @@ export function memoryStorage(initial?: Record<string, string>): StoragePort {
 }
 
 export const SAVE_KEY = "psi.save";
-export const SAVE_VERSION = 5; // v5: authentic shop inventory (stock shape {level, offers} + tool counter)
+export const SAVE_VERSION = 6; // v6: persist whether the post-run report was dismissed
 
 export interface SaveEnvelope<T> {
   version: number;

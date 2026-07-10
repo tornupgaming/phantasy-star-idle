@@ -56,7 +56,7 @@ export function ReportBanner() {
         Consumables gained: {supplyLine(r().consumablesGained)} · used: {supplyLine(r().consumablesUsed)}
       </div>
       <div class="flex gap-2 items-center mt-2.5 mb-1.5 flex-wrap">
-        <button data-action="dismiss-report" onClick={() => ui.setReportDismissed(true)}>
+        <button data-action="dismiss-report" onClick={() => ui.act(() => ui.game.dismissLastReport())}>
           Close
         </button>
       </div>

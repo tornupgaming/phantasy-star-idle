@@ -40,14 +40,20 @@ export function RunPage() {
           hp={maxHp}
           maxHp={maxHp}
         />
-        <h1>✦ Run in progress</h1>
+        <div class="text-right">
+          <h1>✦ Run in progress</h1>
+          <div class="text-muted">
+            {prog.areaName} — {prog.difficultyLabel}
+          </div>
+        </div>
       </div>
-      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5`}>
-        <h2>
-          {prog.areaName} — {prog.difficultyLabel}
-        </h2>
-        <div class="stage-minimap my-2.5"></div>
-        <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-muted [&_b]:text-ink mt-2">
+      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-0 overflow-hidden`}>
+        <div class="stage-ticker">…</div>
+        <div class="relative">
+          <div class="stage-field"></div>
+          <div class="stage-minimap"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-3.5 py-3 border-t border-pso-edge-dim bg-[rgba(10,40,52,0.6)] stage-bottom text-muted [&_b]:text-ink">
           <span>
             Progress <b class="stage-pct">—</b>
           </span>
@@ -55,13 +61,7 @@ export function RunPage() {
             Enemies defeated <b class="stage-kills">0</b>
           </span>
           <span class="stage-status muted">Running…</span>
-        </div>
-      </div>
-      <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-0 overflow-hidden mt-3.5`}>
-        <div class="stage-ticker">…</div>
-        <div class="stage-field"></div>
-        <div class="flex items-center gap-4 px-3.5 py-3 border-t border-pso-edge-dim bg-[rgba(10,40,52,0.6)] stage-bottom">
-          <div class="text-xs stage-side stage-supply muted"></div>
+          <div class="text-xs stage-side stage-supply muted ml-auto"></div>
         </div>
       </div>
       <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5 mt-3.5`}>

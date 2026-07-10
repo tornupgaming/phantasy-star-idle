@@ -109,7 +109,7 @@ export function HubPage() {
 
   return (
     <>
-      <Show when={ui.pane() === "guild" && ui.state.lastReport && !ui.reportDismissed()}>
+      <Show when={ui.pane() === "guild" && ui.state.lastReport && !ui.state.lastReportDismissed}>
         <div class="dialog-scrim fixed inset-0 bg-[rgba(2,8,14,0.6)] flex items-center justify-center z-30 p-5">
           <ReportBanner />
         </div>

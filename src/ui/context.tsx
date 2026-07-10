@@ -37,8 +37,6 @@ export interface Ui {
   setEquipSlot(slot: EquipSlot): void;
   equipCand: Accessor<string | null>;
   setEquipCand(id: string | null): void;
-  reportDismissed: Accessor<boolean>;
-  setReportDismissed(v: boolean): void;
   areaSel: Accessor<string>;
   setAreaSel(id: string): void;
   diffSel: Accessor<DifficultyId>;
@@ -93,7 +91,6 @@ export function createUi(game: Game, gs: GameStore): Ui {
   const [detailId, setDetailId] = createSignal<string | null>(null);
   const [equipSlot, setEquipSlot] = createSignal<EquipSlot>("weapon");
   const [equipCand, setEquipCand] = createSignal<string | null>(null);
-  const [reportDismissed, setReportDismissed] = createSignal(false);
   const [areaSel, setAreaSel] = createSignal(AREA_LIST[0].id);
   const [diffSel, setDiffSel] = createSignal(Object.keys(DIFFICULTIES)[0] as DifficultyId);
   const [kbdMenu, setKbdMenu] = createSignal(0);
@@ -169,7 +166,6 @@ export function createUi(game: Game, gs: GameStore): Ui {
     batch(() => {
       setScreen("hub");
       setPaneRaw("guild");
-      setReportDismissed(false);
       setDetailId(null);
       setEquipCand(null);
       setNotice("");
@@ -192,8 +188,6 @@ export function createUi(game: Game, gs: GameStore): Ui {
     setEquipSlot,
     equipCand,
     setEquipCand,
-    reportDismissed,
-    setReportDismissed,
     areaSel,
     setAreaSel,
     diffSel,
