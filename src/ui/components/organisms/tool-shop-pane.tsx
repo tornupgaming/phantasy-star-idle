@@ -5,7 +5,7 @@
 
 import { For, Match, Switch } from "solid-js";
 import { priceForItem } from "../../../engine/pricing";
-import { GRINDER_PRICE, type ToolOffer } from "../../../engine/shop";
+import { GRINDER_PRICE, MONOGRINDER_CODE, type ToolOffer } from "../../../engine/shop";
 import { CONSUMABLES, CONSUMABLES_LIST, type ConsumableId } from "../../../engine/consumables";
 import { flavor } from "../../dialogue";
 import { iconForKind } from "../../icons";
@@ -21,6 +21,12 @@ import chrome from "../chrome.module.css";
 export function ToolShopPane() {
   const ui = useUi();
   const stock = () => ui.game.toolShopStock();
+  const offerCode = (offer: ToolOffer) => {
+    if (offer.type === "consumable") return CONSUMABLES[offer.id].code;
+    if (offer.type === "grinder") return MONOGRINDER_CODE;
+    return offer.item.code ?? offer.item.defId;
+  };
+  const offers = () => [...stock().offers].sort((a, b) => offerCode(a).localeCompare(offerCode(b)));
   const selCons = () => CONSUMABLES_LIST.find((c) => c.id === ui.detailId());
   const selToolItem = () => {
     const offer = stock().offers.find((o) => o.type === "item" && o.item.id === ui.detailId());
@@ -34,7 +40,7 @@ export function ToolShopPane() {
           <Panel.Header actions={`${stock().offers.length} in stock`}>Tool Shop</Panel.Header>
           <Panel.Body>
           <ShopList>
-            <For each={stock().offers}>
+            <For each={offers()}>
               {(offer, i) => {
                 if (offer.type === "consumable") {
                   const c = CONSUMABLES[offer.id];

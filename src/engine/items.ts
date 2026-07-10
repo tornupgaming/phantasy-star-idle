@@ -214,6 +214,11 @@ export function isTekked(weapon: Weapon): boolean {
 
 export type Item = Weapon | Frame | Barrier | Unit | Tool;
 
+/** Authentic inventory order (TTGGII), without mutating the owning collection. */
+export function itemsByCode<T extends Item>(items: readonly T[]): T[] {
+  return [...items].sort((a, b) => (a.code ?? a.defId).localeCompare(b.code ?? b.defId));
+}
+
 export function isWeapon(item: Item): item is Weapon {
   return item.kind === "weapon";
 }
@@ -229,4 +234,3 @@ export function isUnit(item: Item): item is Unit {
 export function isTool(item: Item): item is Tool {
   return item.kind === "tool";
 }
-

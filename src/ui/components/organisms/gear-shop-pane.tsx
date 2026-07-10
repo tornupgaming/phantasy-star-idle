@@ -5,7 +5,7 @@
 
 import { For, Show } from "solid-js";
 import { unitCapacity } from "../../../engine/character";
-import { isUnit, type Item } from "../../../engine/items";
+import { isUnit, itemsByCode, type Item } from "../../../engine/items";
 import { priceForItem } from "../../../engine/pricing";
 import { useUi } from "../../context";
 import { useEquippedInSlot } from "../../hooks";
@@ -22,6 +22,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
   const ui = useUi();
   const equippedInSlot = useEquippedInSlot();
   const stock = () => ui.selectedEntry().shop[props.kind];
+  const offers = () => itemsByCode(stock().offers);
   const sel = () => stock().offers.find((o) => o.id === ui.detailId()) ?? null;
   const emptyMsg = () => `Sold out — stock refreshes as ${ui.selectedChar().name} gains levels.`;
   const atUnitCap = (item: Item) =>
@@ -37,7 +38,7 @@ export function GearShopPane(props: { kind: "weapon" | "armour" }) {
           <Panel.Body>
             <ShopList>
               <Show when={stock().offers.length > 0} fallback={<div class="text-muted">{emptyMsg()}</div>}>
-                <For each={stock().offers}>
+                <For each={offers()}>
                   {(o, i) => (
                     <ShopListItem
                       index={i()}

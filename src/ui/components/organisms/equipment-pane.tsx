@@ -2,7 +2,7 @@
 
 import { For, Match, Show, Switch, type JSX } from "solid-js";
 import { unitCapacity } from "../../../engine/character";
-import { isUnit, type Item } from "../../../engine/items";
+import { isUnit, itemsByCode, type Item } from "../../../engine/items";
 import { useUi } from "../../context";
 import { SLOT_ICONS, itemDisplayName, itemMeta, weaponAvd, type EquipSlot } from "../../ui-shared";
 import { itemFlavor } from "../../dialogue";
@@ -89,7 +89,7 @@ export function EquipmentPane() {
                     <CandRow id={`remove:${u.id}`} name={<>Remove <ItemName item={u} /></>} meta={equippedMark()} rarity={u.rarity} kind={u.kind} />
                   )}
                 </For>
-                <For each={inv().filter(isUnit)}>
+                <For each={itemsByCode(inv().filter(isUnit))}>
                   {(u) => <CandRow id={u.id} name={<ItemName item={u} />} meta={itemMeta(u)} rarity={u.rarity} kind={u.kind} />}
                 </For>
                 <Show when={eq().units.length === 0 && inv().filter(isUnit).length === 0}>
@@ -100,7 +100,7 @@ export function EquipmentPane() {
                 {(() => {
                   const slot = () => ui.equipSlot() as "weapon" | "frame" | "barrier";
                   const equipped = () => eq()[slot()];
-                  const candidates = () => inv().filter((i) => i.kind === slot());
+                  const candidates = () => itemsByCode(inv().filter((i) => i.kind === slot()));
                   return (
                     <>
                       <Show when={equipped()}>

@@ -43,7 +43,8 @@ import {
 } from "./data/item-table";
 
 /** Authentic Monogrinder price (PMT tool cost; grinders sell as a flat count). */
-export const GRINDER_PRICE = toolDef("030A00")!.cost;
+export const MONOGRINDER_CODE = "030A00";
+export const GRINDER_PRICE = toolDef(MONOGRINDER_CODE)!.cost;
 
 const hexByte = (n: number) => n.toString(16).padStart(2, "0").toUpperCase();
 
@@ -219,7 +220,6 @@ function commonRecoveryTier(level: number): number {
 const techDiskCount = (level: number) => (level < 11 ? 4 : level < 43 ? 5 : 7);
 
 const CONSUMABLE_BY_CODE = new Map<string, ConsumableId>(CONSUMABLES_LIST.map((c) => [c.code, c.id]));
-const MONOGRINDER_CODE = "030A00";
 
 function toolOfferForCode(code: string, mintId: () => string): ToolOffer | null {
   if (code === MONOGRINDER_CODE) return { type: "grinder" };

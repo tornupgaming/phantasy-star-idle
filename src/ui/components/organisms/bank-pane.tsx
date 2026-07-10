@@ -2,6 +2,7 @@
 
 import { For, Show } from "solid-js";
 import { sellPrice } from "../../../engine/pricing";
+import { itemsByCode } from "../../../engine/items";
 import { useUi } from "../../context";
 import { useEquippedInSlot } from "../../hooks";
 import { WindowBox } from "../molecules/window-box";
@@ -14,7 +15,8 @@ export function BankPane() {
   const ui = useUi();
   const equippedInSlot = useEquippedInSlot();
   const inv = () => ui.state.economy.inventory;
-  const sel = () => inv().find((i) => i.id === ui.detailId()) ?? inv()[0] ?? null;
+  const sortedInv = () => itemsByCode(inv());
+  const sel = () => inv().find((i) => i.id === ui.detailId()) ?? sortedInv()[0] ?? null;
   const emptyMsg = "Inventory empty — send a run to find gear.";
 
   return (
@@ -23,7 +25,7 @@ export function BankPane() {
         <WindowBox title="Inventory/Bank" trailing={`${inv().length} items`}>
           <div class={`pso-menu ${chrome.menu} max-h-[62vh] overflow-auto max-[1100px]:max-h-[38vh] max-[900px]:max-h-[50vh]`}>
             <Show when={inv().length > 0} fallback={<div class="text-muted">{emptyMsg}</div>}>
-              <For each={inv()}>
+              <For each={sortedInv()}>
                 {(i) => (
                   <ItemRow
                     item={i}

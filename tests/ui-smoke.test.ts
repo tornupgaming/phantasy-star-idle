@@ -4,6 +4,8 @@ import { memoryStorage } from "../src/engine/save";
 import { Game } from "../src/engine/game";
 import { priceForItem } from "../src/engine/pricing";
 import { meetsRequirements } from "../src/engine/character";
+import { GEAR } from "../src/engine/content";
+import type { Item } from "../src/engine/items";
 import { mountApp } from "../src/ui/app";
 
 const click = (root: HTMLElement, sel: string) => {
@@ -24,6 +26,61 @@ afterEach(() => {
 });
 
 describe("UI smoke (manual-pass stand-in)", () => {
+  it("sorts shop, equipment candidate, and bank lists by authentic item code", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    const game = Game.loadOrNew(memoryStorage(), () => 1_000_000);
+    const item = (id: string, template: Omit<Item, "id">): Item => ({ ...template, id } as Item);
+    const weaponHigh = item("mint-a", GEAR.scoutRifle);
+    const weaponLow = item("mint-z", GEAR.handBlade);
+    const unit = item("mint-b", GEAR.powerUnit);
+    const unitHigh = item("mint-d", GEAR.guardUnit);
+    const frame = item("mint-y", GEAR.clothArmor);
+    const tool = {
+      id: "mint-c", defId: "030200", code: "030200", name: "Disk: Foie Lv.1",
+      kind: "tool", rarity: "common", sellValue: 10, tech: 0, techLevel: 1,
+    } as const satisfies Item;
+
+    const entry = game.state.roster[0];
+    entry.shop.weapon.offers = [weaponHigh, weaponLow];
+    entry.shop.armour.offers = [unit, frame];
+    entry.shop.tool.offers = [
+      { type: "grinder" },
+      { type: "item", item: tool },
+      { type: "consumable", id: "monomate" },
+    ];
+    game.state.economy.inventory = [tool, unitHigh, unit, weaponHigh, weaponLow, frame];
+    const inventoryOrder = game.state.economy.inventory.map((i) => i.id);
+    const armourOrder = entry.shop.armour.offers.map((i) => i.id);
+
+    mount(root, game);
+    click(root, '[data-action="select-char"]');
+    const ids = (selector: string) =>
+      [...root.querySelectorAll<HTMLElement>(selector)].map((el) => el.dataset.id);
+
+    click(root, '[data-action="pane"][data-pane="weapon-shop"]');
+    expect(ids('.hud-pane [data-action="detail"]')).toEqual(["mint-z", "mint-a"]);
+
+    click(root, '[data-action="pane"][data-pane="armour-shop"]');
+    expect(ids('.hud-pane [data-action="detail"]')).toEqual(["mint-y", "mint-b"]);
+
+    click(root, '[data-action="pane"][data-pane="tool-shop"]');
+    expect(ids('.hud-pane [data-action="detail"]')).toEqual(["monomate", "mint-c", "grinder"]);
+
+    click(root, '[data-action="pane"][data-pane="equipment"]');
+    expect(ids('.hud-pane [data-action="equip-cand"]').filter((id) => id !== "remove")).toEqual(["mint-z", "mint-a"]);
+    click(root, '[data-action="equip-slot"][data-id="units"]');
+    expect(ids('.hud-pane [data-action="equip-cand"]')).toEqual(["mint-b", "mint-d"]);
+
+    click(root, '[data-action="pane"][data-pane="bank"]');
+    expect(ids('.hud-pane [data-action="detail"]')).toEqual([
+      "mint-z", "mint-a", "mint-y", "mint-b", "mint-d", "mint-c",
+    ]);
+
+    expect(game.state.economy.inventory.map((i) => i.id)).toEqual(inventoryOrder);
+    expect(entry.shop.armour.offers.map((i) => i.id)).toEqual(armourOrder);
+  });
+
   it("select → create → hub → shops/bank → accept quest", async () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
