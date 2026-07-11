@@ -24,7 +24,7 @@ pnpm check         # typecheck, test, and create a production build
 pnpm test          # run the Vitest suite (formulas, replay determinism, e2e loop)
 ```
 
-Node.js 22.12 or newer is required. Use pnpm exclusively; `packageManager`
+Node.js 22.13 or newer is required. Use pnpm exclusively; `packageManager`
 pins the expected pnpm release for Corepack and CI.
 
 ## Architecture

@@ -6,7 +6,7 @@ tool-neutral entry point for coding agents.
 
 ## Working agreement
 
-- Use Node.js 22.12+ and pnpm. Do not create another package-manager lockfile.
+- Use Node.js 22.13+ and pnpm. Do not create another package-manager lockfile.
 - Preserve simulation determinism. Route game randomness through
   `src/engine/rng.ts`; never use `Math.random` in simulation code.
 - Keep `src/engine/` pure and runtime-agnostic. UI code belongs in `src/ui/`,
