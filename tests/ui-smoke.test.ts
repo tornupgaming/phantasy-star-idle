@@ -188,7 +188,8 @@ describe("UI smoke (manual-pass stand-in)", () => {
     const weapon = game.state.economy.inventory.find((i) => i.kind === "weapon")!;
     click(root, `[data-action="equip-cand"][data-id="${weapon.id}"]`);
     expect(root.querySelector(".diff-table")).toBeTruthy(); // stat preview shown
-    expect(game.selectedCharacter().equipment.weapon).toBeNull(); // not committed yet
+    // Preview only — the starter weapon stays equipped until the commit below.
+    expect(game.selectedCharacter().equipment.weapon?.id).not.toBe(weapon.id);
     click(root, `[data-action="equip"][data-id="${weapon.id}"]`);
     expect(game.selectedCharacter().equipment.weapon?.id).toBe(weapon.id);
 

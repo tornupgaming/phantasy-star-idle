@@ -142,10 +142,15 @@ describe("meta-layer operations", () => {
     expect(game.equipFromInventory(otherCharacterWeapon.id)).toEqual({ ok: true });
     expect(game.selectCharacter(game.state.roster[0].character.id)).toEqual({ ok: true });
     const mesetaBefore = game.state.economy.meseta;
+    // Equipping otherCharacterWeapon displaced Rico's starter handgun back into
+    // the shared inventory; it too is unlocked, so sell-all clears it as well.
+    const unlockedValue = game.state.economy.inventory
+      .filter((item) => !item.locked)
+      .reduce((sum, item) => sum + item.sellValue, 0);
 
     expect(game.sellAllInventoryItems()).toEqual({ ok: true });
     expect(game.state.economy.inventory.map((item) => item.id)).toEqual(["locked"]);
-    expect(game.state.economy.meseta).toBe(mesetaBefore + saleA.sellValue + saleB.sellValue);
+    expect(game.state.economy.meseta).toBe(mesetaBefore + unlockedValue);
     expect(game.selectedCharacter().equipment.weapon).toBe(equipped);
     expect(game.state.roster[1].character.equipment.weapon?.id).toBe(otherCharacterWeapon.id);
   });
@@ -203,7 +208,25 @@ describe("character roster (character-roster spec)", () => {
     expect(rico.classId).toBe("ramarl");
     expect(rico.sectionId).toBe(sectionIdFromName("Rico"));
     expect(rico.level).toBe(1);
-    expect(rico.equipment.weapon).toBeNull();
+  });
+
+  it("equips a new character with a basic frame and a role-appropriate weapon", () => {
+    const game = newGame();
+    const cases: Array<{ classId: string; weaponType: string }> = [
+      { classId: "humar", weaponType: "saber" }, // hunter
+      { classId: "ramarl", weaponType: "handgun" }, // ranger
+      { classId: "fomar", weaponType: "cane" }, // force
+    ];
+    for (const { classId, weaponType } of cases) {
+      expect(game.createCharacter(`New-${classId}`, classId).ok).toBe(true);
+      const c = game.state.roster.at(-1)!.character;
+      expect(c.equipment.weapon).not.toBeNull();
+      expect(c.equipment.weapon!.weaponType).toBe(weaponType);
+      expect(c.equipment.frame).not.toBeNull();
+      // Distinct instance ids so nothing collides in the shared inventory.
+      expect(c.equipment.weapon!.id).toBe(`${c.id}-weapon`);
+      expect(c.equipment.frame!.id).toBe(`${c.id}-frame`);
+    }
   });
 
   it("honors a section ID override at creation", () => {
@@ -256,9 +279,10 @@ describe("character roster (character-roster spec)", () => {
     const game = newGame();
     game.createCharacter("Rico", "ramarl");
     const ricoId = game.state.roster[1].character.id;
-    // Move the starter weapon from char-1 to Rico via the shared inventory.
+    // Move char-1's starter weapon into the shared inventory, then equip it onto
+    // Rico (displacing Rico's own starter weapon back into the inventory).
     game.unequipToInventory("weapon");
-    const weaponId = game.state.economy.inventory.find((i) => i.kind === "weapon")!.id;
+    const weaponId = game.state.economy.inventory.find((i) => i.id === "start-weapon")!.id;
     game.selectCharacter(ricoId);
     expect(game.equipFromInventory(weaponId).ok).toBe(true);
     const invBefore = game.state.economy.inventory.length;
@@ -266,7 +290,8 @@ describe("character roster (character-roster spec)", () => {
     game.selectCharacter("char-1");
     expect(game.deleteCharacter(ricoId).ok).toBe(true);
     expect(game.state.roster).toHaveLength(1);
-    expect(game.state.economy.inventory).toHaveLength(invBefore + 1); // weapon returned
+    // Rico's equipped weapon and starter frame both return to the inventory.
+    expect(game.state.economy.inventory).toHaveLength(invBefore + 2);
     expect(game.state.economy.inventory.some((i) => i.id === weaponId)).toBe(true);
   });
 

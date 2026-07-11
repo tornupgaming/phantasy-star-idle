@@ -46,7 +46,7 @@ import {
 } from "./shop";
 import type { AttackType } from "./combat";
 import type { DifficultyId } from "./areas";
-import { getArea, startingCharacter, startingEconomy, startingSupply } from "./content";
+import { getArea, starterGearFor, startingCharacter, startingEconomy, startingSupply } from "./content";
 import { difficulty } from "./areas";
 import {
   simulateRun,
@@ -412,6 +412,11 @@ export class Game {
       xp: 0,
       equipment: emptyEquipment(),
     };
+    // Equip a basic frame and a role-appropriate weapon so a fresh character is
+    // immediately playable (saber for hunters, handgun for rangers, cane for forces).
+    const gear = starterGearFor(CLASS_BY_ID[classId].role);
+    equip(character, { ...gear.weapon, id: `${character.id}-weapon` } as Weapon);
+    equip(character, { ...gear.frame, id: `${character.id}-frame` } as Frame);
     this.state.roster.push(newEntry(character));
     this.save();
     return { ok: true };

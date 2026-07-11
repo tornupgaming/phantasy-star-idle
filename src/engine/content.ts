@@ -8,6 +8,7 @@
 import type { EnemyDef } from "./enemies";
 import type { AreaDef } from "./areas";
 import { emptyEquipment, type Character } from "./character";
+import type { ClassRole } from "./classes";
 import { sectionIdFromName } from "./progression";
 import type { EconomyState, GearTemplate } from "./loot";
 import type { Supply } from "./consumables";
@@ -31,8 +32,10 @@ function curated(code: string, over: { rarity?: GearTemplate["rarity"] } = {}): 
 export const GEAR = {
   handBlade: curated("000100"), // Saber, 40-55 ATP
   ironSaber: curated("000101"), // Brand, 80-100 ATP
+  handgun: curated("000600"), // Handgun, 20-30 ATP (basic ranger weapon)
   greatBlade: curated("000202"), // Breaker (sword), 100-150 ATP
   scoutRifle: curated("000701"), // Sniper (rifle), 50-90 ATP
+  cane: curated("000A00"), // Cane, 25-30 ATP (basic force weapon)
   photonEdge: curated("000103", { rarity: "rare" as const }), // Pallasch, 170-220 ATP
   clothArmor: curated("010100"), // Frame
   plateArmor: curated("010104"), // Soul Frame
@@ -198,6 +201,18 @@ export function getArea(id: string): AreaDef {
 export const AREA_LIST: AreaDef[] = Object.values(AREAS);
 
 // ---- New-game starting state -------------------------------------------------
+
+/**
+ * Starter gear a newly created roster character is equipped with: a basic frame
+ * plus a role-appropriate weapon — a saber for hunters, a handgun for rangers,
+ * a cane for forces. Returns curated templates only; the caller mints instances
+ * with unique ids and equips them.
+ */
+export function starterGearFor(role: ClassRole): { weapon: GearTemplate; frame: GearTemplate } {
+  const weapon =
+    role === "ranger" ? GEAR.handgun : role === "force" ? GEAR.cane : GEAR.handBlade;
+  return { weapon, frame: GEAR.clothArmor };
+}
 
 export function startingCharacter(): Character {
   const name = "Hunter";
