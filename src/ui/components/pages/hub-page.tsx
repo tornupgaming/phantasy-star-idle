@@ -7,10 +7,11 @@
 
 import { Match, Show, Switch, createEffect, onCleanup, onMount } from "solid-js";
 import { effectiveStats } from "../../../engine/character";
+import { LEVEL_CAP } from "../../../engine/classes";
+import { xpForLevel } from "../../../engine/progression";
 import { useUi } from "../../context";
 import { PANES } from "../../ui-shared";
 import { PlayerHud } from "../molecules/player-hud";
-import { SidePanel } from "../organisms/side-panel";
 import { ReportBanner } from "../organisms/report-banner";
 import { HubNav } from "../organisms/hub-nav";
 import { DialogueWindow } from "../organisms/dialogue-window";
@@ -24,6 +25,16 @@ import { HubLayout } from "../templates/hub-layout";
 export function HubPage() {
   const ui = useUi();
   let hudEl!: HTMLDivElement;
+
+  // XP progress toward the next level, as a bar percentage (player-hud spec:
+  // the capsule's Lv pill trails into the XP bar; no numeric XP readout).
+  const xpPct = () => {
+    const c = ui.selectedChar();
+    if (c.level >= LEVEL_CAP) return 100;
+    const cur = xpForLevel(c.classId, c.level);
+    const next = xpForLevel(c.classId, c.level + 1);
+    return next <= cur ? 100 : Math.min(100, Math.max(0, ((c.xp - cur) / (next - cur)) * 100));
+  };
 
   // Keyboard-navigable menus: classic PSO menus plus the Nova shop card
   // stacks, which expose listbox/option semantics instead of menu-row classes.
@@ -117,16 +128,15 @@ export function HubPage() {
       <HubLayout
         ref={(el) => (hudEl = el)}
         status={
-          <>
-            <PlayerHud
-              name={ui.selectedChar().name}
-              level={ui.selectedChar().level}
-              sectionId={ui.selectedChar().sectionId}
-              hp={effectiveStats(ui.selectedChar()).hp}
-              maxHp={effectiveStats(ui.selectedChar()).hp}
-            />
-            <SidePanel />
-          </>
+          <PlayerHud
+            name={ui.selectedChar().name}
+            level={ui.selectedChar().level}
+            sectionId={ui.selectedChar().sectionId}
+            hp={effectiveStats(ui.selectedChar()).hp}
+            maxHp={effectiveStats(ui.selectedChar()).hp}
+            meseta={ui.state.economy.meseta}
+            xpPct={xpPct()}
+          />
         }
         nav={<HubNav />}
         dialogue={<DialogueWindow />}

@@ -147,8 +147,10 @@ describe("UI smoke (manual-pass stand-in)", () => {
     expect(root.textContent).toContain("Sue");
     // Class name is off the hub HUD (player-hud spec); capsule shows Lv + name.
     expect(root.textContent).not.toContain("RAmarl");
-    expect(root.textContent).toContain("Total Exp");
-    expect(root.textContent).toContain("To Next Lv");
+    // Meseta and XP bar are absorbed into the HUD capsule (no exp readout).
+    expect(root.querySelector(".player-hud .meseta-amount")).toBeTruthy();
+    expect(root.querySelector(".player-hud .xp-bar")).toBeTruthy();
+    expect(root.textContent).not.toContain("Total Exp");
     expect(root.textContent).toContain("Hunter's Guild");
 
     // Weapon Shop pane: buy an offer into the shared inventory. Authentic
@@ -481,10 +483,10 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
       expect(game.state.economy.inventory.some((i) => i.id === offer.id)).toBe(true);
     }
 
-    // Remaining panes render inside the shell (status bar stays up).
+    // Remaining panes render inside the shell (status capsule stays up).
     for (const pane of ["tool-shop", "equipment", "bank", "guild"] as const) {
       click(root, `[data-action="pane"][data-pane="${pane}"]`);
-      expect(root.textContent).toContain("Total Exp");
+      expect(root.querySelector(".player-hud .meseta-amount")).toBeTruthy();
     }
 
     // Accept a quest, fast-forward past the end, settle: the report dialog
