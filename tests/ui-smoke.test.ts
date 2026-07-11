@@ -211,7 +211,7 @@ describe("UI smoke (manual-pass stand-in)", () => {
     ]);
     click(root, '[data-action="send"]');
     await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
-    expect(root.textContent).toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).not.toBeNull();
   });
 
   it("weapon-range-avoidance: AVD chip on shop cards, avoidance shown when equipping/barehanded", () => {
@@ -370,7 +370,7 @@ describe("keyboard menu navigation (ui-navigation)", () => {
     key("Enter"); // confirms ▶ Accept Quest
     expect(game.state.activeRun).not.toBeNull();
     await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
-    expect(root.textContent).toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).not.toBeNull();
   });
 
   it("destination menu is zone-grouped, skips headings, and gates episodes", () => {
@@ -493,7 +493,7 @@ describe("hub walk from a migrated v2 save (pioneer2-hub-redesign 6.2)", () => {
     // appears over the Guild pane and dismisses in place.
     click(root, '[data-action="send"]');
     await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
-    expect(root.textContent).toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).not.toBeNull();
     now += game.runProgress()!.endTime + 60_000;
     expect(game.poll()).toBe(true);
     app.sync();

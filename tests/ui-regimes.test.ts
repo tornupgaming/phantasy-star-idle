@@ -33,6 +33,6 @@ describe("UI regimes", () => {
 
     root.querySelector<HTMLElement>('[data-action="send"]')!.click();
     await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
-    expect(root.textContent).toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).not.toBeNull();
   });
 });

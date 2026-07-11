@@ -4,7 +4,7 @@
  * once by the StageIsland (islands.tsx); this class owns every dynamic update. A rAF
  * loop recomputes game time from the engine each frame (via game.runProgress(),
  * so it can never drift) and plays each newly crossed event at its timestamp:
- * hit flashes, floating damage numbers, HP bar tweens, ticker + log lines.
+ * hit flashes, floating damage numbers, HP bar tweens, log lines.
  *
  * Catch-up (first mount, mid-run reload, tab refocus after throttling) folds the
  * backlog through the pure scene reducer silently and repaints — no replaying
@@ -126,10 +126,7 @@ export class BattleStage {
     if (this.played === 0 || fresh > CATCHUP_BATCH) {
       // First paint or a backlog (reload/refocus): fold silently, repaint fully.
       for (let i = this.played; i < revealed.length; i++) applyEvent(this.scene, revealed[i]);
-      if (revealed.length > 0) {
-        this.appendLog(revealed.slice(this.played));
-        this.setTicker(revealed[revealed.length - 1]);
-      }
+      if (revealed.length > 0) this.appendLog(revealed.slice(this.played));
       this.played = revealed.length;
       this.repaintAll();
     } else if (fresh > 0) {
@@ -137,8 +134,10 @@ export class BattleStage {
       this.played = revealed.length;
     }
 
-    this.q(".stage-pct").textContent =
-      `Room ${Math.max(0, this.scene.roomIndex + 1)}/${prog.totalRooms}`;
+    // Header progress: time through the run, so it moves smoothly even
+    // between rooms (the area name beside it is static shell markup).
+    const pct = prog.endTime > 0 ? Math.min(100, (prog.gameTime / prog.endTime) * 100) : 0;
+    this.q(".stage-pct").textContent = `${Math.floor(pct)}%`;
     this.updateLootTally();
 
     this.raf = requestAnimationFrame(this.tick);
@@ -148,7 +147,6 @@ export class BattleStage {
 
   private playEvent(e: RunEvent): void {
     applyEvent(this.scene, e);
-    this.setTicker(e);
     this.appendLog([e]);
 
     switch (e.kind) {
@@ -200,7 +198,6 @@ export class BattleStage {
       case "kill": {
         const el = this.enemyEl(e.kill?.enemyIndex ?? -1);
         if (el) el.classList.add("dead");
-        this.bumpKills();
         break;
       }
       case "heal":
@@ -211,7 +208,6 @@ export class BattleStage {
       case "complete":
       case "eject":
         this.updateMinimap();
-        this.updateStatus();
         break;
     }
   }
@@ -222,9 +218,6 @@ export class BattleStage {
     this.rebuildField();
     this.updateMinimap();
     this.updatePlayer();
-    this.updateStatus();
-    // Re-mark dead enemies and kill counter after a silent fold.
-    this.bumpKills();
   }
 
   private rebuildField(): void {
@@ -295,11 +288,9 @@ export class BattleStage {
     // plan-level inputs were fixed at mount — no outcome oracle to read).
     const host = this.q(".stage-minimap");
     const s = this.scene;
-    const done = s.phase === "complete" || s.phase === "ejected";
     if (!this.geometry) {
       // Boss arenas have no extracted geometry — the numeric readout carries.
       host.innerHTML = "";
-      if (done) this.updateStatus();
       return;
     }
 
@@ -327,29 +318,6 @@ export class BattleStage {
         return `<div class="minimap-room ${c.state}" style="left:${left.toFixed(1)}px;top:${top.toFixed(1)}px"></div>`;
       })
       .join("");
-    if (done) this.updateStatus();
-  }
-
-  private updateStatus(): void {
-    const el = this.q(".stage-status");
-    if (this.scene.phase === "complete") {
-      el.textContent = "Cleared — settling…";
-      el.className = "stage-status outcome-complete";
-    } else if (this.scene.phase === "ejected") {
-      el.textContent = "Ejected — settling…";
-      el.className = "stage-status outcome-ejected";
-    } else {
-      el.textContent = "Running…";
-      el.className = "stage-status muted";
-    }
-  }
-
-  private bumpKills(): void {
-    // Cheap and always-correct: count kill events already played.
-    const prog = this.game.runProgress();
-    if (!prog) return;
-    const kills = prog.revealedEvents.filter((e) => e.kind === "kill").length;
-    this.q(".stage-kills").textContent = `${kills}`;
   }
 
   private updateLootTally(): void {
@@ -417,12 +385,6 @@ export class BattleStage {
     if (!span.firstChild) span.textContent = text; // atlas not loaded → plain text
     host.appendChild(span);
     span.addEventListener("animationend", () => span.remove());
-  }
-
-  private setTicker(e: RunEvent): void {
-    const ticker = this.q(".stage-ticker");
-    ticker.textContent = e.text;
-    ticker.className = `stage-ticker ${logClass(e)}`;
   }
 
   private appendLog(events: RunEvent[]): void {

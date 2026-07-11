@@ -22,7 +22,7 @@ describe("battle stage (run screen)", () => {
     root.querySelector<HTMLElement>('[data-action="send"]')!.click();
     expect(game.state.activeRun).not.toBeNull();
     await vi.waitFor(() => expect(root.querySelector(".stage-field")).not.toBeNull());
-    expect(root.textContent).toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).not.toBeNull();
     expect(root.querySelector(".stage-field")).not.toBeNull();
     const shell = root.querySelector(".stage-field")!;
 
@@ -77,7 +77,7 @@ describe("battle stage (run screen)", () => {
     app.sync();
     app2.sync();
     expect(game.state.activeRun).toBeNull();
-    expect(root.textContent).not.toContain("Run in progress");
+    expect(root.querySelector(".run-screen")).toBeNull();
     expect(root.textContent).toMatch(/Run complete!|Ejected!/);
     // Settle lands on the hub's Guild pane (ui-navigation).
     expect(root.textContent).toContain("Hunter's Guild");

@@ -32,7 +32,7 @@ export function RunPage() {
   return (
     <div class="run-screen" ref={host}>
       <SpriteDefs />
-      <div class="flex justify-between items-start gap-3 mb-4">
+      <div class="mb-4">
         <PlayerHud
           name={character.name}
           level={character.level}
@@ -40,28 +40,17 @@ export function RunPage() {
           hp={maxHp}
           maxHp={maxHp}
         />
-        <div class="text-right">
-          <h1>✦ Run in progress</h1>
-          <div class="text-muted">
-            {prog.areaName} — {prog.difficultyLabel}
-          </div>
-        </div>
       </div>
       <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-0 overflow-hidden`}>
-        <div class="stage-ticker">…</div>
+        <div class="stage-ticker">
+          {prog.areaName} — <b class="stage-pct">0%</b>
+        </div>
         <div class="relative">
           <div class="stage-field"></div>
           <div class="stage-minimap"></div>
         </div>
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-3.5 py-3 border-t border-pso-edge-dim bg-[rgba(10,40,52,0.6)] stage-bottom text-muted [&_b]:text-ink">
-          <span>
-            Progress <b class="stage-pct">—</b>
-          </span>
-          <span>
-            Enemies defeated <b class="stage-kills">0</b>
-          </span>
-          <span class="stage-status muted">Running…</span>
-          <div class="text-xs stage-side stage-supply muted ml-auto"></div>
+        <div class="px-3.5 py-3 border-t border-pso-edge-dim bg-[rgba(10,40,52,0.6)] stage-bottom text-muted">
+          <div class="text-xs stage-side stage-supply muted"></div>
         </div>
       </div>
       <div class={`${chrome.surface} rounded-[4px_18px_4px_12px] p-3.5 mt-3.5`}>

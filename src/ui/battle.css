@@ -12,12 +12,6 @@
 .muted {
   color: var(--color-muted);
 }
-.outcome-complete {
-  color: var(--color-good);
-}
-.outcome-ejected {
-  color: var(--color-bad);
-}
 
 /* ---- Bars: BB chunky green-on-bezel; width contract unchanged --------------- */
 .hpbar {
@@ -85,40 +79,15 @@
   animation: stage-healed 0.5s ease-out;
 }
 
-/* ---- Ticker + battle log ---------------------------------------------------- */
+/* ---- Header + battle log ----------------------------------------------------- */
+/* Static header (area name + % progress); stage.ts updates the .stage-pct
+ * child each frame. */
 .stage-ticker {
   padding: 10px 14px;
   border-bottom: 1px solid var(--color-pso-edge-dim);
   background: rgba(3, 14, 20, 0.85);
   font: 13px/1.5 ui-monospace, "Cascadia Code", monospace;
   min-height: 40px;
-}
-.stage-ticker.l-miss {
-  color: var(--color-muted);
-}
-.stage-ticker.l-crit {
-  color: var(--color-gold);
-}
-.stage-ticker.l-kill {
-  color: var(--color-good);
-}
-.stage-ticker.l-loot {
-  color: var(--color-accent);
-}
-.stage-ticker.l-heal,
-.stage-ticker.l-revive {
-  color: #7fe0c0;
-}
-.stage-ticker.l-split {
-  color: var(--color-gold);
-}
-.stage-ticker.l-eject {
-  color: var(--color-bad);
-  font-weight: 700;
-}
-.stage-ticker.l-complete {
-  color: var(--color-good);
-  font-weight: 700;
 }
 
 .log {
