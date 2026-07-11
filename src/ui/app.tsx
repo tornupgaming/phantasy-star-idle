@@ -15,6 +15,7 @@ import { BackdropIsland } from "./components/organisms/backdrop-island";
 import { SelectPage } from "./components/pages/select-page";
 import { CreatePage } from "./components/pages/create-page";
 import { HubPage } from "./components/pages/hub-page";
+import { BuildInfo } from "./components/atoms/build-info";
 
 const RunPage = lazy(() =>
   import("./components/pages/run-page").then(({ RunPage }) => ({ default: RunPage })),
@@ -59,11 +60,14 @@ export function App(props: { game: Game; gs: GameStore }) {
 
   return (
     <UiProvider value={ui}>
-      <Show when={ui.state.activeRun} fallback={<MenuRegime />}>
-        <Suspense fallback={<div class="run-screen">Loading run…</div>}>
-          <RunPage />
-        </Suspense>
-      </Show>
+      <>
+        <Show when={ui.state.activeRun} fallback={<MenuRegime />}>
+          <Suspense fallback={<div class="run-screen">Loading run…</div>}>
+            <RunPage />
+          </Suspense>
+        </Show>
+        <BuildInfo />
+      </>
     </UiProvider>
   );
 }

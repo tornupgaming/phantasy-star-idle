@@ -26,6 +26,16 @@ afterEach(() => {
 });
 
 describe("UI smoke (manual-pass stand-in)", () => {
+  it("shows the deployment build fingerprint", () => {
+    const root = document.createElement("div");
+    document.body.appendChild(root);
+    mount(root, Game.loadOrNew(memoryStorage(), () => 1_000_000));
+
+    const buildInfo = root.querySelector<HTMLElement>("[data-build-info]");
+    expect(buildInfo?.textContent).toBe("Build development · local");
+    expect(buildInfo?.title).toBe("Commit development; built local");
+  });
+
   it("sorts shop, equipment candidate, and bank lists by authentic item code", () => {
     const root = document.createElement("div");
     document.body.appendChild(root);
